@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+OpenIDE-Module: se.trixon.toolbox.branding
+OpenIDE-Module-Install: se/trixon/toolbox/branding/Installer.class
+OpenIDE-Module-Layer: se/trixon/toolbox/branding/layer.xml
+OpenIDE-Module-Localizing-Bundle: se/trixon/toolbox/branding/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
