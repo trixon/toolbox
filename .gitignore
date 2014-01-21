@@ -1,3 +1,5 @@
 /build/
 /modules/branding/build/
 /modules/core/build/
+/modules/branding/nbproject/private/
+/modules/core/nbproject/private/
