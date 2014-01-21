@@ -1,5 +1,6 @@
 package se.trixon.toolbox.core;
 
+import org.openide.awt.StatusDisplayer;
 import se.trixon.almond.Monitor;
 
 /**
@@ -16,5 +17,9 @@ public class Toolbox {
 
     public static void outln(String name, String message) {
         new Monitor(name, false, true).outln(message);
+    }
+
+    public static void setStatusText(String text, int importance) {
+        StatusDisplayer.getDefault().setStatusText(text, importance);
     }
 }
