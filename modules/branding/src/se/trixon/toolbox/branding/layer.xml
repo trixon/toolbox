@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
+    <folder name="Menu">
+        <folder name="GoTo">
+            <file name="org-openide-actions-GotoAction.shadow_hidden"/>
+        </folder>
+        <folder name="Window">
+            <file name="Web_hidden"/>
+        </folder>
+    </folder>
 </filesystem>
