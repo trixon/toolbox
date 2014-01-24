@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: false
 OpenIDE-Module: se.trixon.toolbox.branding
 OpenIDE-Module-Install: se/trixon/toolbox/branding/Installer.class
 OpenIDE-Module-Layer: se/trixon/toolbox/branding/layer.xml
