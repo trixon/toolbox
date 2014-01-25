@@ -8,4 +8,5 @@ import org.openide.windows.TopComponent;
  */
 public abstract class ToolTopComponent extends TopComponent {
 
+    protected String mToolName;
 }

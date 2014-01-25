@@ -2,12 +2,15 @@ package se.trixon.toolbox.core.actions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import org.openide.DialogDescriptor;
+import org.openide.DialogDisplayer;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
-import se.trixon.toolbox.core.Toolbox;
+import se.trixon.toolbox.core.dialog.ToolsListPanel;
 
 @ActionID(
         category = "File",
@@ -28,6 +31,12 @@ public final class ToolListAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Toolbox.outln(Toolbox.LOG_TITLE, NbBundle.getMessage(ToolListAction.class, "CTL_ToolListAction"));
+        ToolsListPanel toolsListPanel = new ToolsListPanel();
+        String title = NbBundle.getMessage(ToolListAction.class, "CTL_ToolListAction");
+        Object[] options = {new JButton("Ok")};
+        DialogDescriptor dialogDescriptor = new DialogDescriptor(toolsListPanel, title);
+        dialogDescriptor.setOptions(options);
+        DialogDisplayer.getDefault().notify(dialogDescriptor);
+
     }
 }

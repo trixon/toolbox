@@ -17,7 +17,7 @@ public class ToolInfoAction {
             displayName = "#CTL_ToolInfoAction",
             iconInMenu = true)
     @ActionReferences({
-        @ActionReference(path = "Menu/File", position = 20),
-        @ActionReference(path = "Toolbars/File", position = 20),})
+        @ActionReference(path = "Menu/File", position = 10),
+        @ActionReference(path = "Toolbars/File", position = 10),})
     public static final String KEY = "ToolInfoAction";
 }
