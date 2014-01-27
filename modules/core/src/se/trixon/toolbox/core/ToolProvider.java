@@ -6,17 +6,17 @@ package se.trixon.toolbox.core;
  */
 public interface ToolProvider {
 
-    String getToolCategory();
+    String getCategory();
 
-    String getToolCopyright();
+    String getCopyright();
 
-    String getToolDescription();
+    String getDescription();
 
-    String getToolLicense();
+    String getLicense();
 
-    String getToolName();
+    String getName();
 
-    String getToolOptionsPath();
+    String getOptionsPath();
 
-    String getToolVersion();
+    String getVersion();
 }

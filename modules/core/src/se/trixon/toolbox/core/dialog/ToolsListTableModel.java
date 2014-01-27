@@ -36,17 +36,17 @@ public class ToolsListTableModel extends DefaultTableModel {
         ToolProvider toolProvider = (ToolProvider) dataVector.get(row);
         switch (column) {
             case COLUMN_NAME:
-                return toolProvider.getToolName();
+                return toolProvider.getName();
             case COLUMN_VERSION:
-                return toolProvider.getToolVersion();
+                return toolProvider.getVersion();
             case COLUMN_COPYRIGHT:
-                return toolProvider.getToolCopyright();
+                return toolProvider.getCopyright();
             case COLUMN_CATEGORY:
-                return toolProvider.getToolCategory();
+                return toolProvider.getCategory();
             case COLUMN_LICENSE:
-                return toolProvider.getToolLicense();
+                return toolProvider.getLicense();
             case COLUMN_DESCRIPTION:
-                return toolProvider.getToolDescription();
+                return toolProvider.getDescription();
             default:
                 return null;
         }

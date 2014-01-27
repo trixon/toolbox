@@ -1,6 +1,7 @@
 package se.trixon.toolbox.core.base;
 
 import java.awt.event.ActionEvent;
+import java.util.MissingResourceException;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import org.netbeans.api.options.OptionsDisplayer;
@@ -28,6 +29,34 @@ public abstract class ToolController implements ToolProvider {
         mActionMap = toolTopComponent.getActionMap();
 
         init();
+    }
+
+    @Override
+    public String getCategory() {
+        return getResource("OpenIDE-Module-Display-Category");
+    }
+
+    @Override
+    public String getDescription() {
+        return getResource("OpenIDE-Module-Short-Description");
+    }
+
+    @Override
+    public String getName() {
+        return getResource("OpenIDE-Module-Name");
+    }
+
+    @Override
+    public String getOptionsPath() {
+        return null;
+    }
+
+    public String getResource(String key) {
+        try {
+            return NbBundle.getMessage(this.getClass(), key);
+        } catch (MissingResourceException e) {
+            return "";
+        }
     }
 
     public ToolTopComponent getToolTopComponent() {
@@ -65,11 +94,11 @@ public abstract class ToolController implements ToolProvider {
 
     private void init() {
         setActiveInformation(true);
-        setActiveOptions(getToolOptionsPath() != null);
+        setActiveOptions(getOptionsPath() != null);
     }
 
     private void showDescription() {
-        String message = String.format("%s %s\n%s\n\n%s", getToolName(), getToolVersion(), getToolDescription(), getToolCopyright());
+        String message = String.format("%s %s\n%s\n\n%s", getName(), getVersion(), getDescription(), getCopyright());
 
         NotifyDescriptor notifyDescriptor = new NotifyDescriptor.Message(message, NotifyDescriptor.INFORMATION_MESSAGE);
         notifyDescriptor.setTitle(NbBundle.getMessage(ToolInfoAction.class, "CTL_ToolInfoAction"));
@@ -77,6 +106,6 @@ public abstract class ToolController implements ToolProvider {
     }
 
     private void showOptions() {
-        OptionsDisplayer.getDefault().open(getToolOptionsPath());
+        OptionsDisplayer.getDefault().open(getOptionsPath());
     }
 }

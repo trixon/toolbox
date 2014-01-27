@@ -2,49 +2,29 @@ package se.trixon.toolbox.core;
 
 import java.util.ResourceBundle;
 import org.openide.util.lookup.ServiceProvider;
+import se.trixon.toolbox.core.base.ToolController;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
 @ServiceProvider(service = ToolProvider.class)
-public class ToolboxInfo implements ToolProvider {
+public class ToolboxInfo extends ToolController {
 
     @Override
-    public String getToolCategory() {
-        return "Core";
-    }
-
-    @Override
-    public String getToolCopyright() {
+    public String getCopyright() {
         return "© 2014 Patrik Karlsson";
     }
 
     @Override
-    public String getToolDescription() {
-        return "Trixon Toolbox";
-    }
-
-    @Override
-    public String getToolLicense() {
+    public String getLicense() {
         return "Apache 2.0";
     }
 
     @Override
-    public String getToolName() {
-        return "Toolbox";
-    }
-
-    @Override
-    public String getToolOptionsPath() {
-        return null;
-    }
-
-    @Override
-    public String getToolVersion() {
+    public String getVersion() {
         String version = ResourceBundle.getBundle("se/trixon/toolbox/branding/about").getString("application.version");
 
         return version;
     }
-
 }
