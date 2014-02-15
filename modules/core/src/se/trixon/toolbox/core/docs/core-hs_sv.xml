@@ -20,19 +20,19 @@ limitations under the License.
     <title>toolbox.core Help</title>
     <maps>
         <homeID>se.trixon.toolbox.core.about</homeID>
-        <mapref location="en/core-map.xml"/>
+        <mapref location="sv/core-map.xml"/>
     </maps>
     <view mergetype="javax.help.AppendMerge">
         <name>TOC</name>
         <label>Table of Contents</label>
         <type>javax.help.TOCView</type>
-        <data>en/core-toc.xml</data>
+        <data>sv/core-toc.xml</data>
     </view>
     <view mergetype="javax.help.AppendMerge">
         <name>Index</name>
         <label>Index</label>
         <type>javax.help.IndexView</type>
-        <data>en/core-idx.xml</data>
+        <data>sv/core-idx.xml</data>
     </view>
     <view>
         <name>Search</name>
