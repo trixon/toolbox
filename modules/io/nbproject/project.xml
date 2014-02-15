@@ -6,7 +6,9 @@
             <code-name-base>se.trixon.toolbox.io</code-name-base>
             <suite-component/>
             <module-dependencies/>
-            <public-packages/>
+            <public-packages>
+                <package>se.trixon.toolbox.io.file.asc</package>
+            </public-packages>
         </data>
     </configuration>
 </project>
