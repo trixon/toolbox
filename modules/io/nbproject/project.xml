@@ -8,6 +8,7 @@
             <module-dependencies/>
             <public-packages>
                 <package>se.trixon.toolbox.io.file.asc</package>
+                <package>se.trixon.toolbox.io.pxy</package>
             </public-packages>
         </data>
     </configuration>
