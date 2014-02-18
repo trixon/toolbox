@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2014 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,26 +34,36 @@ import se.trixon.toolbox.io.Io;
  */
 public class Pxy {
 
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.pxy", "pxy");
-    }
-    private final Charset mCharset = Charset.forName("windows-1252");
+    private Charset mCharset = Charset.forName("windows-1252");
     private String mDate = "";
     private String mDescription = "";
     private String mIdText = "XYZ-COORD-FILE";
-    private List<PxyPoint> mPoints = new LinkedList<PxyPoint>();
+    private final List<PxyPoint> mPoints = new LinkedList<>();
     private BufferedReader mReader;
     private String mReserved1 = "";
     private String mReserved2 = "";
     private String mVersion = "V1.00";
     private BufferedWriter mWriter;
 
+    public static FileNameExtensionFilter getFileNameExtensionFilter() {
+        return new FileNameExtensionFilter("*.pxy", "pxy");
+    }
+
     public Pxy() {
         mDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
     }
 
+    public Pxy(Charset charset) {
+        this();
+        mCharset = charset;
+    }
+
     public void addPoint(PxyPoint pxyPoint) {
         mPoints.add(pxyPoint);
+    }
+
+    public void closeWriter() throws IOException {
+        mWriter.close();
     }
 
     public String getDate() {
@@ -78,6 +88,21 @@ public class Pxy {
 
     public String getVersion() {
         return mVersion;
+    }
+
+    public void openWriter(File file) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("%-16s,", mIdText));
+        builder.append(String.format("%-5s,", mVersion));
+        builder.append(String.format("%-10s,", mDate));
+        builder.append(String.format("%-40s", mReserved1));
+        builder.append(",\r\n");
+        builder.append(String.format("%-40s,", mDescription));
+        builder.append(String.format("%-33s", mReserved2));
+        builder.append(",\r\n");
+
+        mWriter = Files.newBufferedWriter(file.toPath(), mCharset);
+        mWriter.write(builder.toString());
     }
 
     public void read(File file) throws IOException {
@@ -126,25 +151,17 @@ public class Pxy {
         mVersion = Io.stripString(version, 5);
     }
 
+    public void write(PxyPoint pxyPoint) throws IOException {
+        mWriter.write(pxyPoint.toString());
+    }
+
     public void write(File file) throws IOException {
-        mWriter = Files.newBufferedWriter(file.toPath(), mCharset);
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%-16s,", mIdText));
-        builder.append(String.format("%-5s,", mVersion));
-        builder.append(String.format("%-10s,", mDate));
-        builder.append(String.format("%-40s", mReserved1));
-        builder.append(",\r\n");
-        builder.append(String.format("%-40s,", mDescription));
-        builder.append(String.format("%-33s", mReserved2));
-        builder.append(",\r\n");
-
-        mWriter.write(builder.toString());
+        openWriter(file);
 
         for (PxyPoint pxyPoint : mPoints) {
             mWriter.write(pxyPoint.toString());
         }
 
-        mWriter.close();
+        closeWriter();
     }
 }
