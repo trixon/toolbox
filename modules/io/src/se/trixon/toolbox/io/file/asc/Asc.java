@@ -33,6 +33,7 @@ public class Asc {
     private Charset mCharset = Charset.forName("US-ASCII");
     private Path mPath;
     private BufferedReader mReader;
+    private double[][] mData;
 
     public static FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter("*.asc", "asc");
@@ -44,6 +45,10 @@ public class Asc {
     public Asc(Charset charset) {
         this();
         mCharset = charset;
+    }
+
+    public double[][] getData() {
+        return mData;
     }
 
     public File getFile() {
@@ -74,6 +79,13 @@ public class Asc {
             mReader = Files.newBufferedReader(file.toPath(), mCharset);
             mAscHeader = new AscHeader(mReader);
             if (!quickRead) {
+                mData = new double[mAscHeader.getNcols()][mAscHeader.getNrows()];
+                for (int i = 0; i < mAscHeader.getNrows(); i++) {
+                    String[] rowData = mReader.readLine().split(" ");
+                    for (int j = 0; j < mAscHeader.getNcols(); j++) {
+                        mData[i][j] = Double.parseDouble(rowData[j]);
+                    }
+                }
             }
         } else {
             throw new IOException();
