@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.io.pxy;
+package se.trixon.toolbox.io.file.pxy;
 
 import java.util.Locale;
 import se.trixon.toolbox.io.Io;
