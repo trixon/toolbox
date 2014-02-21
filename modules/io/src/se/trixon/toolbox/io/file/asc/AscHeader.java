@@ -17,6 +17,7 @@ package se.trixon.toolbox.io.file.asc;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  *
@@ -34,12 +35,14 @@ public class AscHeader {
     private int mNcols = Integer.MIN_VALUE;
     private String mNodata;
     private int mNrows = Integer.MIN_VALUE;
+    private Path mPath;
     private final BufferedReader mReader;
     private double mXllcorner = Double.MIN_VALUE;
     private double mYllcorner = Double.MIN_VALUE;
 
-    public AscHeader(BufferedReader reader) throws IOException, NumberFormatException {
+    public AscHeader(BufferedReader reader, Path path) throws IOException, NumberFormatException {
         mReader = reader;
+        mPath = path;
 
         mNcols = Integer.parseInt(getValue(KEY_NCOLS, mReader.readLine()));
         mNrows = Integer.parseInt(getValue(KEY_NROWS, mReader.readLine()));
@@ -65,6 +68,10 @@ public class AscHeader {
         return mNrows;
     }
 
+    public Path getPath() {
+        return mPath;
+    }
+
     public double getXllcorner() {
         return mXllcorner;
     }
@@ -87,6 +94,10 @@ public class AscHeader {
 
     public void setNrows(int nrows) {
         mNrows = nrows;
+    }
+
+    public void setPath(Path path) {
+        mPath = path;
     }
 
     public void setXllcorner(double xllcorner) {

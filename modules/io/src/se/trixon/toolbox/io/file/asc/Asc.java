@@ -76,8 +76,9 @@ public class Asc {
         boolean quickRead = headerOnly.length > 0 && headerOnly[0] == true;
 
         if (file.isFile() && file.exists()) {
-            mReader = Files.newBufferedReader(file.toPath(), mCharset);
-            mAscHeader = new AscHeader(mReader);
+            mPath = file.toPath();
+            mReader = Files.newBufferedReader(mPath, mCharset);
+            mAscHeader = new AscHeader(mReader, mPath);
             if (!quickRead) {
                 mData = new double[mAscHeader.getNcols()][mAscHeader.getNrows()];
                 for (int i = 0; i < mAscHeader.getNrows(); i++) {
