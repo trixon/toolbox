@@ -9,6 +9,8 @@
             <public-packages>
                 <package>se.trixon.toolbox.io</package>
                 <package>se.trixon.toolbox.io.file.asc</package>
+                <package>se.trixon.toolbox.io.file.geo</package>
+                <package>se.trixon.toolbox.io.file.k</package>
                 <package>se.trixon.toolbox.io.file.pxy</package>
             </public-packages>
         </data>
