@@ -36,9 +36,12 @@ public class AscHeader {
     private double mNodata;
     private int mNrows = Integer.MIN_VALUE;
     private Path mPath;
-    private final BufferedReader mReader;
+    private BufferedReader mReader = null;
     private double mXllcorner = Double.MIN_VALUE;
     private double mYllcorner = Double.MIN_VALUE;
+
+    public AscHeader() {
+    }
 
     public AscHeader(BufferedReader reader, Path path) throws IOException, NumberFormatException {
         mReader = reader;
@@ -106,6 +109,11 @@ public class AscHeader {
 
     public void setYllcorner(double yllcorner) {
         mYllcorner = yllcorner;
+    }
+
+    @Override
+    public String toString() {
+        return "AscHeader{" + "mCellSize=" + mCellSize + ", mNcols=" + mNcols + ", mNodata=" + mNodata + ", mNrows=" + mNrows + ", mPath=" + mPath + ", mXllcorner=" + mXllcorner + ", mYllcorner=" + mYllcorner + '}';
     }
 
     private String getValue(String key, String line) {
