@@ -35,16 +35,17 @@ public class Asc {
     private Path mPath;
     private BufferedReader mReader;
 
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.asc", "asc");
-    }
-
     public Asc() {
+        mAscHeader = new AscHeader();
     }
 
     public Asc(Charset charset) {
         this();
         mCharset = charset;
+    }
+
+    public static FileNameExtensionFilter getFileNameExtensionFilter() {
+        return new FileNameExtensionFilter("*.asc", "asc");
     }
 
     public double[][] getData() {
@@ -95,5 +96,9 @@ public class Asc {
 
     public void readHeader(File file) throws IOException, NumberFormatException {
         read(file, true);
+    }
+
+    public void setData(double[][] data) {
+        mData = data;
     }
 }
