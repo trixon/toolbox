@@ -31,7 +31,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Asc {
 
-    private AscHeader mAscHeader;
+    private AscHeader mHeader;
     private Charset mCharset = Charset.forName("US-ASCII");
     private double[][] mData;
     private Path mPath;
@@ -39,7 +39,7 @@ public class Asc {
     private BufferedWriter mWriter;
 
     public Asc() {
-        mAscHeader = new AscHeader();
+        mHeader = new AscHeader();
     }
 
     public Asc(Charset charset) {
@@ -64,7 +64,7 @@ public class Asc {
     }
 
     public AscHeader getHeader() {
-        return mAscHeader;
+        return mHeader;
     }
 
     public Path getPath() {
@@ -72,22 +72,22 @@ public class Asc {
     }
 
     public boolean isValid() {
-        return (mAscHeader != null
-                && mAscHeader.getNcols() > 0
-                && mAscHeader.getNrows() > 0
-                && mAscHeader.getCellSize() > Double.MIN_VALUE
-                && mAscHeader.getXllcorner() > Double.MIN_VALUE
-                && mAscHeader.getYllcorner() > Double.MIN_VALUE);
+        return (mHeader != null
+                && mHeader.getNcols() > 0
+                && mHeader.getNrows() > 0
+                && mHeader.getCellSize() > Double.MIN_VALUE
+                && mHeader.getXllcorner() > Double.MIN_VALUE
+                && mHeader.getYllcorner() > Double.MIN_VALUE);
     }
 
     public void openWriter(File file) throws IOException {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format(Locale.ENGLISH, "ncols %d\r\n", mAscHeader.getNcols()));
-        builder.append(String.format(Locale.ENGLISH, "nrows %d\r\n", mAscHeader.getNrows()));
-        builder.append(String.format(Locale.ENGLISH, "xllcorner %f\r\n", mAscHeader.getXllcorner()));
-        builder.append(String.format(Locale.ENGLISH, "yllcorner %f\r\n", mAscHeader.getYllcorner()));
-        builder.append(String.format(Locale.ENGLISH, "cellsize %f\r\n", mAscHeader.getCellSize()));
-        builder.append(String.format(Locale.ENGLISH, "nodata_value %f\r\n", mAscHeader.getNodata()));
+        builder.append(String.format(Locale.ENGLISH, "ncols %d\r\n", mHeader.getNcols()));
+        builder.append(String.format(Locale.ENGLISH, "nrows %d\r\n", mHeader.getNrows()));
+        builder.append(String.format(Locale.ENGLISH, "xllcorner %f\r\n", mHeader.getXllcorner()));
+        builder.append(String.format(Locale.ENGLISH, "yllcorner %f\r\n", mHeader.getYllcorner()));
+        builder.append(String.format(Locale.ENGLISH, "cellsize %f\r\n", mHeader.getCellSize()));
+        builder.append(String.format(Locale.ENGLISH, "nodata_value %f\r\n", mHeader.getNodata()));
 
         mWriter = Files.newBufferedWriter(file.toPath(), mCharset);
         mWriter.write(builder.toString());
@@ -99,12 +99,12 @@ public class Asc {
         if (file.isFile() && file.exists()) {
             mPath = file.toPath();
             mReader = Files.newBufferedReader(mPath, mCharset);
-            mAscHeader = new AscHeader(mReader, mPath);
+            mHeader = new AscHeader(mReader, mPath);
             if (!quickRead) {
-                mData = new double[mAscHeader.getNcols()][mAscHeader.getNrows()];
-                for (int i = 0; i < mAscHeader.getNrows(); i++) {
+                mData = new double[mHeader.getNcols()][mHeader.getNrows()];
+                for (int i = 0; i < mHeader.getNrows(); i++) {
                     String[] rowData = mReader.readLine().split(" ");
-                    for (int j = 0; j < mAscHeader.getNcols(); j++) {
+                    for (int j = 0; j < mHeader.getNcols(); j++) {
                         mData[i][j] = Double.parseDouble(rowData[j]);
                     }
                 }
