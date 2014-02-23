@@ -31,9 +31,9 @@ public class Asc {
 
     private AscHeader mAscHeader;
     private Charset mCharset = Charset.forName("US-ASCII");
+    private double[][] mData;
     private Path mPath;
     private BufferedReader mReader;
-    private double[][] mData;
 
     public static FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter("*.asc", "asc");
@@ -91,5 +91,9 @@ public class Asc {
         } else {
             throw new IOException();
         }
+    }
+
+    public void readHeader(File file) throws IOException, NumberFormatException {
+        read(file, true);
     }
 }
