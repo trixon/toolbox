@@ -16,11 +16,13 @@
 package se.trixon.toolbox.io.file.asc;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -34,6 +36,7 @@ public class Asc {
     private double[][] mData;
     private Path mPath;
     private BufferedReader mReader;
+    private BufferedWriter mWriter;
 
     public Asc() {
         mAscHeader = new AscHeader();
@@ -46,6 +49,10 @@ public class Asc {
 
     public static FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter("*.asc", "asc");
+    }
+
+    public void closeWriter() throws IOException {
+        mWriter.close();
     }
 
     public double[][] getData() {
@@ -71,6 +78,19 @@ public class Asc {
                 && mAscHeader.getCellSize() > Double.MIN_VALUE
                 && mAscHeader.getXllcorner() > Double.MIN_VALUE
                 && mAscHeader.getYllcorner() > Double.MIN_VALUE);
+    }
+
+    public void openWriter(File file) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format(Locale.ENGLISH, "ncols %d\r\n", mAscHeader.getNcols()));
+        builder.append(String.format(Locale.ENGLISH, "nrows %d\r\n", mAscHeader.getNrows()));
+        builder.append(String.format(Locale.ENGLISH, "xllcorner %f\r\n", mAscHeader.getXllcorner()));
+        builder.append(String.format(Locale.ENGLISH, "yllcorner %f\r\n", mAscHeader.getYllcorner()));
+        builder.append(String.format(Locale.ENGLISH, "cellsize %f\r\n", mAscHeader.getCellSize()));
+        builder.append(String.format(Locale.ENGLISH, "nodata_value %f\r\n", mAscHeader.getNodata()));
+
+        mWriter = Files.newBufferedWriter(file.toPath(), mCharset);
+        mWriter.write(builder.toString());
     }
 
     public void read(File file, boolean... headerOnly) throws IOException, NumberFormatException {
@@ -100,5 +120,22 @@ public class Asc {
 
     public void setData(double[][] data) {
         mData = data;
+    }
+
+    public void write(File file) throws IOException {
+        openWriter(file);
+
+        for (int row = 0; row < mData.length; row++) {
+            StringBuilder builder = new StringBuilder();
+
+            for (double value : mData[row]) {
+                builder.append(value).append(" ");
+            }
+
+            builder.deleteCharAt(builder.length() - 1);
+            builder.append("\r\n");
+            mWriter.write(builder.toString());
+        }
+        closeWriter();
     }
 }
