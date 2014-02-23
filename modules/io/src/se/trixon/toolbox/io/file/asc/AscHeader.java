@@ -33,7 +33,7 @@ public class AscHeader {
     public static final String KEY_YLLCORNER = "yllcorner";
     private double mCellSize = Double.MIN_VALUE;
     private int mNcols = Integer.MIN_VALUE;
-    private String mNodata;
+    private double mNodata;
     private int mNrows = Integer.MIN_VALUE;
     private Path mPath;
     private final BufferedReader mReader;
@@ -49,7 +49,7 @@ public class AscHeader {
         mXllcorner = Double.parseDouble(getValue(KEY_XLLCORNER, mReader.readLine()));
         mYllcorner = Double.parseDouble(getValue(KEY_YLLCORNER, mReader.readLine()));
         mCellSize = Double.parseDouble(getValue(KEY_CELL_SIZE, mReader.readLine()));
-        mNodata = getValue(KEY_NODATA, mReader.readLine());
+        mNodata = Double.parseDouble(getValue(KEY_NODATA, mReader.readLine()));
     }
 
     public double getCellSize() {
@@ -60,7 +60,7 @@ public class AscHeader {
         return mNcols;
     }
 
-    public String getNodata() {
+    public double getNodata() {
         return mNodata;
     }
 
@@ -88,7 +88,7 @@ public class AscHeader {
         mNcols = ncols;
     }
 
-    public void setNodata(String nodata) {
+    public void setNodata(double nodata) {
         mNodata = nodata;
     }
 
