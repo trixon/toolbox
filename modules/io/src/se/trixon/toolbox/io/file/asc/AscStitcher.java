@@ -126,11 +126,13 @@ public class AscStitcher {
         for (File file : mFiles) {
             Asc asc = new Asc();
             asc.read(file);
+            AscHeader header = asc.getHeader();
             double[][] fileData = asc.getData();
-            for (int row = 0; row < asc.getHeader().getNrows(); row++) {
-                for (int col = 0; col < asc.getHeader().getNcols(); col++) {
-                    int colOffset = (int) ((asc.getHeader().getXllcorner() - mMinX) / asc.getHeader().getCellSize());
-                    int rowOffset = (int) ((asc.getHeader().getYllcorner() - mMinY) / asc.getHeader().getCellSize());
+
+            for (int row = 0; row < header.getNrows(); row++) {
+                int rowOffset = (int) ((header.getYllcorner() - mMinY) / header.getCellSize());
+                for (int col = 0; col < header.getNcols(); col++) {
+                    int colOffset = (int) ((header.getXllcorner() - mMinX) / header.getCellSize());
                     mData[rowOffset + row][colOffset + col] = fileData[row][col];
                 }
             }
