@@ -101,11 +101,11 @@ public class Asc {
             mReader = Files.newBufferedReader(mPath, mCharset);
             mHeader = new AscHeader(mReader, mPath);
             if (!quickRead) {
-                mData = new double[mHeader.getNcols()][mHeader.getNrows()];
-                for (int i = 0; i < mHeader.getNrows(); i++) {
+                mData = new double[mHeader.getNrows()][mHeader.getNcols()];
+                for (int row = 0; row < mHeader.getNrows(); row++) {
                     String[] rowData = mReader.readLine().split(" ");
-                    for (int j = 0; j < mHeader.getNcols(); j++) {
-                        mData[i][j] = Double.parseDouble(rowData[j]);
+                    for (int col = 0; col < mHeader.getNcols(); col++) {
+                        mData[row][col] = Double.parseDouble(rowData[col]);
                     }
                 }
             }
