@@ -36,6 +36,7 @@ public class AscStitcher {
     private double mMaxY = Double.MIN_VALUE;
     private double mMinX = Double.MAX_VALUE;
     private double mMinY = Double.MAX_VALUE;
+    private double mCellSize;
     private int mRows;
 
     public boolean addFile(File file) {
@@ -54,18 +55,20 @@ public class AscStitcher {
         calcMinMaxXY();
 
         mAsc = new Asc();
+        AscHeader header = mAsc.getHeader();
         double noData = mAscs[0].getHeader().getNodata();
-        mAsc.getHeader().setCellSize(mAscs[0].getHeader().getCellSize());
-        mAsc.getHeader().setNodata(noData);
-        mAsc.getHeader().setXllcorner(mMinX);
-        mAsc.getHeader().setYllcorner(mMinY);
-        mAsc.getHeader().setNcols(mCols);
-        mAsc.getHeader().setNrows(mRows);
+        mCellSize = mAscs[0].getHeader().getCellSize();
+        header.setCellSize(mCellSize);
+        header.setNodata(noData);
+        header.setXllcorner(mMinX);
+        header.setYllcorner(mMinY);
+        header.setNcols(mCols);
+        header.setNrows(mRows);
 
         mData = new double[mRows][mCols];
         Arrays.fill(mData[0], noData);
 
-        for (int row = 1; row < mAsc.getHeader().getNrows(); row++) {
+        for (int row = 1; row < mRows; row++) {
             mData[row] = Arrays.copyOf(mData[0], mCols);
         }
 
@@ -126,14 +129,25 @@ public class AscStitcher {
         for (File file : mFiles) {
             Asc asc = new Asc();
             asc.read(file);
-            AscHeader header = asc.getHeader();
-            double[][] fileData = asc.getData();
+            AscHeader smallHeader = asc.getHeader();
+            double[][] smallData = asc.getData();
 
-            for (int row = 0; row < header.getNrows(); row++) {
-                int rowOffset = (int) ((header.getYllcorner() - mMinY) / header.getCellSize());
-                for (int col = 0; col < header.getNcols(); col++) {
-                    int colOffset = (int) ((header.getXllcorner() - mMinX) / header.getCellSize());
-                    mData[rowOffset + row][colOffset + col] = fileData[row][col];
+            System.err.println("mergeData");
+            System.err.println(file.getAbsoluteFile());
+            System.err.println("smallHeader.getYllcorner() " + smallHeader.getYllcorner());
+            System.err.println("mMinY " + mMinY);
+            double diff = smallHeader.getYllcorner() - mMinY;
+            System.err.println("smallHeader.getYllcorner()-mMinY " + diff);
+
+            int rowOffset = (int) ((smallHeader.getYllcorner() - mMinY) / mCellSize);
+            int colOffset = (int) ((smallHeader.getXllcorner() - mMinX) / mCellSize);
+//            int rowOffset = Math.abs((int) ((mMinY - smallHeader.getYllcorner()) / mCellSize));
+            rowOffset = Math.abs(rowOffset - 1250);
+            for (int row = 0; row < smallHeader.getNrows(); row++) {
+                System.err.println(String.format("rowOffset=%d, row=%d ", rowOffset, row));
+//                int rowOffset = (int) (mMaxY-(smallHeader.getYllcorner() ) / smallHeader.getCellSize());
+                for (int col = 0; col < smallHeader.getNcols(); col++) {
+                    mData[rowOffset + row][colOffset + col] = smallData[row][col];
                 }
             }
         }
