@@ -37,7 +37,9 @@ public class AscHeader {
     private int mNrows = Integer.MIN_VALUE;
     private Path mPath;
     private BufferedReader mReader = null;
+    private int mXPrecision;
     private double mXllcorner = Double.MIN_VALUE;
+    private int mYPrecision;
     private double mYllcorner = Double.MIN_VALUE;
 
     public AscHeader() {
@@ -49,10 +51,15 @@ public class AscHeader {
 
         mNcols = Integer.parseInt(getValue(KEY_NCOLS, mReader.readLine()));
         mNrows = Integer.parseInt(getValue(KEY_NROWS, mReader.readLine()));
-        mXllcorner = Double.parseDouble(getValue(KEY_XLLCORNER, mReader.readLine()));
-        mYllcorner = Double.parseDouble(getValue(KEY_YLLCORNER, mReader.readLine()));
+        String xll = mReader.readLine();
+        mXllcorner = Double.parseDouble(getValue(KEY_XLLCORNER, xll));
+        String yll = mReader.readLine();
+        mYllcorner = Double.parseDouble(getValue(KEY_YLLCORNER, yll));
         mCellSize = Double.parseDouble(getValue(KEY_CELL_SIZE, mReader.readLine()));
         mNodata = Double.parseDouble(getValue(KEY_NODATA, mReader.readLine()));
+
+        mXPrecision = getNumOfDecimals(xll);
+        mYPrecision = getNumOfDecimals(yll);
     }
 
     public double getCellSize() {
@@ -75,8 +82,20 @@ public class AscHeader {
         return mPath;
     }
 
+    public int getXPrecision() {
+        return mXPrecision;
+    }
+
+    public int getXYPrecision() {
+        return Math.min(mXPrecision, mYPrecision);
+    }
+
     public double getXllcorner() {
         return mXllcorner;
+    }
+
+    public int getYPrecision() {
+        return mYPrecision;
     }
 
     public double getYllcorner() {
@@ -114,6 +133,18 @@ public class AscHeader {
     @Override
     public String toString() {
         return "AscHeader{" + "mCellSize=" + mCellSize + ", mNcols=" + mNcols + ", mNodata=" + mNodata + ", mNrows=" + mNrows + ", mPath=" + mPath + ", mXllcorner=" + mXllcorner + ", mYllcorner=" + mYllcorner + '}';
+    }
+
+    private int getNumOfDecimals(String string) {
+        string = string.split(" ")[1];
+        int index = string.indexOf(".");
+        int numOfDecimals = 0;
+
+        if (index > -1) {
+            numOfDecimals = string.length() - index - 1;
+        }
+
+        return numOfDecimals;
     }
 
     private String getValue(String key, String line) {

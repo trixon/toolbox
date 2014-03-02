@@ -31,12 +31,19 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Asc {
 
-    private AscHeader mHeader;
     private Charset mCharset = Charset.forName("US-ASCII");
     private double[][] mData;
+
+    private AscHeader mHeader;
     private Path mPath;
     private BufferedReader mReader;
+    private int mValuePrecision = 8;
     private BufferedWriter mWriter;
+    private int mXYPrecision = 8;
+
+    public static FileNameExtensionFilter getFileNameExtensionFilter() {
+        return new FileNameExtensionFilter("*.asc", "asc");
+    }
 
     public Asc() {
         mHeader = new AscHeader();
@@ -45,10 +52,6 @@ public class Asc {
     public Asc(Charset charset) {
         this();
         mCharset = charset;
-    }
-
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.asc", "asc");
     }
 
     public void closeWriter() throws IOException {
@@ -71,6 +74,14 @@ public class Asc {
         return mPath;
     }
 
+    public int getValuePrecision() {
+        return mValuePrecision;
+    }
+
+    public int getXYPrecision() {
+        return mXYPrecision;
+    }
+
     public boolean isValid() {
         return (mHeader != null
                 && mHeader.getNcols() > 0
@@ -81,11 +92,13 @@ public class Asc {
     }
 
     public void openWriter(File file) throws IOException {
+        String llFormat = String.format(Locale.ENGLISH, "%%s %%.%df\r\n", mXYPrecision);
+
         StringBuilder builder = new StringBuilder();
         builder.append(String.format(Locale.ENGLISH, "ncols %d\r\n", mHeader.getNcols()));
         builder.append(String.format(Locale.ENGLISH, "nrows %d\r\n", mHeader.getNrows()));
-        builder.append(String.format(Locale.ENGLISH, "xllcorner %f\r\n", mHeader.getXllcorner()));
-        builder.append(String.format(Locale.ENGLISH, "yllcorner %f\r\n", mHeader.getYllcorner()));
+        builder.append(String.format(Locale.ENGLISH, llFormat, "xllcorner", mHeader.getXllcorner()));
+        builder.append(String.format(Locale.ENGLISH, llFormat, "yllcorner", mHeader.getYllcorner()));
         builder.append(String.format(Locale.ENGLISH, "cellsize %f\r\n", mHeader.getCellSize()));
         builder.append(String.format(Locale.ENGLISH, "nodata_value %f\r\n", mHeader.getNodata()));
 
@@ -122,14 +135,23 @@ public class Asc {
         mData = data;
     }
 
+    public void setValuePrecision(int valuePrecision) {
+        mValuePrecision = valuePrecision;
+    }
+
+    public void setXYPrecision(int XYPrecision) {
+        mXYPrecision = XYPrecision;
+    }
+
     public void write(File file) throws IOException {
         openWriter(file);
+        String format = String.format(Locale.ENGLISH, "%%.%df ", mValuePrecision);
 
         for (int row = 0; row < mData.length; row++) {
             StringBuilder builder = new StringBuilder();
 
             for (double value : mData[row]) {
-                builder.append(value).append(" ");
+                builder.append(String.format(Locale.ENGLISH, format, value));
             }
 
             builder.deleteCharAt(builder.length() - 1);
