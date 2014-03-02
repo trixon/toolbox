@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2014 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +24,7 @@ import se.trixon.toolbox.io.Io;
  */
 public class PxyPoint {
 
+    private static String sLineEnding;
     private String mPointCode = "";
     private String mPointId = "";
     private String mRemark = "";
@@ -51,6 +52,10 @@ public class PxyPoint {
         mY = y;
         mZ = z;
         setPointCode(pointCode);
+    }
+
+    public static void setLineEnding(String lineEnding) {
+        PxyPoint.sLineEnding = lineEnding;
     }
 
     public String getPointCode() {
@@ -122,7 +127,7 @@ public class PxyPoint {
         builder.append(" ");
         builder.append(String.format("%-2s", mSpecialCode));
         builder.append(String.format("%-12s", mRemark));
-        builder.append(",\r\n");
+        builder.append(",").append(sLineEnding);
 
         return builder.toString();
     }

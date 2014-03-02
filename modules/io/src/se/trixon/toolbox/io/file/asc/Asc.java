@@ -15,31 +15,22 @@
  */
 package se.trixon.toolbox.io.file.asc;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Locale;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import se.trixon.toolbox.io.file.CoordinateFile;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public class Asc {
+public class Asc extends CoordinateFile {
 
-    private Charset mCharset = Charset.forName("US-ASCII");
     private double[][] mData;
-
     private AscHeader mHeader;
-    private Path mPath;
-    private BufferedReader mReader;
-    private int mValuePrecision = 8;
-    private BufferedWriter mWriter;
-    private int mXYPrecision = 8;
 
     public static FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter("*.asc", "asc");
@@ -54,32 +45,12 @@ public class Asc {
         mCharset = charset;
     }
 
-    public void closeWriter() throws IOException {
-        mWriter.close();
-    }
-
     public double[][] getData() {
         return mData;
     }
 
-    public File getFile() {
-        return mPath.toFile();
-    }
-
     public AscHeader getHeader() {
         return mHeader;
-    }
-
-    public Path getPath() {
-        return mPath;
-    }
-
-    public int getValuePrecision() {
-        return mValuePrecision;
-    }
-
-    public int getXYPrecision() {
-        return mXYPrecision;
     }
 
     public boolean isValid() {
@@ -91,6 +62,7 @@ public class Asc {
                 && mHeader.getYllcorner() > Double.MIN_VALUE);
     }
 
+    @Override
     public void openWriter(File file) throws IOException {
         String llFormat = String.format(Locale.ENGLISH, "%%s %%.%df\r\n", mXYPrecision);
 
@@ -133,14 +105,6 @@ public class Asc {
 
     public void setData(double[][] data) {
         mData = data;
-    }
-
-    public void setValuePrecision(int valuePrecision) {
-        mValuePrecision = valuePrecision;
-    }
-
-    public void setXYPrecision(int XYPrecision) {
-        mXYPrecision = XYPrecision;
     }
 
     public void write(File file) throws IOException {

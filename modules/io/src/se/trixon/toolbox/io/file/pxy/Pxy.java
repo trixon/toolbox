@@ -15,8 +15,6 @@
  */
 package se.trixon.toolbox.io.file.pxy;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -27,23 +25,21 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import se.trixon.toolbox.io.Io;
+import se.trixon.toolbox.io.file.CoordinateFile;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public class Pxy {
+public class Pxy extends CoordinateFile {
 
-    private Charset mCharset = Charset.forName("windows-1252");
     private String mDate = "";
     private String mDescription = "";
     private String mIdText = "XYZ-COORD-FILE";
     private final List<PxyPoint> mPoints = new LinkedList<>();
-    private BufferedReader mReader;
     private String mReserved1 = "";
     private String mReserved2 = "";
     private String mVersion = "V1.00";
-    private BufferedWriter mWriter;
 
     public static FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter("*.pxy", "pxy");
@@ -51,6 +47,7 @@ public class Pxy {
 
     public Pxy() {
         mDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
+        PxyPoint.setLineEnding("\r\n");
     }
 
     public Pxy(Charset charset) {
@@ -60,10 +57,6 @@ public class Pxy {
 
     public void addPoint(PxyPoint pxyPoint) {
         mPoints.add(pxyPoint);
-    }
-
-    public void closeWriter() throws IOException {
-        mWriter.close();
     }
 
     public String getDate() {
@@ -90,16 +83,17 @@ public class Pxy {
         return mVersion;
     }
 
+    @Override
     public void openWriter(File file) throws IOException {
         StringBuilder builder = new StringBuilder();
         builder.append(String.format("%-16s,", mIdText));
         builder.append(String.format("%-5s,", mVersion));
         builder.append(String.format("%-10s,", mDate));
         builder.append(String.format("%-40s", mReserved1));
-        builder.append(",\r\n");
+        builder.append(",").append(mLineEnding);
         builder.append(String.format("%-40s,", mDescription));
         builder.append(String.format("%-33s", mReserved2));
-        builder.append(",\r\n");
+        builder.append(",").append(mLineEnding);
 
         mWriter = Files.newBufferedWriter(file.toPath(), mCharset);
         mWriter.write(builder.toString());
@@ -137,6 +131,12 @@ public class Pxy {
 
     public void setIdText(String idText) {
         mIdText = Io.stripString(idText, 16);
+    }
+
+    @Override
+    public void setLineEnding(String lineEnding) {
+        super.setLineEnding(lineEnding);
+        PxyPoint.setLineEnding(lineEnding);
     }
 
     public void setReserved1(String reserved1) {
