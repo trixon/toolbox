@@ -24,14 +24,17 @@ import se.trixon.toolbox.io.Io;
  */
 public class PxyPoint {
 
+    private static final int MAX_DECIMALS = 4;
     private static String sLineEnding;
     private String mPointCode = "";
     private String mPointId = "";
     private String mRemark = "";
     private String mSpecialCode = "";
     private double mX;
+    private int mXYPrecision = 3;
     private double mY;
     private double mZ;
+    private int mZPrecision = 3;
 
     public PxyPoint() {
     }
@@ -78,12 +81,20 @@ public class PxyPoint {
         return mX;
     }
 
+    public int getXYPrecision() {
+        return mXYPrecision;
+    }
+
     public double getY() {
         return mY;
     }
 
     public double getZ() {
         return mZ;
+    }
+
+    public int getZPrecision() {
+        return mZPrecision;
     }
 
     public final void setPointCode(String pointCode) {
@@ -106,6 +117,10 @@ public class PxyPoint {
         mX = x;
     }
 
+    public void setXYPrecision(int xyPrecision) {
+        mXYPrecision = Math.min(xyPrecision, MAX_DECIMALS);
+    }
+
     public void setY(double y) {
         mY = y;
     }
@@ -114,14 +129,36 @@ public class PxyPoint {
         mZ = z;
     }
 
+    public void setZPrecision(int zPrecision) {
+        mZPrecision = Math.min(zPrecision, MAX_DECIMALS);
+    }
+
     @Override
     public String toString() {
+        int xyInt = mXYPrecision == 0 ? 1 : 0;
+        int zInt = mZPrecision == 0 ? 1 : 0;
+
+        int paddingXY = MAX_DECIMALS - mXYPrecision;
+        if (paddingXY == MAX_DECIMALS) {
+            paddingXY++;
+        }
+        String xyPadding = new String(new char[paddingXY]).replace("\0", " ");
+
+        int paddingZ = MAX_DECIMALS - mZPrecision;
+        if (paddingZ == MAX_DECIMALS) {
+            paddingZ++;
+        }
+        String zPadding = new String(new char[paddingZ]).replace("\0", " ");
+
+        String xyFormat = String.format(Locale.ENGLISH, "%%%d.%df", 12 - MAX_DECIMALS + mXYPrecision - xyInt, mXYPrecision);
+        String zFormat = String.format(Locale.ENGLISH, "%%%d.%df", 12 - MAX_DECIMALS + mZPrecision - zInt, mZPrecision);
+
         StringBuilder builder = new StringBuilder();
         builder.append(String.format("%-12s", mPointId));
         builder.append("  ");
-        builder.append(String.format(Locale.ENGLISH, "%12.4f", mX));
-        builder.append(String.format(Locale.ENGLISH, "%12.4f", mY));
-        builder.append(String.format(Locale.ENGLISH, "%12.4f", mZ));
+        builder.append(String.format(Locale.ENGLISH, xyFormat, mX)).append(xyPadding);
+        builder.append(String.format(Locale.ENGLISH, xyFormat, mY)).append(xyPadding);
+        builder.append(String.format(Locale.ENGLISH, zFormat, mZ)).append(zPadding);
         builder.append(" ");
         builder.append(String.format("%-8s", mPointCode));
         builder.append(" ");
