@@ -41,10 +41,6 @@ public class Pxy extends CoordinateFile {
     private String mReserved2 = "";
     private String mVersion = "V1.00";
 
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.pxy", "pxy");
-    }
-
     public Pxy() {
         mDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
         PxyPoint.setLineEnding("\r\n");
@@ -55,7 +51,17 @@ public class Pxy extends CoordinateFile {
         mCharset = charset;
     }
 
+    public static FileNameExtensionFilter getFileNameExtensionFilter() {
+        return new FileNameExtensionFilter("*.pxy", "pxy");
+    }
+
     public void addPoint(PxyPoint pxyPoint) {
+        if (mPoints.isEmpty()) {
+            mPath2D.moveTo(pxyPoint.getY(), pxyPoint.getX());
+        } else {
+            mPath2D.lineTo(pxyPoint.getY(), pxyPoint.getX());
+        }
+
         mPoints.add(pxyPoint);
     }
 
@@ -101,6 +107,7 @@ public class Pxy extends CoordinateFile {
 
     public void read(File file) throws IOException {
         mReader = Files.newBufferedReader(file.toPath(), mCharset);
+
         String line = mReader.readLine();
         setIdText(line.substring(0, 16));
         setVersion(line.substring(17, 22));
@@ -112,7 +119,15 @@ public class Pxy extends CoordinateFile {
         setReserved2(line.substring(41, 73));
 
         while ((line = mReader.readLine()) != null) {
-            mPoints.add(new PxyPoint(line));
+            PxyPoint pxyPoint = new PxyPoint(line);
+
+            if (mPoints.isEmpty()) {
+                mPath2D.moveTo(pxyPoint.getY(), pxyPoint.getX());
+            } else {
+                mPath2D.lineTo(pxyPoint.getY(), pxyPoint.getX());
+            }
+
+            mPoints.add(pxyPoint);
         }
 
         mReader.close();

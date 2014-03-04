@@ -15,6 +15,8 @@
  */
 package se.trixon.toolbox.io.file.asc;
 
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -32,10 +34,6 @@ public class Asc extends CoordinateFile {
     private double[][] mData;
     private AscHeader mHeader;
 
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.asc", "asc");
-    }
-
     public Asc() {
         mHeader = new AscHeader();
     }
@@ -45,12 +43,26 @@ public class Asc extends CoordinateFile {
         mCharset = charset;
     }
 
+    public static FileNameExtensionFilter getFileNameExtensionFilter() {
+        return new FileNameExtensionFilter("*.asc", "asc");
+    }
+
+    @Override
+    public Rectangle2D getBounds2D() {
+        return mHeader.getBounds2D();
+    }
+
     public double[][] getData() {
         return mData;
     }
 
     public AscHeader getHeader() {
         return mHeader;
+    }
+
+    @Override
+    public Path2D.Double getPath2D() {
+        return mHeader.getPath2D();
     }
 
     public boolean isValid() {

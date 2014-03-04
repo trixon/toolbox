@@ -15,6 +15,8 @@
  */
 package se.trixon.toolbox.io.file;
 
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,6 +34,7 @@ public abstract class CoordinateFile {
     protected Charset mCharset = Charset.forName("US-ASCII");
     protected String mLineEnding = "\r\n";
     protected Path mPath;
+    protected final Path2D.Double mPath2D = new Path2D.Double();
     protected BufferedReader mReader;
     protected int mValuePrecision = 8;
     protected BufferedWriter mWriter;
@@ -39,6 +42,10 @@ public abstract class CoordinateFile {
 
     public void closeWriter() throws IOException {
         mWriter.close();
+    }
+
+    public Rectangle2D getBounds2D() {
+        return mPath2D.getBounds2D();
     }
 
     public File getFile() {
@@ -51,6 +58,10 @@ public abstract class CoordinateFile {
 
     public Path getPath() {
         return mPath;
+    }
+
+    public Path2D.Double getPath2D() {
+        return mPath2D;
     }
 
     public int getValuePrecision() {

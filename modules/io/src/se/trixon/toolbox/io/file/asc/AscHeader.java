@@ -15,6 +15,8 @@
  */
 package se.trixon.toolbox.io.file.asc;
 
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -36,6 +38,7 @@ public class AscHeader {
     private double mNodata;
     private int mNrows = Integer.MIN_VALUE;
     private Path mPath;
+    private final Path2D.Double mPath2D = new Path2D.Double();
     private BufferedReader mReader = null;
     private int mXPrecision;
     private double mXllcorner = Double.MIN_VALUE;
@@ -60,6 +63,15 @@ public class AscHeader {
 
         mXPrecision = getNumOfDecimals(xll);
         mYPrecision = getNumOfDecimals(yll);
+
+        mPath2D.moveTo(mXllcorner, mYllcorner);
+        mPath2D.lineTo(mXllcorner + mCellSize * mNcols, mYllcorner);
+        mPath2D.lineTo(mXllcorner + mCellSize * mNcols, mYllcorner + mCellSize * mNrows);
+        mPath2D.lineTo(mXllcorner, mYllcorner + mCellSize * mNrows);
+    }
+
+    public Rectangle2D getBounds2D() {
+        return mPath2D.getBounds2D();
     }
 
     public double getCellSize() {
@@ -80,6 +92,10 @@ public class AscHeader {
 
     public Path getPath() {
         return mPath;
+    }
+
+    public Path2D.Double getPath2D() {
+        return mPath2D;
     }
 
     public int getXPrecision() {
