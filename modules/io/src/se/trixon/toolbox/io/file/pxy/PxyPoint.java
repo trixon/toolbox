@@ -17,12 +17,13 @@ package se.trixon.toolbox.io.file.pxy;
 
 import java.util.Locale;
 import se.trixon.toolbox.io.Io;
+import se.trixon.toolbox.io.file.CoordinatePoint;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public class PxyPoint {
+public class PxyPoint extends CoordinatePoint {
 
     private static final int MAX_DECIMALS = 4;
     private static String sLineEnding;
@@ -30,10 +31,7 @@ public class PxyPoint {
     private String mPointId = "";
     private String mRemark = "";
     private String mSpecialCode = "";
-    private double mX;
     private int mXYPrecision = 3;
-    private double mY;
-    private double mZ;
     private int mZPrecision = 3;
 
     public PxyPoint() {
@@ -77,20 +75,8 @@ public class PxyPoint {
         return mSpecialCode;
     }
 
-    public double getX() {
-        return mX;
-    }
-
     public int getXYPrecision() {
         return mXYPrecision;
-    }
-
-    public double getY() {
-        return mY;
-    }
-
-    public double getZ() {
-        return mZ;
     }
 
     public int getZPrecision() {
@@ -113,20 +99,8 @@ public class PxyPoint {
         mSpecialCode = Io.stripString(specialCode, 2);
     }
 
-    public void setX(double x) {
-        mX = x;
-    }
-
     public void setXYPrecision(int xyPrecision) {
         mXYPrecision = Math.min(xyPrecision, MAX_DECIMALS);
-    }
-
-    public void setY(double y) {
-        mY = y;
-    }
-
-    public void setZ(double z) {
-        mZ = z;
     }
 
     public void setZPrecision(int zPrecision) {
