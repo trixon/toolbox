@@ -17,53 +17,56 @@ package se.trixon.toolbox.io.file.geo;
 
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import se.trixon.toolbox.io.file.CoordinateFile;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public class Geo extends CoordinateFile {
+public class GeoLine {
 
     private List<GeoAttribute> mAttributes = new LinkedList<>();
-    private GeoHeader mHeader;
-    private List<GeoLine> mLines = new LinkedList<>();
+    private boolean mClosedPolygon = false;
+    private String mCode = "";
+    private String mLineNumber = "";
     private List<GeoPoint> mPoints = new LinkedList<>();
 
-    public Geo() {
-    }
-
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.geo", "geo");
+    public GeoLine() {
     }
 
     public List<GeoAttribute> getAttributes() {
         return mAttributes;
     }
 
-    public GeoHeader getHeader() {
-        return mHeader;
+    public String getCode() {
+        return mCode;
     }
 
-    public List<GeoLine> getLines() {
-        return mLines;
+    public String getLineNumber() {
+        return mLineNumber;
     }
 
     public List<GeoPoint> getPoints() {
         return mPoints;
     }
 
+    public boolean isClosedPolygon() {
+        return mClosedPolygon;
+    }
+
     public void setAttributes(List<GeoAttribute> attributes) {
         mAttributes = attributes;
     }
 
-    public void setHeader(GeoHeader header) {
-        mHeader = header;
+    public void setClosedPolygon(boolean closedPolygon) {
+        mClosedPolygon = closedPolygon;
     }
 
-    public void setLines(List<GeoLine> lines) {
-        mLines = lines;
+    public void setCode(String code) {
+        mCode = code;
+    }
+
+    public void setLineNumber(String lineNumber) {
+        mLineNumber = lineNumber;
     }
 
     public void setPoints(List<GeoPoint> points) {

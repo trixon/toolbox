@@ -17,56 +17,57 @@ package se.trixon.toolbox.io.file.geo;
 
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import se.trixon.toolbox.io.file.CoordinateFile;
+import se.trixon.toolbox.io.Io;
+import se.trixon.toolbox.io.file.CoordinatePoint;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public class Geo extends CoordinateFile {
+public class GeoPoint extends CoordinatePoint {
 
     private List<GeoAttribute> mAttributes = new LinkedList<>();
-    private GeoHeader mHeader;
-    private List<GeoLine> mLines = new LinkedList<>();
-    private List<GeoPoint> mPoints = new LinkedList<>();
+    private String mPointCode = "";
+    private String mPointId = "";
+    private String mRemark = "";
+    private String mSpecialCode = "";
 
-    public Geo() {
+    public GeoPoint() {
     }
 
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.geo", "geo");
+    public String getPointCode() {
+        return mPointCode;
     }
 
-    public List<GeoAttribute> getAttributes() {
-        return mAttributes;
+    public String getPointId() {
+        return mPointId;
     }
 
-    public GeoHeader getHeader() {
-        return mHeader;
+    public String getRemark() {
+        return mRemark;
     }
 
-    public List<GeoLine> getLines() {
-        return mLines;
-    }
-
-    public List<GeoPoint> getPoints() {
-        return mPoints;
+    public String getSpecialCode() {
+        return mSpecialCode;
     }
 
     public void setAttributes(List<GeoAttribute> attributes) {
         mAttributes = attributes;
     }
 
-    public void setHeader(GeoHeader header) {
-        mHeader = header;
+    public void setPointCode(String pointCode) {
+        mPointCode = Io.stripString(pointCode, 8);
     }
 
-    public void setLines(List<GeoLine> lines) {
-        mLines = lines;
+    public void setPointId(String pointId) {
+        mPointId = Io.stripString(pointId, 12);
     }
 
-    public void setPoints(List<GeoPoint> points) {
-        mPoints = points;
+    public void setRemark(String remark) {
+        mRemark = Io.stripString(remark, 12);
+    }
+
+    public void setSpecialCode(String specialCode) {
+        mSpecialCode = Io.stripString(specialCode, 2);
     }
 }
