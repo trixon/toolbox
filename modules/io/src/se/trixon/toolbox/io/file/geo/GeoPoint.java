@@ -17,6 +17,7 @@ package se.trixon.toolbox.io.file.geo;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import se.trixon.toolbox.io.Io;
 import se.trixon.toolbox.io.file.CoordinatePoint;
 
@@ -26,6 +27,7 @@ import se.trixon.toolbox.io.file.CoordinatePoint;
  */
 public class GeoPoint extends CoordinatePoint {
 
+    private static String sLineEnding = "\r\n";
     private List<GeoAttribute> mAttributes = new LinkedList<>();
     private String mPointCode = "";
     private String mPointId = "";
@@ -33,6 +35,29 @@ public class GeoPoint extends CoordinatePoint {
     private String mSpecialCode = "";
 
     public GeoPoint() {
+    }
+
+    public GeoPoint(String line) throws NumberFormatException {
+        String[] parts = line.trim().replace("\"", "").substring(5).split(",", -1);
+        setPointId(parts[0]);
+        mX = Double.parseDouble(parts[1]);
+        mY = Double.parseDouble(parts[2]);
+        mZ = Double.parseDouble(parts[3]);
+        setPointCode(parts[4]);
+        setSpecialCode(parts[5]);
+        setRemark(parts[6]);
+    }
+
+    public GeoPoint(String pointId, double x, double y, double z, String pointCode) {
+        setPointId(pointId);
+        mX = x;
+        mY = y;
+        mZ = z;
+        setPointCode(pointCode);
+    }
+
+    public static void setLineEnding(String lineEnding) {
+        GeoPoint.sLineEnding = lineEnding;
     }
 
     public String getPointCode() {
@@ -70,4 +95,21 @@ public class GeoPoint extends CoordinatePoint {
     public void setSpecialCode(String specialCode) {
         mSpecialCode = Io.stripString(specialCode, 2);
     }
+
+    @Override
+    public String toString() {
+//        Point "5647",60039.3739,3670.4064,0,"141",,
+        String line = String.format(Locale.ENGLISH, "\t\tPoint \"%s\",%f,%f,%f,\"%s\",\"%s\",\"%s\"%s",
+                getPointId(),
+                getX(),
+                getY(),
+                getZ(),
+                getPointCode(),
+                getSpecialCode(),
+                getRemark(),
+                sLineEnding);
+
+        return line;
+    }
+
 }
