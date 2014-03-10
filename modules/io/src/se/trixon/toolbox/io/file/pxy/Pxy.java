@@ -65,6 +65,10 @@ public class Pxy extends CoordinateFile {
         mPoints.add(pxyPoint);
     }
 
+    public void clear() {
+        mPoints.clear();
+    }
+
     public String getDate() {
         return mDate;
     }
@@ -75,6 +79,10 @@ public class Pxy extends CoordinateFile {
 
     public String getIdText() {
         return mIdText;
+    }
+
+    public List<PxyPoint> getPoints() {
+        return mPoints;
     }
 
     public String getReserved1() {
