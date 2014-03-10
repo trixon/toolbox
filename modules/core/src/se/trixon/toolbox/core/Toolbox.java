@@ -15,7 +15,9 @@
  */
 package se.trixon.toolbox.core;
 
+import java.awt.Frame;
 import org.openide.awt.StatusDisplayer;
+import org.openide.windows.WindowManager;
 
 /**
  *
@@ -24,6 +26,10 @@ import org.openide.awt.StatusDisplayer;
 public class Toolbox {
 
     public static final String LOG_TAG = "Toolbox";
+
+    public static Frame getFrame() {
+        return WindowManager.getDefault().getMainWindow();
+    }
 
     public static void setStatusText(String text, int importance) {
         StatusDisplayer.getDefault().setStatusText(text, importance);
