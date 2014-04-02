@@ -98,7 +98,6 @@
             <public-packages>
                 <package>se.trixon.toolbox.core</package>
                 <package>se.trixon.toolbox.core.base</package>
-                <package>se.trixon.toolbox.core.util</package>
             </public-packages>
         </data>
     </configuration>
