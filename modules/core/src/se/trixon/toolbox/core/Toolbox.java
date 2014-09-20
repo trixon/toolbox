@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2014 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,5 +33,9 @@ public class Toolbox {
 
     public static void setStatusText(String text, int importance) {
         StatusDisplayer.getDefault().setStatusText(text, importance);
+    }
+
+    public static void setStatusText(String text) {
+        setStatusText(text, StatusDisplayer.IMPORTANCE_ANNOTATION);
     }
 }
