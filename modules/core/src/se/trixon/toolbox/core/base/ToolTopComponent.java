@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2014 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.core.base;
-
-import org.openide.windows.TopComponent;
-
-/**
- *
- * @author Patrik Karlsson <patrik@trixon.se>
- */
-public abstract class ToolTopComponent extends TopComponent {
-
-    protected String mToolName;
-}
+package se.trixon.toolbox.core.base;
+
+import java.util.ResourceBundle;
+import org.openide.windows.TopComponent;
+
+/**
+ *
+ * @author Patrik Karlsson <patrik@trixon.se>
+ */
+public abstract class ToolTopComponent extends TopComponent {
+
+    protected ResourceBundle mBundle;
+    protected String mToolName;
+}
