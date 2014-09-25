@@ -29,6 +29,7 @@ import org.openide.util.Exceptions;
  */
 public class Launcher {
 
+    private boolean mDestroyedByUser;
     private final Set<Launchable> mLaunchables = new HashSet<>();
     private Process mProcess;
     private final ProcessBuilder mProcessBuilder = new ProcessBuilder(new String[]{"/home/pata/ticktock.sh"});
@@ -49,6 +50,7 @@ public class Launcher {
     }
 
     public void destroy() {
+        mDestroyedByUser = true;
         mProcess.destroy();
     }
 
@@ -61,6 +63,7 @@ public class Launcher {
     }
 
     public void launch() throws IOException, InterruptedException {
+        mDestroyedByUser = false;
         mProcess = mProcessBuilder.start();
 
         new Thread(new MessageProcessor(mProcess.getInputStream(), Mode.STD)).start();
@@ -69,7 +72,7 @@ public class Launcher {
         mProcess.waitFor();
 
         for (Launchable launchable : mLaunchables) {
-            launchable.launcherFinished(mProcess.exitValue());
+            launchable.launcherFinished(mProcess.exitValue(), mDestroyedByUser);
         }
     }
 
@@ -80,7 +83,7 @@ public class Launcher {
 
     public interface Launchable {
 
-        public void launcherFinished(int exitValue);
+        public void launcherFinished(int exitValue, boolean destroyedByUser);
 
         public void launcherMessage(String message, Mode mode);
     }
