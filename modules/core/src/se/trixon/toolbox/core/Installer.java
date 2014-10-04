@@ -35,6 +35,7 @@ public class Installer extends ModuleInstall {
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             @Override
             public void run() {
+//                ToolbarPool.getDefault().setConfiguration("ToolbarToolbox");
                 ResourceBundle bundle = ResourceBundle.getBundle("se/trixon/toolbox/core/about/about");
                 JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
                 mainFrame.setTitle(bundle.getString("application.title"));
