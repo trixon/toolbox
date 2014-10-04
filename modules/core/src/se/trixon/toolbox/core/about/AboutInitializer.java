@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2014 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.branding;
+package se.trixon.toolbox.core.about;
 
 import java.util.ResourceBundle;
 import org.openide.util.ImageUtilities;
@@ -26,8 +26,8 @@ import se.trixon.almond.about.AboutAction;
 public class AboutInitializer {
 
     public static void init() {
-        AboutAction.setAboutBundle(ResourceBundle.getBundle("se/trixon/toolbox/branding/about"));
-        AboutAction.setLicenseBundle(ResourceBundle.getBundle("se/trixon/toolbox/branding/license"));
-        AboutAction.setImageIcon(ImageUtilities.loadImageIcon("se/trixon/toolbox/branding/logo.png", false));
+        AboutAction.setAboutBundle(ResourceBundle.getBundle("se/trixon/toolbox/core/about/about"));
+        AboutAction.setLicenseBundle(ResourceBundle.getBundle("se/trixon/toolbox/core/about/license"));
+        AboutAction.setImageIcon(ImageUtilities.loadImageIcon("se/trixon/toolbox/core/about/logo.png", false));
     }
 }

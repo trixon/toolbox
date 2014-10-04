@@ -15,10 +15,13 @@
  */
 package se.trixon.toolbox.core;
 
+import java.util.ResourceBundle;
+import javax.swing.JFrame;
 import org.openide.modules.ModuleInstall;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import se.trixon.almond.Xlog;
+import se.trixon.toolbox.core.about.AboutInitializer;
 
 /**
  *
@@ -28,12 +31,16 @@ public class Installer extends ModuleInstall {
 
     @Override
     public void restored() {
-//        WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
-//            @Override
-//            public void run() {
+        AboutInitializer.init();
+        WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+            @Override
+            public void run() {
+                ResourceBundle bundle = ResourceBundle.getBundle("se/trixon/toolbox/core/about/about");
+                JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
+                mainFrame.setTitle(bundle.getString("application.title"));
 //                openWindow("output");
-//            }
-//        });
+            }
+        });
         Xlog.v(Toolbox.LOG_TAG, "Loaded and ready...");
     }
 
