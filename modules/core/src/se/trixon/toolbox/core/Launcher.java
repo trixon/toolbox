@@ -30,23 +30,23 @@ import org.openide.util.Exceptions;
 public class Launcher {
 
     private boolean mDestroyedByUser;
-    private final Set<Launchable> mLaunchables = new HashSet<>();
+    private final Set<LauncherListener> mLauncherListeners = new HashSet<>();
     private Process mProcess;
     private final ProcessBuilder mProcessBuilder = new ProcessBuilder(new String[]{"/home/pata/ticktock.sh"});
 
     public Launcher() {
     }
 
-    public Launcher(Launchable launchable) {
-        mLaunchables.add(launchable);
+    public Launcher(LauncherListener launcherListener) {
+        mLauncherListeners.add(launcherListener);
     }
 
-    public boolean addLaunchable(Launchable launchable) {
-        return mLaunchables.add(launchable);
+    public boolean addLauncherListener(LauncherListener launcherListener) {
+        return mLauncherListeners.add(launcherListener);
     }
 
     public void clearLaunchables() {
-        mLaunchables.clear();
+        mLauncherListeners.clear();
     }
 
     public void destroy() {
@@ -71,8 +71,8 @@ public class Launcher {
 
         mProcess.waitFor();
 
-        for (Launchable launchable : mLaunchables) {
-            launchable.launcherFinished(mProcess.exitValue(), mDestroyedByUser);
+        for (LauncherListener launcherListener : mLauncherListeners) {
+            launcherListener.onLauncherFinished(mProcess.exitValue(), mDestroyedByUser);
         }
     }
 
@@ -81,11 +81,14 @@ public class Launcher {
         ERR, STD;
     }
 
-    public interface Launchable {
+    public interface LauncherListener {
 
-        public void launcherFinished(int exitValue, boolean destroyedByUser);
+        public void launcherLog(String string);
 
-        public void launcherMessage(String message, Mode mode);
+        public void onLauncherFinished(int exitValue, boolean destroyedByUser);
+
+        public void onLauncherMessage(String message, Mode mode);
+
     }
 
     class MessageProcessor implements Runnable {
@@ -105,14 +108,14 @@ public class Launcher {
             try {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    for (Launchable launchable : mLaunchables) {
-                        launchable.launcherMessage(line, mMode);
+                    for (LauncherListener launcherListener : mLauncherListeners) {
+                        launcherListener.onLauncherMessage(line, mMode);
                     }
                 }
             } catch (IOException ex) {
                 Exceptions.printStackTrace(ex);
-                for (Launchable launchable : mLaunchables) {
-                    launchable.launcherMessage(ex.getLocalizedMessage(), Mode.ERR);
+                for (LauncherListener launcherListener : mLauncherListeners) {
+                    launcherListener.onLauncherMessage(ex.getLocalizedMessage(), Mode.ERR);
                 }
             }
         }
