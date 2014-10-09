@@ -21,6 +21,10 @@
                 <package>org.apache.commons.lang3.tuple</package>
             </public-packages>
             <class-path-extension>
+                <runtime-relative-path>ext/commons-lang3-3.3.2-javadoc.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-lang3-3.3.2-javadoc.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
                 <runtime-relative-path>ext/commons-lang3-3.3.2.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/commons-lang3-3.3.2.jar</binary-origin>
             </class-path-extension>
