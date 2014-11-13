@@ -24,6 +24,7 @@ import org.openide.windows.TopComponent;
  */
 public abstract class ToolTopComponent extends TopComponent {
 
+    protected static final int TOOLBAR_ICON_SIZE = 24;
     protected ResourceBundle mBundle;
     protected String mToolName;
 }
