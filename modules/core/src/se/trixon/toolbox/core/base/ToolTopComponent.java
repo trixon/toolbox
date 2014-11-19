@@ -16,7 +16,9 @@
 package se.trixon.toolbox.core.base;
 
 import java.util.ResourceBundle;
+import org.openide.awt.StatusDisplayer;
 import org.openide.windows.TopComponent;
+import se.trixon.toolbox.core.Toolbox;
 
 /**
  *
@@ -27,4 +29,18 @@ public abstract class ToolTopComponent extends TopComponent {
     protected static final int TOOLBAR_ICON_SIZE = 24;
     protected ResourceBundle mBundle;
     protected String mToolName;
+    private String mStatus = "";
+
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated();
+        mStatus = StatusDisplayer.getDefault().getStatusText();
+        Toolbox.setStatusText("");
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated();
+        Toolbox.setStatusText(mStatus);
+    }
 }
