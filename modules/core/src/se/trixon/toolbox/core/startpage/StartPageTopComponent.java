@@ -94,23 +94,21 @@ public final class StartPageTopComponent extends TopComponent {
     private void initInstalledTools() {
         Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
 
+        StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 14px }</style></head>");
         if (toolProviders.isEmpty()) {
-            installedToolsLabel.setVisible(false);
+            String header = NbBundle.getMessage(StartPageTopComponent.class, "noInstalledTools");
+            builder.append("<h2>").append(header).append("</h2>");
         } else {
+            String header = NbBundle.getMessage(StartPageTopComponent.class, "installedTools");
+            builder.append("<h2>").append(header).append("</h2>");
+
             ArrayList<String> tools = new ArrayList<>();
 
             for (ToolProvider provider : toolProviders) {
                 tools.add(String.format("%s (%s)", provider.getName(), provider.getDescription()));
             }
-            tools.add("ws (3)");
-            tools.add("aw (5)");
-            tools.add("fr (6)");
-            tools.add("rf (7)");
 
             Collections.sort(tools);
-            String header = NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.installedToolsLabel.text");
-            StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 14px }</style></head>");
-            builder.append("<h2>").append(header).append("</h2>");
             builder.append("<ul>");
 
             for (String tool : tools) {
@@ -118,9 +116,8 @@ public final class StartPageTopComponent extends TopComponent {
             }
 
             builder.append("</ul>");
-
-            installedToolsLabel.setText(builder.toString());
         }
+        installedToolsLabel.setText(builder.toString());
     }
 
     /**
@@ -160,7 +157,7 @@ public final class StartPageTopComponent extends TopComponent {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(installedToolsLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.installedToolsLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(installedToolsLabel, "Installed tools");
 
         org.openide.awt.Mnemonics.setLocalizedText(creditLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.creditLabel.text")); // NOI18N
 
@@ -210,9 +207,9 @@ public final class StartPageTopComponent extends TopComponent {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(welcomeLabel)
-                .addGap(48, 48, 48)
+                .addGap(32, 32, 32)
                 .addComponent(installedToolsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(copyrightLabel)
                     .addComponent(creditLabel))
