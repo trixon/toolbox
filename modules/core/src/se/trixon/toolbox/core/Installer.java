@@ -16,18 +16,27 @@
 package se.trixon.toolbox.core;
 
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import javax.swing.JFrame;
 import org.openide.modules.ModuleInstall;
+import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import se.trixon.almond.Xlog;
 import se.trixon.toolbox.core.about.AboutInitializer;
+import se.trixon.toolbox.core.startpage.StartPageTopComponent;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
 public class Installer extends ModuleInstall {
+
+    private final Preferences mPreferences;
+
+    public Installer() {
+        mPreferences = NbPreferences.forModule(StartPageTopComponent.class);
+    }
 
     @Override
     public void restored() {
@@ -40,6 +49,9 @@ public class Installer extends ModuleInstall {
                 JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
                 mainFrame.setTitle(bundle.getString("application.title"));
 //                openWindow("output");
+                if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
+                    openWindow("StartPageTopComponent");
+                }
             }
         });
         Xlog.v(Toolbox.LOG_TAG, "Loaded and ready...");
