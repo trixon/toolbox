@@ -24,14 +24,19 @@ import java.awt.RenderingHints;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.prefs.Preferences;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.util.NbBundle.Messages;
+import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import se.trixon.almond.about.AboutAction;
+import se.trixon.toolbox.core.ToolProvider;
 
 /**
  *
@@ -53,10 +58,6 @@ import se.trixon.almond.about.AboutAction;
         displayName = "#CTL_StartPageAction",
         preferredID = "StartPageTopComponent"
 )
-@Messages({
-    "CTL_StartPageAction=Start Page",
-    "CTL_StartPageTopComponent=Start Page"
-})
 public final class StartPageTopComponent extends TopComponent {
 
     public static final String KEY_SHOW_START_PAGE_ON_STARTUP = "showStartPageOnStartup";
@@ -65,9 +66,10 @@ public final class StartPageTopComponent extends TopComponent {
     public StartPageTopComponent() {
         mPreferences = NbPreferences.forModule(StartPageTopComponent.class);
         initComponents();
-        setName(Bundle.CTL_StartPageTopComponent());
-        headerLabel.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
-        copyrightLabel.setText(AboutAction.getAboutBundle().getString("application.copyright"));
+
+        setName(NbBundle.getMessage(StartPageTopComponent.class, "CTL_StartPageTopComponent"));
+        init();
+        initInstalledTools();
     }
 
     @Override
@@ -77,11 +79,48 @@ public final class StartPageTopComponent extends TopComponent {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         int w = getWidth();
         int h = getHeight();
-        Color upperColor = Color.RED;
+        Color upperColor = new Color(212, 0, 0);
         Color lowerColor = Color.WHITE;
         GradientPaint gp = new GradientPaint(0, 0, upperColor, 0, h, lowerColor);
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, w, h);
+    }
+
+    private void init() {
+        headerLabel.setFont(headerLabel.getFont().deriveFont(headerLabel.getFont().getStyle() | java.awt.Font.BOLD, 48));
+        copyrightLabel.setText(AboutAction.getAboutBundle().getString("application.copyright"));
+    }
+
+    private void initInstalledTools() {
+        Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
+
+        if (toolProviders.isEmpty()) {
+            installedToolsLabel.setVisible(false);
+        } else {
+            ArrayList<String> tools = new ArrayList<>();
+
+            for (ToolProvider provider : toolProviders) {
+                tools.add(String.format("%s (%s)", provider.getName(), provider.getDescription()));
+            }
+            tools.add("ws (3)");
+            tools.add("aw (5)");
+            tools.add("fr (6)");
+            tools.add("rf (7)");
+
+            Collections.sort(tools);
+            String header = NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.installedToolsLabel.text");
+            StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 14px }</style></head>");
+            builder.append("<h2>").append(header).append("</h2>");
+            builder.append("<ul>");
+
+            for (String tool : tools) {
+                builder.append("<li>").append(tool).append("</li>");
+            }
+
+            builder.append("</ul>");
+
+            installedToolsLabel.setText(builder.toString());
+        }
     }
 
     /**
@@ -94,12 +133,13 @@ public final class StartPageTopComponent extends TopComponent {
 
         headerLabel = new javax.swing.JLabel();
         startCheckBox = new javax.swing.JCheckBox();
-        playerManagerPanel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
+        installedToolsLabel = new javax.swing.JLabel();
+        creditLabel = new javax.swing.JLabel();
         copyrightLabel = new javax.swing.JLabel();
+        welcomeLabel = new javax.swing.JLabel();
 
-        headerLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        headerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/se/trixon/toolbox/core/startpage/logo.png"))); // NOI18N
+        headerLabel.setForeground(new java.awt.Color(62, 62, 62));
         org.openide.awt.Mnemonics.setLocalizedText(headerLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.headerLabel.text")); // NOI18N
         headerLabel.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         headerLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -110,7 +150,9 @@ public final class StartPageTopComponent extends TopComponent {
             }
         });
 
-        startCheckBox.setBackground(java.awt.Color.red);
+        startCheckBox.setBackground(new java.awt.Color(212, 0, 0));
+        startCheckBox.setFont(startCheckBox.getFont());
+        startCheckBox.setForeground(new java.awt.Color(62, 62, 62));
         org.openide.awt.Mnemonics.setLocalizedText(startCheckBox, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.startCheckBox.text")); // NOI18N
         startCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,53 +160,62 @@ public final class StartPageTopComponent extends TopComponent {
             }
         });
 
-        playerManagerPanel.setBackground(java.awt.Color.white);
-        playerManagerPanel.setPreferredSize(new java.awt.Dimension(0, 8));
+        org.openide.awt.Mnemonics.setLocalizedText(installedToolsLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.installedToolsLabel.text")); // NOI18N
 
-        javax.swing.GroupLayout playerManagerPanelLayout = new javax.swing.GroupLayout(playerManagerPanel);
-        playerManagerPanel.setLayout(playerManagerPanelLayout);
-        playerManagerPanelLayout.setHorizontalGroup(
-            playerManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        playerManagerPanelLayout.setVerticalGroup(
-            playerManagerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
+        org.openide.awt.Mnemonics.setLocalizedText(creditLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.creditLabel.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(copyrightLabel, "copyright"); // NOI18N
+
+        welcomeLabel.setFont(welcomeLabel.getFont().deriveFont(welcomeLabel.getFont().getStyle() | java.awt.Font.BOLD, welcomeLabel.getFont().getSize()+6));
+        welcomeLabel.setForeground(new java.awt.Color(62, 62, 62));
+        org.openide.awt.Mnemonics.setLocalizedText(welcomeLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.welcomeLabel.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(playerManagerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addComponent(headerLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                         .addComponent(startCheckBox))
-                    .addComponent(jSeparator1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(copyrightLabel)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(copyrightLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(creditLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(installedToolsLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jSeparator1))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startCheckBox)
                     .addComponent(headerLabel))
-                .addGap(27, 27, 27)
-                .addComponent(playerManagerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
-                .addComponent(copyrightLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(welcomeLabel)
+                .addGap(48, 48, 48)
+                .addComponent(installedToolsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(copyrightLabel)
+                    .addComponent(creditLabel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -185,10 +236,12 @@ public final class StartPageTopComponent extends TopComponent {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel copyrightLabel;
+    private javax.swing.JLabel creditLabel;
     private javax.swing.JLabel headerLabel;
+    private javax.swing.JLabel installedToolsLabel;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JPanel playerManagerPanel;
     private javax.swing.JCheckBox startCheckBox;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 
     @Override
