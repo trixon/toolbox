@@ -110,6 +110,7 @@ public final class StartPageTopComponent extends TopComponent {
             }
         });
 
+        startCheckBox.setBackground(java.awt.Color.red);
         org.openide.awt.Mnemonics.setLocalizedText(startCheckBox, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.startCheckBox.text")); // NOI18N
         startCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
