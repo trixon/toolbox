@@ -53,7 +53,7 @@ import se.trixon.toolbox.core.ToolProvider;
 )
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
 @ActionID(category = "Window", id = "se.trixon.toolbox.core.StartPageTopComponent")
-@ActionReference(path = "Menu/Help", position = 1300)
+@ActionReference(path = "Menu/Help", position = 1400)
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_StartPageAction",
         preferredID = "StartPageTopComponent"
@@ -94,7 +94,7 @@ public final class StartPageTopComponent extends TopComponent {
     private void initInstalledTools() {
         Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
 
-        StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 14px }</style></head>");
+        StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 12px }</style></head>");
         if (toolProviders.isEmpty()) {
             String header = NbBundle.getMessage(StartPageTopComponent.class, "noInstalledTools");
             builder.append("<h2>").append(header).append("</h2>");

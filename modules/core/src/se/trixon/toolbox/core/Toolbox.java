@@ -31,6 +31,10 @@ public class Toolbox {
         return WindowManager.getDefault().getMainWindow();
     }
 
+    public static void clearStatusText() {
+        setStatusText("");
+    }
+
     public static void setStatusText(String text, int importance) {
         StatusDisplayer.getDefault().setStatusText(text, importance);
     }
