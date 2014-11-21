@@ -35,7 +35,7 @@ public abstract class ToolTopComponent extends TopComponent {
     protected void componentDeactivated() {
         super.componentDeactivated();
         mStatus = StatusDisplayer.getDefault().getStatusText();
-        Toolbox.setStatusText("");
+        Toolbox.clearStatusText();
     }
 
     @Override
