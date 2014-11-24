@@ -16,8 +16,12 @@
 package se.trixon.toolbox.core.base;
 
 import java.util.ResourceBundle;
+import javax.swing.SwingUtilities;
 import org.openide.awt.StatusDisplayer;
+import org.openide.util.HelpCtx;
 import org.openide.windows.TopComponent;
+import se.trixon.almond.dialogs.Message;
+import se.trixon.almond.dictionary.Dict;
 import se.trixon.toolbox.core.Toolbox;
 
 /**
@@ -42,5 +46,19 @@ public abstract class ToolTopComponent extends TopComponent {
     protected void componentActivated() {
         super.componentActivated();
         Toolbox.setStatusText(mStatus);
+    }
+
+    protected void displayHelp(final String helpId) {
+
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (!new HelpCtx(helpId).display()) {
+                    Message.error(Dict.HELP_NOT_FOUND_TITLE.getString(), String.format(Dict.HELP_NOT_FOUND_MESSAGE.getString(), helpId));
+                }
+            }
+        });
     }
 }
