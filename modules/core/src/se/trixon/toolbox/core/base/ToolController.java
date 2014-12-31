@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2014 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ import se.trixon.toolbox.core.actions.ToolOptionsAction;
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public abstract class ToolController implements ToolProvider {
+public class ToolController implements ToolProvider {
 
     private ActionMap mActionMap;
     private ToolTopComponent mToolTopComponent;
@@ -48,17 +48,27 @@ public abstract class ToolController implements ToolProvider {
 
     @Override
     public String getCategory() {
-        return getResource("OpenIDE-Module-Display-Category");
+        return getResource("Tool-Category");
+    }
+
+    @Override
+    public String getCopyright() {
+        return getResource("Tool-Copyright");
     }
 
     @Override
     public String getDescription() {
-        return getResource("OpenIDE-Module-Short-Description");
+        return getResource("Tool-Description");
+    }
+
+    @Override
+    public String getLicense() {
+        return getResource("Tool-License");
     }
 
     @Override
     public String getName() {
-        return getResource("OpenIDE-Module-Name");
+        return getResource("Tool-Name");
     }
 
     @Override
@@ -76,6 +86,11 @@ public abstract class ToolController implements ToolProvider {
 
     public ToolTopComponent getToolTopComponent() {
         return mToolTopComponent;
+    }
+
+    @Override
+    public String getVersion() {
+        return getResource("Tool-Version");
     }
 
     protected void setActiveInformation(boolean state) {
