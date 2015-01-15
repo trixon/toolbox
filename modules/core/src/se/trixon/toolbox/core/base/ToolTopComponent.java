@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2015 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 import javax.swing.SwingUtilities;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.HelpCtx;
+import org.openide.windows.InputOutput;
 import org.openide.windows.TopComponent;
 import se.trixon.almond.dialogs.Message;
 import se.trixon.almond.dictionary.Dict;
@@ -32,14 +33,22 @@ public abstract class ToolTopComponent extends TopComponent {
 
     protected static final int TOOLBAR_ICON_SIZE = 24;
     protected ResourceBundle mBundle;
+    protected InputOutput mInputOutput;
     protected String mToolName;
+
     private String mStatus = "";
 
     @Override
-    protected void componentDeactivated() {
-        super.componentDeactivated();
-        mStatus = StatusDisplayer.getDefault().getStatusText();
-        Toolbox.clearStatusText();
+    public void componentClosed() {
+        super.componentClosed();
+        if (mInputOutput != null) {
+            mInputOutput.closeInputOutput();
+        }
+    }
+
+    @Override
+    public void componentOpened() {
+        super.componentOpened();
     }
 
     @Override
@@ -48,16 +57,18 @@ public abstract class ToolTopComponent extends TopComponent {
         Toolbox.setStatusText(mStatus);
     }
 
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated();
+        mStatus = StatusDisplayer.getDefault().getStatusText();
+        Toolbox.clearStatusText();
+    }
+
     protected void displayHelp(final String helpId) {
 
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                if (!new HelpCtx(helpId).display()) {
-                    Message.error(Dict.HELP_NOT_FOUND_TITLE.getString(), String.format(Dict.HELP_NOT_FOUND_MESSAGE.getString(), helpId));
-                }
+        SwingUtilities.invokeLater(() -> {
+            if (!new HelpCtx(helpId).display()) {
+                Message.error(Dict.HELP_NOT_FOUND_TITLE.getString(), String.format(Dict.HELP_NOT_FOUND_MESSAGE.getString(), helpId));
             }
         });
     }

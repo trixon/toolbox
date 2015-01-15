@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2015 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,19 +41,17 @@ public class Installer extends ModuleInstall {
     @Override
     public void restored() {
         AboutInitializer.init();
-        WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
-            @Override
-            public void run() {
-//                ToolbarPool.getDefault().setConfiguration("ToolbarToolbox");
-                ResourceBundle bundle = ResourceBundle.getBundle("se/trixon/toolbox/core/about/about");
-                JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
-                mainFrame.setTitle(bundle.getString("application.title"));
+        WindowManager.getDefault().invokeWhenUIReady(() -> {
+            //                ToolbarPool.getDefault().setConfiguration("ToolbarToolbox");
+            ResourceBundle bundle = ResourceBundle.getBundle("se/trixon/toolbox/core/about/about");
+            JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
+            mainFrame.setTitle(bundle.getString("application.title"));
 //                openWindow("output");
-                if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
-                    openWindow("StartPageTopComponent");
-                }
+            if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
+                openWindow("StartPageTopComponent");
             }
         });
+        Xlog.select();
         Xlog.v(Toolbox.LOG_TAG, "Loaded and ready...");
     }
 
