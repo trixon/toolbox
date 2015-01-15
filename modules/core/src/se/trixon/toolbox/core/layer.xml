@@ -56,15 +56,4 @@ limitations under the License.
         <file name="UndoRedo_hidden"/>
         <file name="ToolbarToolbox.xml" url="ToolbarToolbox.xml"/>
     </folder>
-    <folder name="Services">
-        <folder name="AutoupdateType">
-            <file name="se_trixon_toolbox_core_update_center.instance">
-                <attr name="displayName" bundlevalue="se.trixon.toolbox.core.Bundle#Services/AutoupdateType/trixon_toolbox_update_center.instance"/>
-                <attr name="enabled" boolvalue="true"/>
-                <attr name="instanceCreate" methodvalue="org.netbeans.modules.autoupdate.updateprovider.AutoupdateCatalogFactory.createUpdateProvider"/>
-                <attr name="instanceOf" stringvalue="org.netbeans.spi.autoupdate.UpdateProvider"/>
-                <attr name="url" bundlevalue="se.trixon.toolbox.core.Bundle#se_trixon_toolbox_update_center"/>
-            </file>
-        </folder>
-    </folder>
 </filesystem>
