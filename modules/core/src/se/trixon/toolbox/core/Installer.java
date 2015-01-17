@@ -50,8 +50,8 @@ public class Installer extends ModuleInstall {
             if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
                 openWindow("StartPageTopComponent");
             }
+            Xlog.select();
         });
-        Xlog.select();
         Xlog.v(Toolbox.LOG_TAG, "Loaded and ready...");
     }
 
