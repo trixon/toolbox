@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2015 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +24,8 @@ public interface ToolProvider {
     String getCategory();
 
     String getCopyright();
+
+    String getCredit();
 
     String getDescription();
 

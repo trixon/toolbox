@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2015 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,6 +54,11 @@ public class ToolController implements ToolProvider {
     @Override
     public String getCopyright() {
         return getResource("Tool-Copyright");
+    }
+
+    @Override
+    public String getCredit() {
+        return getResource("Tool-Credit");
     }
 
     @Override
@@ -128,9 +133,15 @@ public class ToolController implements ToolProvider {
     }
 
     private void showDescription() {
-        String message = String.format("%s %s\n%s\n\n%s", getName(), getVersion(), getDescription(), getCopyright());
+        StringBuilder builder = new StringBuilder();
+        builder.append(getName()).append(" ").append(getVersion()).append("\n");
+        builder.append(getDescription()).append("\n\n");
+        builder.append(getCopyright());
+        if (!getCredit().isEmpty()) {
+            builder.append("\n\n").append(getCredit());
+        }
 
-        NotifyDescriptor notifyDescriptor = new NotifyDescriptor.Message(message, NotifyDescriptor.INFORMATION_MESSAGE);
+        NotifyDescriptor notifyDescriptor = new NotifyDescriptor.Message(builder.toString(), NotifyDescriptor.INFORMATION_MESSAGE);
         notifyDescriptor.setTitle(NbBundle.getMessage(ToolInfoAction.class, "CTL_ToolInfoAction"));
         DialogDisplayer.getDefault().notify(notifyDescriptor);
     }
