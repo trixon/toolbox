@@ -17,6 +17,7 @@ package se.trixon.toolbox.core.base;
 
 import java.awt.event.ActionEvent;
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import org.netbeans.api.options.OptionsDisplayer;
@@ -26,12 +27,13 @@ import org.openide.util.NbBundle;
 import se.trixon.toolbox.core.ToolProvider;
 import se.trixon.toolbox.core.actions.ToolInfoAction;
 import se.trixon.toolbox.core.actions.ToolOptionsAction;
+import se.trixon.toolbox.core.news.NewsProvider;
 
 /**
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public class ToolController implements ToolProvider {
+public class ToolController implements ToolProvider, NewsProvider {
 
     private ActionMap mActionMap;
     private ToolTopComponent mToolTopComponent;
@@ -74,6 +76,11 @@ public class ToolController implements ToolProvider {
     @Override
     public String getName() {
         return getResource("Tool-Name");
+    }
+
+    @Override
+    public ResourceBundle getNewsBundle() {
+        return null;
     }
 
     @Override

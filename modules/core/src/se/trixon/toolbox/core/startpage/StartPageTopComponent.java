@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2015 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,7 +36,9 @@ import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import se.trixon.almond.about.AboutAction;
+import se.trixon.almond.dictionary.Dict;
 import se.trixon.toolbox.core.ToolProvider;
+import se.trixon.toolbox.core.news.NewsBuilder;
 
 /**
  *
@@ -70,6 +72,7 @@ public final class StartPageTopComponent extends TopComponent {
         setName(NbBundle.getMessage(StartPageTopComponent.class, "CTL_StartPageTopComponent"));
         init();
         initInstalledTools();
+        initNews();
     }
 
     @Override
@@ -89,12 +92,19 @@ public final class StartPageTopComponent extends TopComponent {
     private void init() {
         headerLabel.setFont(headerLabel.getFont().deriveFont(headerLabel.getFont().getStyle() | java.awt.Font.BOLD, 48));
         copyrightLabel.setText(AboutAction.getAboutBundle().getString("application.copyright"));
+
+        splitPanel.setBackground(TRANSPARENT);
+        toolsScrollPane.setBackground(TRANSPARENT);
+        toolsLabel.setBackground(TRANSPARENT);
+        newsScrollPane.setBackground(TRANSPARENT);
+        newsLabel.setBackground(TRANSPARENT);
     }
+    private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 
     private void initInstalledTools() {
         Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
-
         StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 12px }</style></head>");
+
         if (toolProviders.isEmpty()) {
             String header = NbBundle.getMessage(StartPageTopComponent.class, "noInstalledTools");
             builder.append("<h2>").append(header).append("</h2>");
@@ -117,7 +127,16 @@ public final class StartPageTopComponent extends TopComponent {
 
             builder.append("</ul>");
         }
-        installedToolsLabel.setText(builder.toString());
+
+        toolsLabel.setText(builder.toString());
+    }
+
+    private void initNews() {
+        StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 12px }</style></head>");
+        builder.append("<h2>").append(Dict.NEWS.getString()).append("</h2>");
+        builder.append(new NewsBuilder().getNews());
+
+        newsLabel.setText(builder.toString());
     }
 
     /**
@@ -131,10 +150,14 @@ public final class StartPageTopComponent extends TopComponent {
         headerLabel = new javax.swing.JLabel();
         startCheckBox = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
-        installedToolsLabel = new javax.swing.JLabel();
+        welcomeLabel = new javax.swing.JLabel();
+        splitPanel = new javax.swing.JPanel();
+        toolsScrollPane = new javax.swing.JScrollPane();
+        toolsLabel = new javax.swing.JLabel();
+        newsScrollPane = new javax.swing.JScrollPane();
+        newsLabel = new javax.swing.JLabel();
         creditLabel = new javax.swing.JLabel();
         copyrightLabel = new javax.swing.JLabel();
-        welcomeLabel = new javax.swing.JLabel();
 
         headerLabel.setForeground(new java.awt.Color(62, 62, 62));
         org.openide.awt.Mnemonics.setLocalizedText(headerLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.headerLabel.text")); // NOI18N
@@ -157,15 +180,36 @@ public final class StartPageTopComponent extends TopComponent {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(installedToolsLabel, "Installed tools");
+        welcomeLabel.setFont(welcomeLabel.getFont().deriveFont(welcomeLabel.getFont().getStyle() | java.awt.Font.BOLD, welcomeLabel.getFont().getSize()+6));
+        welcomeLabel.setForeground(new java.awt.Color(62, 62, 62));
+        org.openide.awt.Mnemonics.setLocalizedText(welcomeLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.welcomeLabel.text")); // NOI18N
+
+        splitPanel.setLayout(new java.awt.GridLayout(1, 0));
+
+        toolsScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 28, 0, 28));
+        toolsScrollPane.setOpaque(true);
+
+        org.openide.awt.Mnemonics.setLocalizedText(toolsLabel, "Installed tools");
+        toolsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        toolsLabel.setOpaque(true);
+        toolsScrollPane.setViewportView(toolsLabel);
+
+        splitPanel.add(toolsScrollPane);
+
+        newsScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 28, 0, 28));
+        newsScrollPane.setHorizontalScrollBar(null);
+        newsScrollPane.setOpaque(true);
+
+        org.openide.awt.Mnemonics.setLocalizedText(newsLabel, Dict.NEWS.getString());
+        newsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        newsLabel.setOpaque(true);
+        newsScrollPane.setViewportView(newsLabel);
+
+        splitPanel.add(newsScrollPane);
 
         org.openide.awt.Mnemonics.setLocalizedText(creditLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.creditLabel.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(copyrightLabel, "copyright"); // NOI18N
-
-        welcomeLabel.setFont(welcomeLabel.getFont().deriveFont(welcomeLabel.getFont().getStyle() | java.awt.Font.BOLD, welcomeLabel.getFont().getSize()+6));
-        welcomeLabel.setForeground(new java.awt.Color(62, 62, 62));
-        org.openide.awt.Mnemonics.setLocalizedText(welcomeLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.welcomeLabel.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -176,7 +220,7 @@ public final class StartPageTopComponent extends TopComponent {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(headerLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                         .addComponent(startCheckBox))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -184,16 +228,13 @@ public final class StartPageTopComponent extends TopComponent {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(creditLabel))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(installedToolsLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(splitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
-                                .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jSeparator1))))
+                                .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -207,9 +248,9 @@ public final class StartPageTopComponent extends TopComponent {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(welcomeLabel)
-                .addGap(32, 32, 32)
-                .addComponent(installedToolsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(splitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(copyrightLabel)
                     .addComponent(creditLabel))
@@ -235,9 +276,13 @@ public final class StartPageTopComponent extends TopComponent {
     private javax.swing.JLabel copyrightLabel;
     private javax.swing.JLabel creditLabel;
     private javax.swing.JLabel headerLabel;
-    private javax.swing.JLabel installedToolsLabel;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel newsLabel;
+    private javax.swing.JScrollPane newsScrollPane;
+    private javax.swing.JPanel splitPanel;
     private javax.swing.JCheckBox startCheckBox;
+    private javax.swing.JLabel toolsLabel;
+    private javax.swing.JScrollPane toolsScrollPane;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 
