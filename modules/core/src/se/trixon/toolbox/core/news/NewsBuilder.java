@@ -56,7 +56,7 @@ public class NewsBuilder {
         Collections.reverse(keys);
 
         keys.stream().forEach((key) -> {
-            builder.append("<h3>").append(key).append("</h3>");
+            builder.append("<h2>").append(key).append("</h2>");
             LinkedList<NewsItem> newsItems = mDateCollections.get((String) key);
             newsItems.sort((NewsItem o1, NewsItem o2) -> o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase()));
 

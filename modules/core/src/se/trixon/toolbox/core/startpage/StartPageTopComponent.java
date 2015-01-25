@@ -92,12 +92,6 @@ public final class StartPageTopComponent extends TopComponent {
     private void init() {
         headerLabel.setFont(headerLabel.getFont().deriveFont(headerLabel.getFont().getStyle() | java.awt.Font.BOLD, 48));
         copyrightLabel.setText(AboutAction.getAboutBundle().getString("application.copyright"));
-
-        splitPanel.setBackground(TRANSPARENT);
-        toolsScrollPane.setBackground(TRANSPARENT);
-        toolsLabel.setBackground(TRANSPARENT);
-        newsScrollPane.setBackground(TRANSPARENT);
-        newsLabel.setBackground(TRANSPARENT);
     }
     private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 
@@ -132,11 +126,13 @@ public final class StartPageTopComponent extends TopComponent {
     }
 
     private void initNews() {
-        StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 12px }</style></head>");
-        builder.append("<h2>").append(Dict.NEWS.getString()).append("</h2>");
+        StringBuilder builder = new StringBuilder("<html><head><style>body {margin-left: 16px; } li { font-size: 12px } h1 { font-size: 16px; color: red; margin-bottom: 0px; } h2 { font-size: 11px; margin-bottom: 0px; } p {margin-bottom: 4px;margin-top: 4px;}</style></head>");
+        builder.append("<h1>").append(Dict.NEWS.getString()).append("</h1>");
         builder.append(new NewsBuilder().getNews());
 
-        newsLabel.setText(builder.toString());
+        newsTextPane.setText(builder.toString());
+        newsTextPane.setCaretPosition(0);
+        newsScrollPane.getVerticalScrollBar().setValue(0);
     }
 
     /**
@@ -152,10 +148,12 @@ public final class StartPageTopComponent extends TopComponent {
         jSeparator1 = new javax.swing.JSeparator();
         welcomeLabel = new javax.swing.JLabel();
         splitPanel = new javax.swing.JPanel();
-        toolsScrollPane = new javax.swing.JScrollPane();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(32, 0), new java.awt.Dimension(32, 0), new java.awt.Dimension(32, 32767));
         toolsLabel = new javax.swing.JLabel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(64, 0), new java.awt.Dimension(64, 0), new java.awt.Dimension(64, 32767));
         newsScrollPane = new javax.swing.JScrollPane();
-        newsLabel = new javax.swing.JLabel();
+        newsTextPane = new javax.swing.JTextPane();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(32, 0), new java.awt.Dimension(32, 0), new java.awt.Dimension(32, 32767));
         creditLabel = new javax.swing.JLabel();
         copyrightLabel = new javax.swing.JLabel();
 
@@ -184,28 +182,27 @@ public final class StartPageTopComponent extends TopComponent {
         welcomeLabel.setForeground(new java.awt.Color(62, 62, 62));
         org.openide.awt.Mnemonics.setLocalizedText(welcomeLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.welcomeLabel.text")); // NOI18N
 
-        splitPanel.setLayout(new java.awt.GridLayout(1, 0));
-
-        toolsScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 28, 0, 28));
-        toolsScrollPane.setOpaque(true);
+        splitPanel.setOpaque(false);
+        splitPanel.setLayout(new javax.swing.BoxLayout(splitPanel, javax.swing.BoxLayout.LINE_AXIS));
+        splitPanel.add(filler1);
 
         org.openide.awt.Mnemonics.setLocalizedText(toolsLabel, "Installed tools");
         toolsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        toolsLabel.setOpaque(true);
-        toolsScrollPane.setViewportView(toolsLabel);
+        toolsLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
+        toolsLabel.setMinimumSize(new java.awt.Dimension(25, 25));
+        toolsLabel.setPreferredSize(new java.awt.Dimension(32767, 32767));
+        splitPanel.add(toolsLabel);
+        splitPanel.add(filler2);
 
-        splitPanel.add(toolsScrollPane);
+        newsScrollPane.setPreferredSize(new java.awt.Dimension(32767, 32767));
 
-        newsScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 28, 0, 28));
-        newsScrollPane.setHorizontalScrollBar(null);
-        newsScrollPane.setOpaque(true);
-
-        org.openide.awt.Mnemonics.setLocalizedText(newsLabel, Dict.NEWS.getString());
-        newsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        newsLabel.setOpaque(true);
-        newsScrollPane.setViewportView(newsLabel);
+        newsTextPane.setEditable(false);
+        newsTextPane.setContentType("text/html"); // NOI18N
+        newsTextPane.setMaximumSize(new java.awt.Dimension(32767, 32767));
+        newsScrollPane.setViewportView(newsTextPane);
 
         splitPanel.add(newsScrollPane);
+        splitPanel.add(filler3);
 
         org.openide.awt.Mnemonics.setLocalizedText(creditLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.creditLabel.text")); // NOI18N
 
@@ -220,22 +217,20 @@ public final class StartPageTopComponent extends TopComponent {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(headerLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                         .addComponent(startCheckBox))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(32, 32, 32)
                         .addComponent(copyrightLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(creditLabel))
+                        .addComponent(creditLabel)
+                        .addGap(32, 32, 32))
+                    .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(splitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(24, 24, 24)
+                        .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(splitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,14 +270,16 @@ public final class StartPageTopComponent extends TopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel copyrightLabel;
     private javax.swing.JLabel creditLabel;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel newsLabel;
     private javax.swing.JScrollPane newsScrollPane;
+    private javax.swing.JTextPane newsTextPane;
     private javax.swing.JPanel splitPanel;
     private javax.swing.JCheckBox startCheckBox;
     private javax.swing.JLabel toolsLabel;
-    private javax.swing.JScrollPane toolsScrollPane;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 
