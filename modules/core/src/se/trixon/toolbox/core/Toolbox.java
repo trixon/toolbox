@@ -16,6 +16,7 @@
 package se.trixon.toolbox.core;
 
 import java.awt.Frame;
+import java.text.DateFormat;
 import org.openide.awt.StatusDisplayer;
 import org.openide.windows.WindowManager;
 
@@ -33,6 +34,10 @@ public class Toolbox {
 
     public static void clearStatusText() {
         setStatusText("");
+    }
+
+    public static DateFormat getDefaultDateFormat() {
+        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
     }
 
     public static void setStatusText(String text, int importance) {
