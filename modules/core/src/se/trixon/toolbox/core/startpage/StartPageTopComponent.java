@@ -32,13 +32,17 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
+import se.trixon.almond.Xlog;
 import se.trixon.almond.about.AboutAction;
 import se.trixon.almond.dictionary.Dict;
 import se.trixon.toolbox.core.ToolProvider;
+import se.trixon.toolbox.core.Toolbox;
 import se.trixon.toolbox.core.news.NewsBuilder;
+import se.trixon.toolbox.core.news.NewsProvider;
 
 /**
  *
@@ -71,8 +75,8 @@ public final class StartPageTopComponent extends TopComponent {
 
         setName(NbBundle.getMessage(StartPageTopComponent.class, "CTL_StartPageTopComponent"));
         init();
-        initInstalledTools();
-        initNews();
+        updateTools();
+        updateNews();
     }
 
     @Override
@@ -92,10 +96,21 @@ public final class StartPageTopComponent extends TopComponent {
     private void init() {
         headerLabel.setFont(headerLabel.getFont().deriveFont(headerLabel.getFont().getStyle() | java.awt.Font.BOLD, 48));
         copyrightLabel.setText(AboutAction.getAboutBundle().getString("application.copyright"));
-    }
-    private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 
-    private void initInstalledTools() {
+        Lookup.Result<ToolProvider> toolsResult = Lookup.getDefault().lookupResult(ToolProvider.class);
+        toolsResult.addLookupListener((LookupEvent ev) -> {
+            updateTools();
+        });
+
+        Lookup.Result<NewsProvider> newsResult = Lookup.getDefault().lookupResult(NewsProvider.class);
+        newsResult.addLookupListener((LookupEvent ev) -> {
+            updateNews();
+        });
+    }
+
+    private void updateTools() {
+        Xlog.v(Toolbox.LOG_TAG, "updateTools()");
+        
         Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
         StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 12px }</style></head>");
 
@@ -125,7 +140,9 @@ public final class StartPageTopComponent extends TopComponent {
         toolsLabel.setText(builder.toString());
     }
 
-    private void initNews() {
+    private void updateNews() {
+        Xlog.v(Toolbox.LOG_TAG, "updateNews()");
+
         StringBuilder builder = new StringBuilder("<html><head><style>body {margin-left: 16px; } li { font-size: 12px } h1 { font-size: 16px; color: red; margin-bottom: 0px; } h2 { font-size: 11px; margin-bottom: 0px; } p {margin-bottom: 4px;margin-top: 4px;}</style></head>");
         builder.append("<h1>").append(Dict.NEWS.getString()).append("</h1>");
         builder.append(new NewsBuilder().getNews());
