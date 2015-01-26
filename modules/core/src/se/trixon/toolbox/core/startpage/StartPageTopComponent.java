@@ -143,7 +143,7 @@ public final class StartPageTopComponent extends TopComponent {
     private void updateNews() {
         Xlog.v(Toolbox.LOG_TAG, "updateNews()");
 
-        StringBuilder builder = new StringBuilder("<html><head><style>body {margin-left: 16px; } li { font-size: 12px } h1 { font-size: 16px; color: red; margin-bottom: 0px; } h2 { font-size: 11px; margin-bottom: 0px; } p {margin-bottom: 4px;margin-top: 4px;}</style></head>");
+        StringBuilder builder = new StringBuilder("<html><head><style>body {margin-left: 16px; } li { font-size: 12px } h1 { font-size: 16px; color: #D40000; margin-bottom: 0px; } h2 { font-size: 11px; margin-bottom: 0px; } p {margin-bottom: 4px;margin-top: 4px;}</style></head>");
         builder.append("<h1>").append(Dict.NEWS.getString()).append("</h1>");
         builder.append(new NewsBuilder().getNews());
 
