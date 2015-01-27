@@ -97,8 +97,8 @@ public final class StartPageTopComponent extends TopComponent {
         mCssBuilder = new StringBuilder("<html>");
         mCssBuilder.append("<head><style>");
         mCssBuilder.append("h1 { font-size: x-large; color: #D40000; margin-bottom: 0px; }");
-        mCssBuilder.append("h2 { font-size: large; margin-bottom: 0px; } ");
-        mCssBuilder.append("body {margin-left: 16px; font-size: medium; }");
+        mCssBuilder.append("h2 { font-size: large; margin-bottom: 0px; }");
+        mCssBuilder.append("body {margin-left: 16px; font-size: medium; background-color: #F5F5F5; }");
         mCssBuilder.append("p {margin-bottom: 4px;margin-top: 4px;}");
         mCssBuilder.append("ul { margin-left: 16px; }");
         mCssBuilder.append("li { }");
