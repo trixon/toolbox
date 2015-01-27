@@ -245,10 +245,10 @@ public final class StartPageTopComponent extends TopComponent {
                         .addComponent(copyrightLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(creditLabel)
-                        .addGap(32, 32, 32))
-                    .addComponent(jSeparator1))
+                        .addGap(32, 32, 32)))
                 .addContainerGap())
             .addComponent(splitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
