@@ -36,11 +36,9 @@ import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
-import se.trixon.almond.Xlog;
 import se.trixon.almond.about.AboutAction;
 import se.trixon.almond.dictionary.Dict;
 import se.trixon.toolbox.core.ToolProvider;
-import se.trixon.toolbox.core.Toolbox;
 import se.trixon.toolbox.core.news.NewsBuilder;
 import se.trixon.toolbox.core.news.NewsProvider;
 
@@ -68,6 +66,7 @@ public final class StartPageTopComponent extends TopComponent {
 
     public static final String KEY_SHOW_START_PAGE_ON_STARTUP = "showStartPageOnStartup";
     private final Preferences mPreferences;
+    private StringBuilder mCssBuilder;
 
     public StartPageTopComponent() {
         mPreferences = NbPreferences.forModule(StartPageTopComponent.class);
@@ -94,6 +93,16 @@ public final class StartPageTopComponent extends TopComponent {
     }
 
     private void init() {
+        mCssBuilder = new StringBuilder("<html>");
+        mCssBuilder.append("<head><style>");
+        mCssBuilder.append("h1 { font-size: x-large; color: #D40000; margin-bottom: 0px; }");
+        mCssBuilder.append("h2 { font-size: large; margin-bottom: 0px; } ");
+        mCssBuilder.append("body {margin-left: 16px; font-size: medium; }");
+        mCssBuilder.append("p {margin-bottom: 4px;margin-top: 4px;}");
+        mCssBuilder.append("ul { margin-left: 16px; }");
+        mCssBuilder.append("li { }");
+        mCssBuilder.append("</style></head>");
+
         headerLabel.setFont(headerLabel.getFont().deriveFont(headerLabel.getFont().getStyle() | java.awt.Font.BOLD, 48));
         copyrightLabel.setText(AboutAction.getAboutBundle().getString("application.copyright"));
 
@@ -108,48 +117,45 @@ public final class StartPageTopComponent extends TopComponent {
         });
     }
 
-    private void updateTools() {
-        Xlog.v(Toolbox.LOG_TAG, "updateTools()");
-        
-        Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
-        StringBuilder builder = new StringBuilder("<html><head><style>li { font-size: 12px }</style></head>");
-
-        if (toolProviders.isEmpty()) {
-            String header = NbBundle.getMessage(StartPageTopComponent.class, "noInstalledTools");
-            builder.append("<h2>").append(header).append("</h2>");
-        } else {
-            String header = NbBundle.getMessage(StartPageTopComponent.class, "installedTools");
-            builder.append("<h2>").append(header).append("</h2>");
-
-            ArrayList<String> tools = new ArrayList<>();
-
-            for (ToolProvider provider : toolProviders) {
-                tools.add(String.format("%s (%s)", provider.getName(), provider.getDescription()));
-            }
-
-            Collections.sort(tools);
-            builder.append("<ul>");
-
-            for (String tool : tools) {
-                builder.append("<li>").append(tool).append("</li>");
-            }
-
-            builder.append("</ul>");
-        }
-
-        toolsLabel.setText(builder.toString());
-    }
-
     private void updateNews() {
-        Xlog.v(Toolbox.LOG_TAG, "updateNews()");
-
-        StringBuilder builder = new StringBuilder("<html><head><style>body {margin-left: 16px; } li { font-size: 12px } h1 { font-size: 16px; color: #D40000; margin-bottom: 0px; } h2 { font-size: 11px; margin-bottom: 0px; } p {margin-bottom: 4px;margin-top: 4px;}</style></head>");
+        StringBuilder builder = new StringBuilder(mCssBuilder);
         builder.append("<h1>").append(Dict.NEWS.getString()).append("</h1>");
         builder.append(new NewsBuilder().getNews());
 
         newsTextPane.setText(builder.toString());
         newsTextPane.setCaretPosition(0);
         newsScrollPane.getVerticalScrollBar().setValue(0);
+    }
+
+    private void updateTools() {
+        Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
+        StringBuilder builder = new StringBuilder(mCssBuilder);
+
+        if (toolProviders.isEmpty()) {
+            String header = NbBundle.getMessage(StartPageTopComponent.class, "noInstalledTools");
+            builder.append("<h1>").append(header).append("</h1>");
+        } else {
+            String header = NbBundle.getMessage(StartPageTopComponent.class, "installedTools");
+            builder.append("<h1>").append(header).append("</h1>");
+
+            ArrayList<String> tools = new ArrayList<>();
+
+            toolProviders.stream().forEach((provider) -> {
+                tools.add(String.format("<li><strong>%s</strong> (%s)</li>", provider.getName(), provider.getDescription()));
+            });
+
+            Collections.sort(tools);
+
+            builder.append("<ul>");
+            tools.stream().forEach((tool) -> {
+                builder.append(tool);
+            });
+            builder.append("</ul>");
+        }
+
+        toolsTextPane.setText(builder.toString());
+        toolsTextPane.setCaretPosition(0);
+        toolsScrollPane.getVerticalScrollBar().setValue(0);
     }
 
     /**
@@ -163,10 +169,10 @@ public final class StartPageTopComponent extends TopComponent {
         headerLabel = new javax.swing.JLabel();
         startCheckBox = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
-        welcomeLabel = new javax.swing.JLabel();
         splitPanel = new javax.swing.JPanel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(32, 0), new java.awt.Dimension(32, 0), new java.awt.Dimension(32, 32767));
-        toolsLabel = new javax.swing.JLabel();
+        toolsScrollPane = new javax.swing.JScrollPane();
+        toolsTextPane = new javax.swing.JTextPane();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(64, 0), new java.awt.Dimension(64, 0), new java.awt.Dimension(64, 32767));
         newsScrollPane = new javax.swing.JScrollPane();
         newsTextPane = new javax.swing.JTextPane();
@@ -195,20 +201,17 @@ public final class StartPageTopComponent extends TopComponent {
             }
         });
 
-        welcomeLabel.setFont(welcomeLabel.getFont().deriveFont(welcomeLabel.getFont().getStyle() | java.awt.Font.BOLD, welcomeLabel.getFont().getSize()+6));
-        welcomeLabel.setForeground(new java.awt.Color(62, 62, 62));
-        org.openide.awt.Mnemonics.setLocalizedText(welcomeLabel, org.openide.util.NbBundle.getMessage(StartPageTopComponent.class, "StartPageTopComponent.welcomeLabel.text")); // NOI18N
-
         splitPanel.setOpaque(false);
         splitPanel.setLayout(new javax.swing.BoxLayout(splitPanel, javax.swing.BoxLayout.LINE_AXIS));
         splitPanel.add(filler1);
 
-        org.openide.awt.Mnemonics.setLocalizedText(toolsLabel, "Installed tools");
-        toolsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        toolsLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
-        toolsLabel.setMinimumSize(new java.awt.Dimension(25, 25));
-        toolsLabel.setPreferredSize(new java.awt.Dimension(32767, 32767));
-        splitPanel.add(toolsLabel);
+        toolsScrollPane.setPreferredSize(new java.awt.Dimension(32767, 32767));
+
+        toolsTextPane.setEditable(false);
+        toolsTextPane.setContentType("text/html"); // NOI18N
+        toolsScrollPane.setViewportView(toolsTextPane);
+
+        splitPanel.add(toolsScrollPane);
         splitPanel.add(filler2);
 
         newsScrollPane.setPreferredSize(new java.awt.Dimension(32767, 32767));
@@ -242,10 +245,7 @@ public final class StartPageTopComponent extends TopComponent {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(creditLabel)
                         .addGap(32, 32, 32))
-                    .addComponent(jSeparator1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jSeparator1))
                 .addContainerGap())
             .addComponent(splitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
@@ -258,10 +258,8 @@ public final class StartPageTopComponent extends TopComponent {
                     .addComponent(headerLabel))
                 .addGap(16, 16, 16)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(welcomeLabel)
                 .addGap(18, 18, 18)
-                .addComponent(splitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .addComponent(splitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(copyrightLabel)
@@ -296,8 +294,8 @@ public final class StartPageTopComponent extends TopComponent {
     private javax.swing.JTextPane newsTextPane;
     private javax.swing.JPanel splitPanel;
     private javax.swing.JCheckBox startCheckBox;
-    private javax.swing.JLabel toolsLabel;
-    private javax.swing.JLabel welcomeLabel;
+    private javax.swing.JScrollPane toolsScrollPane;
+    private javax.swing.JTextPane toolsTextPane;
     // End of variables declaration//GEN-END:variables
 
     @Override
