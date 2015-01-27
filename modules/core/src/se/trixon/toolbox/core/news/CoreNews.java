@@ -17,6 +17,7 @@ package se.trixon.toolbox.core.news;
 
 import java.util.ResourceBundle;
 import org.openide.util.lookup.ServiceProvider;
+import se.trixon.almond.SystemHelper;
 
 /**
  *
@@ -32,6 +33,6 @@ public class CoreNews implements NewsProvider {
 
     @Override
     public ResourceBundle getNewsBundle() {
-        return ResourceBundle.getBundle("se/trixon/toolbox/core/news/CoreNews");
+        return ResourceBundle.getBundle(SystemHelper.getPackageAsPath(this.getClass()) + "CoreNews");
     }
 }

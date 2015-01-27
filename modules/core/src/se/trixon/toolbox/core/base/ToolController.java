@@ -24,6 +24,7 @@ import org.netbeans.api.options.OptionsDisplayer;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.util.NbBundle;
+import se.trixon.almond.SystemHelper;
 import se.trixon.toolbox.core.ToolProvider;
 import se.trixon.toolbox.core.actions.ToolInfoAction;
 import se.trixon.toolbox.core.actions.ToolOptionsAction;
@@ -86,6 +87,10 @@ public class ToolController implements ToolProvider, NewsProvider {
     @Override
     public String getOptionsPath() {
         return null;
+    }
+
+    public String getPackageAsPath() {
+        return SystemHelper.getPackageAsPath(this.getClass());
     }
 
     public String getResource(String key) {
