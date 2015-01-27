@@ -36,6 +36,7 @@ import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
+import se.trixon.almond.Xlog;
 import se.trixon.almond.about.AboutAction;
 import se.trixon.almond.dictionary.Dict;
 import se.trixon.toolbox.core.ToolProvider;
@@ -273,13 +274,14 @@ public final class StartPageTopComponent extends TopComponent {
     }//GEN-LAST:event_startCheckBoxActionPerformed
 
     private void headerLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerLabelMouseClicked
-        try {
-            URI mUri = new URI(AboutAction.getAboutBundle().getString("application.uri"));
-            Desktop.getDesktop().browse(mUri);
-        } catch (IOException | URISyntaxException ex) {
-            System.err.println(ex);
+        if (Desktop.isDesktopSupported()) {
+            try {
+                URI mUri = new URI(AboutAction.getAboutBundle().getString("application.uri"));
+                Desktop.getDesktop().browse(mUri);
+            } catch (IOException | URISyntaxException | UnsupportedOperationException ex) {
+                Xlog.e(this.getClass(), ex.getLocalizedMessage());
+            }
         }
-
     }//GEN-LAST:event_headerLabelMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
