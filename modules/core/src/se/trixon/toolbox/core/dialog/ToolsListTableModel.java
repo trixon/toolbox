@@ -16,8 +16,10 @@
 package se.trixon.toolbox.core.dialog;
 
 import javax.swing.table.DefaultTableModel;
+import org.openide.util.NbBundle;
 import se.trixon.almond.dictionary.Dict;
 import se.trixon.toolbox.core.ToolProvider;
+import se.trixon.toolbox.core.Toolbox;
 
 /**
  *
@@ -25,7 +27,7 @@ import se.trixon.toolbox.core.ToolProvider;
  */
 public class ToolsListTableModel extends DefaultTableModel {
 
-    public static final int COLUMN_CATEGORY = 3;
+    public static final int COLUMN_MODULE = 3;
     public static final int COLUMN_COPYRIGHT = 4;
     public static final int COLUMN_DESCRIPTION = 1;
     public static final int COLUMN_LICENSE = 5;
@@ -36,7 +38,7 @@ public class ToolsListTableModel extends DefaultTableModel {
         columnIdentifiers.add(Dict.NAME.getString());
         columnIdentifiers.add(Dict.DESCRIPTION.getString());
         columnIdentifiers.add(Dict.VERSION.getString());
-        columnIdentifiers.add(Dict.CATEGORY.getString());
+        columnIdentifiers.add(NbBundle.getMessage(Toolbox.class, "toolModule"));
         columnIdentifiers.add(Dict.COPYRIGHT.getString());
         columnIdentifiers.add(Dict.LICENSE.getString());
     }
@@ -56,8 +58,8 @@ public class ToolsListTableModel extends DefaultTableModel {
                 return toolProvider.getVersion();
             case COLUMN_COPYRIGHT:
                 return toolProvider.getCopyright();
-            case COLUMN_CATEGORY:
-                return toolProvider.getCategory();
+            case COLUMN_MODULE:
+                return toolProvider.getModuleName();
             case COLUMN_LICENSE:
                 return toolProvider.getLicense();
             case COLUMN_DESCRIPTION:

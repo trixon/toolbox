@@ -15,7 +15,11 @@
  */
 package se.trixon.toolbox.core.dialog;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import javax.swing.DefaultRowSorter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.TableColumnModel;
 import org.openide.util.Lookup;
 import se.trixon.toolbox.core.ToolProvider;
@@ -40,15 +44,21 @@ public class ToolsListPanel extends javax.swing.JPanel {
         columnModel.getColumn(ToolsListTableModel.COLUMN_NAME).setPreferredWidth(100);
         columnModel.getColumn(ToolsListTableModel.COLUMN_DESCRIPTION).setPreferredWidth(100);
         columnModel.getColumn(ToolsListTableModel.COLUMN_VERSION).setPreferredWidth(10);
-        columnModel.getColumn(ToolsListTableModel.COLUMN_CATEGORY).setPreferredWidth(20);
+        columnModel.getColumn(ToolsListTableModel.COLUMN_MODULE).setPreferredWidth(100);
         columnModel.getColumn(ToolsListTableModel.COLUMN_COPYRIGHT).setPreferredWidth(100);
         columnModel.getColumn(ToolsListTableModel.COLUMN_LICENSE).setPreferredWidth(40);
 
         Collection<? extends ToolProvider> toolProviders = Lookup.getDefault().lookupAll(ToolProvider.class);
 
-        for (ToolProvider toolProvider : toolProviders) {
+        toolProviders.stream().forEach((toolProvider) -> {
             mListTableModel.addRow(toolProvider);
-        }
+        });
+
+        DefaultRowSorter rowSorter = ((DefaultRowSorter) table.getRowSorter());
+        ArrayList list = new ArrayList();
+        list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        rowSorter.setSortKeys(list);
+        rowSorter.sort();
     }
 
     /**

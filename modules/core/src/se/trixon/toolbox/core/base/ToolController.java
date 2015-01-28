@@ -23,6 +23,7 @@ import javax.swing.ActionMap;
 import org.netbeans.api.options.OptionsDisplayer;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
+import org.openide.modules.Modules;
 import org.openide.util.NbBundle;
 import se.trixon.almond.SystemHelper;
 import se.trixon.toolbox.core.ToolProvider;
@@ -72,6 +73,11 @@ public class ToolController implements ToolProvider, NewsProvider {
     @Override
     public String getLicense() {
         return getResource("Tool-License");
+    }
+
+    @Override
+    public String getModuleName() {
+        return Modules.getDefault().ownerOf(this.getClass()).getDisplayName();
     }
 
     @Override

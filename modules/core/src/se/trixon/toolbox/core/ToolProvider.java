@@ -31,6 +31,8 @@ public interface ToolProvider {
 
     String getLicense();
 
+    String getModuleName();
+
     String getName();
 
     String getOptionsPath();
