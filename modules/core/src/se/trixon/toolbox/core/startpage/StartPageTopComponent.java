@@ -142,7 +142,7 @@ public final class StartPageTopComponent extends TopComponent {
             ArrayList<String> tools = new ArrayList<>();
 
             toolProviders.stream().forEach((provider) -> {
-                tools.add(String.format("<li><strong>%s</strong> (%s)</li>", provider.getName(), provider.getDescription()));
+                tools.add(String.format("<li><strong>%s</strong> ‒ %s</li>", provider.getName(), provider.getDescription()));
             });
 
             Collections.sort(tools);
