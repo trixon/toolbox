@@ -31,6 +31,7 @@ import java.util.prefs.Preferences;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
@@ -77,6 +78,11 @@ public final class StartPageTopComponent extends TopComponent {
         init();
         updateTools();
         updateNews();
+    }
+
+    @Override
+    public HelpCtx getHelpCtx() {
+        return new HelpCtx("se.trixon.toolbox.core.about");
     }
 
     @Override
