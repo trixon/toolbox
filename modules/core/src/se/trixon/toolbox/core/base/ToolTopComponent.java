@@ -32,11 +32,12 @@ import se.trixon.toolbox.core.Toolbox;
 public abstract class ToolTopComponent extends TopComponent {
 
     protected static final int TOOLBAR_ICON_SIZE = 32;
+    private String mStatus = "";
     protected ResourceBundle mBundle;
     protected InputOutput mInputOutput;
-    protected String mToolName;
+    protected StringBuilder mLogBuilder;
 
-    private String mStatus = "";
+    protected String mToolName;
 
     @Override
     public void componentClosed() {
