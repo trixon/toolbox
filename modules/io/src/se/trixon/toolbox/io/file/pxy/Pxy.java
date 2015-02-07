@@ -18,6 +18,7 @@ package se.trixon.toolbox.io.file.pxy;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -113,7 +114,7 @@ public class Pxy extends CoordinateFile {
         mWriter.write(builder.toString());
     }
 
-    public void read(File file) throws IOException {
+    public void read(File file) throws IOException, NumberFormatException, StringIndexOutOfBoundsException, MalformedInputException {
         mReader = Files.newBufferedReader(file.toPath(), mCharset);
 
         String line = mReader.readLine();
