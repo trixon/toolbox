@@ -19,7 +19,9 @@ import java.util.ResourceBundle;
 import javax.swing.SwingUtilities;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.HelpCtx;
+import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
+import org.openide.windows.OutputWriter;
 import org.openide.windows.TopComponent;
 import se.trixon.almond.dialogs.Message;
 import se.trixon.almond.dictionary.Dict;
@@ -36,7 +38,6 @@ public abstract class ToolTopComponent extends TopComponent {
     protected ResourceBundle mBundle;
     protected InputOutput mInputOutput;
     protected StringBuilder mLogBuilder;
-
     protected String mToolName;
 
     @Override
@@ -72,5 +73,24 @@ public abstract class ToolTopComponent extends TopComponent {
                 Message.error(Dict.HELP_NOT_FOUND_TITLE.getString(), String.format(Dict.HELP_NOT_FOUND_MESSAGE.getString(), helpId));
             }
         });
+    }
+
+    protected void logAppend(String string) {
+        mLogBuilder.append(string).append("\n");
+
+        try (OutputWriter writer = mInputOutput.getOut()) {
+            writer.append(string + "\n");
+        }
+    }
+
+    protected void logClear() {
+        mLogBuilder = new StringBuilder();
+
+        if (mInputOutput != null) {
+            mInputOutput.closeInputOutput();
+        }
+
+        mInputOutput = IOProvider.getDefault().getIO(mToolName, false);
+        mInputOutput.select();
     }
 }
