@@ -29,7 +29,7 @@ import se.trixon.almond.SystemHelper;
 import se.trixon.toolbox.core.ToolProvider;
 import se.trixon.toolbox.core.actions.ToolInfoAction;
 import se.trixon.toolbox.core.actions.ToolOptionsAction;
-import se.trixon.toolbox.core.news.NewsProvider;
+import se.trixon.almond.news.NewsProvider;
 
 /**
  *

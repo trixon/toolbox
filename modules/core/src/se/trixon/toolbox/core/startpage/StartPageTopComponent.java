@@ -41,8 +41,8 @@ import se.trixon.almond.Xlog;
 import se.trixon.almond.about.AboutAction;
 import se.trixon.almond.dictionary.Dict;
 import se.trixon.toolbox.core.ToolProvider;
-import se.trixon.toolbox.core.news.NewsBuilder;
-import se.trixon.toolbox.core.news.NewsProvider;
+import se.trixon.almond.news.NewsBuilder;
+import se.trixon.almond.news.NewsProvider;
 
 /**
  *
