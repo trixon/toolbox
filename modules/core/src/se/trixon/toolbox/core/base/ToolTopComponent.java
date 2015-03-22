@@ -38,6 +38,7 @@ public abstract class ToolTopComponent extends TopComponent {
     protected ResourceBundle mBundle;
     protected InputOutput mInputOutput;
     protected StringBuilder mLogBuilder;
+    protected String mHelpId = null;
     protected String mToolName;
 
     @Override
