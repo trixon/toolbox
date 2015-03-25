@@ -7,6 +7,14 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
+                    <code-name-base>org.json.simple</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>1.1.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.netbeans.api.annotations.common</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -122,16 +130,10 @@
                 </dependency>
             </module-dependencies>
             <public-packages>
-                <package>org.json.simple</package>
-                <package>org.json.simple.parser</package>
                 <package>se.trixon.toolbox.core</package>
                 <package>se.trixon.toolbox.core.base</package>
                 <package>se.trixon.toolbox.core.news</package>
             </public-packages>
-            <class-path-extension>
-                <runtime-relative-path>ext/json-simple-1.1.1.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/json-simple-1.1.1.jar</binary-origin>
-            </class-path-extension>
         </data>
     </configuration>
 </project>
