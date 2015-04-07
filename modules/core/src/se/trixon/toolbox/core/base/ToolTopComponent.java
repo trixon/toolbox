@@ -41,6 +41,14 @@ public abstract class ToolTopComponent extends TopComponent {
     protected String mHelpId = null;
     protected String mToolName;
 
+    public void appendLog(String string) {
+        mLogBuilder.append(string).append("\n");
+
+        try (OutputWriter writer = mInputOutput.getOut()) {
+            writer.append(string + "\n");
+        }
+    }
+
     @Override
     public void componentClosed() {
         super.componentClosed();
