@@ -1,5 +1,5 @@
-/*
- * Copyright 2015 Patrik Karlsson.
+/* 
+ * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import se.trixon.almond.Xlog;
-import se.trixon.toolbox.core.about.AboutInitializer;
 import se.trixon.toolbox.core.startpage.StartPageTopComponent;
 
 /**
