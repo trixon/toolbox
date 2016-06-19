@@ -4,7 +4,7 @@
     <parent>
         <groupId>se.trixon.toolbox</groupId>
         <artifactId>toolbox-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.5.0-SNAPSHOT</version>
     </parent>
     <artifactId>toolbox-io</artifactId>
     <packaging>nbm</packaging>
