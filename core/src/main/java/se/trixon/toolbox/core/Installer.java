@@ -18,7 +18,7 @@ package se.trixon.toolbox.core;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 import javax.swing.JFrame;
-import org.openide.modules.ModuleInstall;
+import org.openide.modules.OnStart;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -29,7 +29,8 @@ import se.trixon.toolbox.core.startpage.StartPageTopComponent;
  *
  * @author Patrik Karlsson <patrik@trixon.se>
  */
-public class Installer extends ModuleInstall {
+@OnStart
+public class Installer implements Runnable {
 
     private final Preferences mPreferences;
 
@@ -38,7 +39,7 @@ public class Installer extends ModuleInstall {
     }
 
     @Override
-    public void restored() {
+    public void run() {
         WindowManager.getDefault().invokeWhenUIReady(() -> {
             ResourceBundle bundle = ResourceBundle.getBundle("se/trixon/toolbox/core/about/about");
             JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
