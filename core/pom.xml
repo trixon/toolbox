@@ -14,6 +14,13 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
+                <configuration>
+                    <publicPackages>
+                        <publicPackage>se.trixon.toolbox.core</publicPackage>
+                        <publicPackage>se.trixon.toolbox.core.base</publicPackage>
+                        <publicPackage>se.trixon.toolbox.core.news</publicPackage>
+                    </publicPackages>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
