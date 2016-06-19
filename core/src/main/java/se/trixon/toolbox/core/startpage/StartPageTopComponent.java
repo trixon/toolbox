@@ -37,12 +37,12 @@ import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
-import se.trixon.almond.Xlog;
-import se.trixon.almond.about.AboutAction;
-import se.trixon.almond.dictionary.Dict;
+import se.trixon.almond.nbp.Xlog;
+import se.trixon.almond.nbp.about.AboutAction;
+import se.trixon.almond.util.Dict;
 import se.trixon.toolbox.core.ToolProvider;
-import se.trixon.almond.news.NewsBuilder;
-import se.trixon.almond.news.NewsProvider;
+import se.trixon.almond.nbp.news.NewsBuilder;
+import se.trixon.almond.nbp.news.NewsProvider;
 
 /**
  *
@@ -58,7 +58,7 @@ import se.trixon.almond.news.NewsProvider;
         persistenceType = TopComponent.PERSISTENCE_NEVER
 )
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
-@ActionID(category = "Window", id = "se.trixon.toolbox.core.StartPageTopComponent")
+@ActionID(category = "Window", id = "se.trixon.toolbox.core.startpage.StartPageTopComponent")
 @ActionReference(path = "Menu/Help", position = 1400)
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_StartPageAction",

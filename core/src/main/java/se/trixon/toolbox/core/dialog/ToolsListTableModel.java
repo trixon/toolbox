@@ -17,7 +17,7 @@ package se.trixon.toolbox.core.dialog;
 
 import javax.swing.table.DefaultTableModel;
 import org.openide.util.NbBundle;
-import se.trixon.almond.dictionary.Dict;
+import se.trixon.almond.util.Dict;
 import se.trixon.toolbox.core.ToolProvider;
 import se.trixon.toolbox.core.Toolbox;
 

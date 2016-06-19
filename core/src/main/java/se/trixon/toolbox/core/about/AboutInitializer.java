@@ -18,7 +18,7 @@ package se.trixon.toolbox.core.about;
 import java.util.ResourceBundle;
 import org.openide.modules.OnStart;
 import org.openide.util.ImageUtilities;
-import se.trixon.almond.about.AboutAction;
+import se.trixon.almond.nbp.about.AboutAction;
 
 /**
  *

@@ -15,10 +15,10 @@
  */
 package se.trixon.toolbox.core.news;
 
-import se.trixon.almond.news.NewsProvider;
+import se.trixon.almond.nbp.news.NewsProvider;
 import java.util.ResourceBundle;
 import org.openide.util.lookup.ServiceProvider;
-import se.trixon.almond.SystemHelper;
+import se.trixon.almond.util.SystemHelper;
 
 /**
  *

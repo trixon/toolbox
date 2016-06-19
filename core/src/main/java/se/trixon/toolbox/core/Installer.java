@@ -22,7 +22,7 @@ import org.openide.modules.ModuleInstall;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-import se.trixon.almond.Xlog;
+import se.trixon.almond.nbp.Xlog;
 import se.trixon.toolbox.core.startpage.StartPageTopComponent;
 
 /**

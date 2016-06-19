@@ -23,8 +23,8 @@ import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 import org.openide.windows.OutputWriter;
 import org.openide.windows.TopComponent;
-import se.trixon.almond.dialogs.Message;
-import se.trixon.almond.dictionary.Dict;
+import se.trixon.almond.nbp.dialogs.Message;
+import se.trixon.almond.util.Dict;
 import se.trixon.toolbox.core.Toolbox;
 
 /**

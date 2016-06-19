@@ -52,6 +52,5 @@ public final class ToolListAction implements ActionListener {
         DialogDescriptor dialogDescriptor = new DialogDescriptor(toolsListPanel, title);
         dialogDescriptor.setOptions(options);
         DialogDisplayer.getDefault().notify(dialogDescriptor);
-
     }
 }
