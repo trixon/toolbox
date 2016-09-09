@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,8 +49,8 @@ public class Installer implements Runnable {
                 openWindow("StartPageTopComponent");
             }
             Xlog.select();
+            Xlog.v(Toolbox.LOG_TAG, "Loaded and ready...");
         });
-        Xlog.v(Toolbox.LOG_TAG, "Loaded and ready...");
     }
 
     private void openWindow(String id) {
