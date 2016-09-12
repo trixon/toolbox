@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,7 +79,7 @@ public abstract class ToolTopComponent extends TopComponent {
 
         SwingUtilities.invokeLater(() -> {
             if (!new HelpCtx(helpId).display()) {
-                Message.error(Dict.HELP_NOT_FOUND_TITLE.getString(), String.format(Dict.HELP_NOT_FOUND_MESSAGE.getString(), helpId));
+                Message.error(Dict.Dialog.TITLE_HELP_NOT_FOUND.toString(), String.format(Dict.Dialog.MESSAGE_HELP_NOT_FOUND.toString(), helpId));
             }
         });
     }
