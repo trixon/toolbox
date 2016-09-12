@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,6 +27,10 @@ public class PxyPoint extends CoordinatePoint {
 
     private static final int MAX_DECIMALS = 4;
     private static String sLineEnding;
+
+    public static void setLineEnding(String lineEnding) {
+        PxyPoint.sLineEnding = lineEnding;
+    }
     private String mPointCode = "";
     private String mPointId = "";
     private String mRemark = "";
@@ -53,10 +57,6 @@ public class PxyPoint extends CoordinatePoint {
         mY = y;
         mZ = z;
         setPointCode(pointCode);
-    }
-
-    public static void setLineEnding(String lineEnding) {
-        PxyPoint.sLineEnding = lineEnding;
     }
 
     public String getPointCode() {
@@ -116,13 +116,13 @@ public class PxyPoint extends CoordinatePoint {
         if (paddingXY == MAX_DECIMALS) {
             paddingXY++;
         }
-        String xyPadding = new String(new char[paddingXY]).replace("\0", " ");
+        String xyPadding = new String(new char[paddingXY]).replace("\\0", " ");
 
         int paddingZ = MAX_DECIMALS - mZPrecision;
         if (paddingZ == MAX_DECIMALS) {
             paddingZ++;
         }
-        String zPadding = new String(new char[paddingZ]).replace("\0", " ");
+        String zPadding = new String(new char[paddingZ]).replace("\\0", " ");
 
         String xyFormat = String.format(Locale.ENGLISH, "%%%d.%df", 12 - MAX_DECIMALS + mXYPrecision - xyInt, mXYPrecision);
         String zFormat = String.format(Locale.ENGLISH, "%%%d.%df", 12 - MAX_DECIMALS + mZPrecision - zInt, mZPrecision);

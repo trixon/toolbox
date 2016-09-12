@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,6 +65,11 @@ public class Geo extends CoordinateFile {
 
     public List<GeoPoint> getPoints() {
         return mPoints;
+    }
+
+    @Override
+    public boolean isValid(File file) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void setAttributes(List<GeoAttribute> attributes) {

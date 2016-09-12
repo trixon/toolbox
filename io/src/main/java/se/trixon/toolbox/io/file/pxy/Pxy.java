@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,6 +34,10 @@ import se.trixon.toolbox.io.file.CoordinateFile;
  */
 public class Pxy extends CoordinateFile {
 
+    public static FileNameExtensionFilter getFileNameExtensionFilter() {
+        return new FileNameExtensionFilter("*.pxy", "pxy");
+    }
+
     private String mDate = "";
     private String mDescription = "";
     private String mIdText = "XYZ-COORD-FILE";
@@ -50,10 +54,6 @@ public class Pxy extends CoordinateFile {
     public Pxy(Charset charset) {
         this();
         mCharset = charset;
-    }
-
-    public static FileNameExtensionFilter getFileNameExtensionFilter() {
-        return new FileNameExtensionFilter("*.pxy", "pxy");
     }
 
     public void addPoint(PxyPoint pxyPoint) {
@@ -96,6 +96,27 @@ public class Pxy extends CoordinateFile {
 
     public String getVersion() {
         return mVersion;
+    }
+
+    @Override
+    public boolean isValid(File file) {
+        boolean valid = false;
+        Pxy pxy = new Pxy();
+
+        try {
+            pxy.read(file);
+            valid = true;
+        } catch (IOException | NumberFormatException | StringIndexOutOfBoundsException ex) {
+            valid = false;
+        } finally {
+            try {
+                pxy.mReader.close();
+            } catch (IOException ex) {
+                // nvm
+            }
+        }
+
+        return valid;
     }
 
     @Override

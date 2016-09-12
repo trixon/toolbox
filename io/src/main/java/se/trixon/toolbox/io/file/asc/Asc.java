@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -72,6 +72,11 @@ public class Asc extends CoordinateFile {
                 && mHeader.getCellSize() > Double.MIN_VALUE
                 && mHeader.getXllcorner() > Double.MIN_VALUE
                 && mHeader.getYllcorner() > Double.MIN_VALUE);
+    }
+
+    @Override
+    public boolean isValid(File file) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -71,6 +71,8 @@ public abstract class CoordinateFile {
     public int getXYPrecision() {
         return mXYPrecision;
     }
+
+    public abstract boolean isValid(File file);
 
     public void openWriter(File file) throws IOException {
         mWriter = Files.newBufferedWriter(file.toPath(), mCharset);

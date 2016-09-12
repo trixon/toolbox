@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,6 +42,11 @@ public class Csv extends CoordinateFile {
     public Csv(Charset charset) {
         this();
         mCharset = charset;
+    }
+
+    @Override
+    public boolean isValid(File file) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void read(File file) throws IOException {
