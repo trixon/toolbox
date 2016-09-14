@@ -48,6 +48,10 @@ public abstract class CoordinateFile {
         return mPath2D.getBounds2D();
     }
 
+    public Charset getCharset() {
+        return mCharset;
+    }
+
     public File getFile() {
         return mPath.toFile();
     }
@@ -76,6 +80,10 @@ public abstract class CoordinateFile {
 
     public void openWriter(File file) throws IOException {
         mWriter = Files.newBufferedWriter(file.toPath(), mCharset);
+    }
+
+    public void setCharset(Charset charset) {
+        mCharset = charset;
     }
 
     public void setLineEnding(String lineEnding) {

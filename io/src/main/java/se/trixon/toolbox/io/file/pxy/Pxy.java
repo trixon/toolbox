@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.openide.util.Exceptions;
 import se.trixon.toolbox.io.Io;
 import se.trixon.toolbox.io.file.CoordinateFile;
 
@@ -101,16 +102,16 @@ public class Pxy extends CoordinateFile {
     @Override
     public boolean isValid(File file) {
         boolean valid = false;
-        Pxy pxy = new Pxy();
 
         try {
-            pxy.read(file);
+            read(file);
             valid = true;
         } catch (IOException | NumberFormatException | StringIndexOutOfBoundsException ex) {
             valid = false;
+            Exceptions.printStackTrace(ex);
         } finally {
             try {
-                pxy.mReader.close();
+                mReader.close();
             } catch (IOException ex) {
                 // nvm
             }
