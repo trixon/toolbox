@@ -23,7 +23,7 @@ import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 import org.openide.windows.OutputWriter;
 import org.openide.windows.TopComponent;
-import se.trixon.almond.nbp.dialogs.Message;
+import se.trixon.almond.nbp.dialogs.NbMessage;
 import se.trixon.almond.util.Dict;
 import se.trixon.toolbox.core.Toolbox;
 
@@ -79,7 +79,7 @@ public abstract class ToolTopComponent extends TopComponent {
 
         SwingUtilities.invokeLater(() -> {
             if (!new HelpCtx(helpId).display()) {
-                Message.error(Dict.Dialog.TITLE_HELP_NOT_FOUND.toString(), String.format(Dict.Dialog.MESSAGE_HELP_NOT_FOUND.toString(), helpId));
+                NbMessage.error(Dict.Dialog.TITLE_HELP_NOT_FOUND.toString(), String.format(Dict.Dialog.MESSAGE_HELP_NOT_FOUND.toString(), helpId));
             }
         });
     }
