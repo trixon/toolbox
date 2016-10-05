@@ -37,7 +37,7 @@ import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
-import se.trixon.almond.nbp.Xlog;
+import se.trixon.almond.nbp.NbLog;
 import se.trixon.almond.nbp.about.AboutAction;
 import se.trixon.almond.util.Dict;
 import se.trixon.toolbox.core.ToolProvider;
@@ -285,7 +285,7 @@ public final class StartPageTopComponent extends TopComponent {
                 URI mUri = new URI(AboutAction.getAboutBundle().getString("application.uri"));
                 Desktop.getDesktop().browse(mUri);
             } catch (IOException | URISyntaxException | UnsupportedOperationException ex) {
-                Xlog.e(this.getClass(), ex.getLocalizedMessage());
+                NbLog.e(this.getClass(), ex.getLocalizedMessage());
             }
         }
     }//GEN-LAST:event_headerLabelMouseClicked

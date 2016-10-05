@@ -22,7 +22,7 @@ import org.openide.modules.OnStart;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-import se.trixon.almond.nbp.Xlog;
+import se.trixon.almond.nbp.NbLog;
 import se.trixon.toolbox.core.startpage.StartPageTopComponent;
 
 /**
@@ -48,8 +48,8 @@ public class Installer implements Runnable {
             if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
                 openWindow("StartPageTopComponent");
             }
-            Xlog.select();
-            Xlog.v(Toolbox.LOG_TAG, "Loaded and ready...");
+            NbLog.select();
+            NbLog.v(Toolbox.LOG_TAG, "Loaded and ready...");
         });
     }
 
