@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,16 +31,15 @@ import se.trixon.toolbox.core.dialog.ToolsListPanel;
         category = "File",
         id = "se.trixon.toolbox.core.actions.ToolListAction"
 )
-@ActionRegistration(iconBase = "se/trixon/toolbox/core/res/format-list-ordered.png",
-        displayName = "#CTL_ToolListAction",
-        iconInMenu = true)
+@ActionRegistration(displayName = "#CTL_ToolListAction")
 @ActionReferences({
-    @ActionReference(path = "Menu/File", position = 30, separatorAfter = 31),
+    @ActionReference(path = "Menu/File", position = 30, separatorAfter = 31)
+    ,
     @ActionReference(path = "Toolbars/File", position = 30),})
 
 /**
  *
- * @author Patrik Karlsson <patrik@trixon.se>
+ * @author Patrik Karlsson
  */
 public final class ToolListAction implements ActionListener {
 

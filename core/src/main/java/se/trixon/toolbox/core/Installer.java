@@ -23,6 +23,8 @@ import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import se.trixon.almond.nbp.ActionHelper;
+import se.trixon.almond.nbp.Almond;
+import se.trixon.almond.nbp.InitIcons;
 import se.trixon.almond.nbp.NbLog;
 import se.trixon.almond.util.AlmondOptions;
 import se.trixon.almond.util.icons.IconColor;
@@ -53,9 +55,23 @@ public class Installer implements Runnable {
                 openWindow("StartPageTopComponent");
             }
 
+            InitIcons.run();
+
             IconColor iconColor = AlmondOptions.getInstance().getIconColor();
-            ActionHelper.setIconSmall("Actions/File", "se.trixon.almond.nbp.actions.QuitAction", MaterialIcon._Navigation.CLOSE.get(16, iconColor));
-            ActionHelper.setIconLarge("Actions/File", "se.trixon.almond.nbp.actions.QuitAction", MaterialIcon._Navigation.CLOSE.get(24, iconColor));
+            String category = "Actions/File";
+            String id = "se.trixon.toolbox.core.actions.ToolInfoAction";
+            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.INFO_OUTLINE.get(Almond.ICON_SMALL, iconColor));
+            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.INFO_OUTLINE.get(Almond.ICON_LARGE, iconColor));
+
+            id = "se.trixon.toolbox.core.actions.ToolListAction";
+            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.LIST.get(Almond.ICON_SMALL, iconColor));
+            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.LIST.get(Almond.ICON_LARGE, iconColor));
+
+            id = "se.trixon.toolbox.core.actions.ToolOptionsAction";
+            //TODO Will not set icon, Action does not exist at this time
+            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.SETTINGS.get(Almond.ICON_SMALL, iconColor));
+            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.SETTINGS.get(Almond.ICON_LARGE, iconColor));
+
             NbLog.select();
             NbLog.v(Toolbox.LOG_TAG, "Loaded and ready...");
         });

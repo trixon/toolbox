@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,17 +22,18 @@ import org.openide.awt.ActionRegistration;
 
 /**
  *
- * @author Patrik Karlsson <patrik@trixon.se>
+ * @author Patrik Karlsson
  */
 public class ToolInfoAction {
 
-    @ActionID(category = "file",
+    @ActionID(category = "File",
             id = "se.trixon.toolbox.core.actions.ToolInfoAction")
-    @ActionRegistration(iconBase = "se/trixon/toolbox/core/res/dialog-information.png",
-            displayName = "#CTL_ToolInfoAction",
-            iconInMenu = true)
+    @ActionRegistration(
+            displayName = "#CTL_ToolInfoAction"
+    )
     @ActionReferences({
-        @ActionReference(path = "Menu/File", position = 20),
+        @ActionReference(path = "Menu/File", position = 20)
+        ,
         @ActionReference(path = "Toolbars/File", position = 20),})
     public static final String KEY = "ToolInfoAction";
 }
