@@ -22,7 +22,11 @@ import org.openide.modules.OnStart;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
+import se.trixon.almond.nbp.ActionHelper;
 import se.trixon.almond.nbp.NbLog;
+import se.trixon.almond.util.AlmondOptions;
+import se.trixon.almond.util.icons.IconColor;
+import se.trixon.almond.util.icons.material.MaterialIcon;
 import se.trixon.toolbox.core.startpage.StartPageTopComponent;
 
 /**
@@ -48,6 +52,10 @@ public class Installer implements Runnable {
             if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
                 openWindow("StartPageTopComponent");
             }
+
+            IconColor iconColor = AlmondOptions.getInstance().getIconColor();
+            ActionHelper.setIconSmall("Actions/File", "se.trixon.almond.nbp.actions.QuitAction", MaterialIcon._Navigation.CLOSE.get(16, iconColor));
+            ActionHelper.setIconLarge("Actions/File", "se.trixon.almond.nbp.actions.QuitAction", MaterialIcon._Navigation.CLOSE.get(24, iconColor));
             NbLog.select();
             NbLog.v(Toolbox.LOG_TAG, "Loaded and ready...");
         });
