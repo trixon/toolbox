@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,7 +49,7 @@ public class Installer implements Runnable {
         WindowManager.getDefault().invokeWhenUIReady(() -> {
             ResourceBundle bundle = ResourceBundle.getBundle("se/trixon/toolbox/core/about/about");
             JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
-            mainFrame.setTitle(bundle.getString("application.title"));
+            mainFrame.setTitle(bundle.getString("app.name"));
 //                openWindow("output");
             if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
                 openWindow("StartPageTopComponent");

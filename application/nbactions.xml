@@ -16,4 +16,17 @@
                 <goal>nbm:build-installers</goal>
             </goals>
         </action>
+        <action>
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>nbm-application</packaging>
+            </packagings>
+            <goals>
+                <goal>nbm:cluster-app</goal>
+                <goal>nbm:run-platform</goal>
+            </goals>
+            <properties>
+                <locale>sv:se</locale>
+            </properties>
+        </action>
     </actions>

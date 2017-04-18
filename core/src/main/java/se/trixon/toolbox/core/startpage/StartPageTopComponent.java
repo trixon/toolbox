@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,11 +38,12 @@ import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.windows.TopComponent;
 import se.trixon.almond.nbp.NbLog;
-import se.trixon.almond.nbp.about.AboutAction;
-import se.trixon.almond.util.Dict;
-import se.trixon.toolbox.core.ToolProvider;
 import se.trixon.almond.nbp.news.NewsBuilder;
 import se.trixon.almond.nbp.news.NewsProvider;
+import se.trixon.almond.util.Dict;
+import se.trixon.almond.util.SystemHelper;
+import se.trixon.toolbox.core.ToolProvider;
+import se.trixon.toolbox.core.about.AboutInitializer;
 
 /**
  *
@@ -111,7 +112,7 @@ public final class StartPageTopComponent extends TopComponent {
         mCssBuilder.append("</style></head>");
 
         headerLabel.setFont(headerLabel.getFont().deriveFont(headerLabel.getFont().getStyle() | java.awt.Font.BOLD, 48));
-        copyrightLabel.setText(AboutAction.getAboutBundle().getString("application.copyright"));
+        copyrightLabel.setText(SystemHelper.getBundle(AboutInitializer.class, "about").getString("app.copyright"));
 
         Lookup.Result<ToolProvider> toolsResult = Lookup.getDefault().lookupResult(ToolProvider.class);
         toolsResult.addLookupListener((LookupEvent ev) -> {
@@ -282,7 +283,7 @@ public final class StartPageTopComponent extends TopComponent {
     private void headerLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerLabelMouseClicked
         if (Desktop.isDesktopSupported()) {
             try {
-                URI mUri = new URI(AboutAction.getAboutBundle().getString("application.uri"));
+                URI mUri = new URI(SystemHelper.getBundle(AboutInitializer.class, "about").getString("app.uri"));
                 Desktop.getDesktop().browse(mUri);
             } catch (IOException | URISyntaxException | UnsupportedOperationException ex) {
                 NbLog.e(this.getClass(), ex.getLocalizedMessage());

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +15,10 @@
  */
 package se.trixon.toolbox.core.about;
 
-import java.util.ResourceBundle;
 import org.openide.modules.OnStart;
-import org.openide.util.ImageUtilities;
 import se.trixon.almond.nbp.about.AboutAction;
+import se.trixon.almond.util.SystemHelper;
+import se.trixon.almond.util.swing.dialogs.about.AboutModel;
 
 /**
  *
@@ -29,8 +29,8 @@ public class AboutInitializer implements Runnable {
 
     @Override
     public void run() {
-        AboutAction.setAboutBundle(ResourceBundle.getBundle("se/trixon/toolbox/core/about/about"));
-        AboutAction.setLicenseBundle(ResourceBundle.getBundle("se/trixon/toolbox/core/about/license"));
-        AboutAction.setImageIcon(ImageUtilities.loadImageIcon("se/trixon/toolbox/core/about/logo.png", false));
+        AboutModel aboutModel = new AboutModel(SystemHelper.getBundle(getClass(), "about"),
+                SystemHelper.getResourceAsImageIcon(getClass(), "logo.png"));
+        AboutAction.setAboutModel(aboutModel);
     }
 }
