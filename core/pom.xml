@@ -4,7 +4,7 @@
     <parent>
         <groupId>se.trixon.toolbox</groupId>
         <artifactId>toolbox-parent</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.5.3-SNAPSHOT</version>
     </parent>
     <artifactId>toolbox-core</artifactId>
     <packaging>nbm</packaging>
@@ -16,10 +16,11 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
-                        <publicPackage>se.trixon.almond.*</publicPackage>
+                        <publicPackage>se.trixon.almond.nbp.*</publicPackage>
                         <publicPackage>se.trixon.toolbox.core</publicPackage>
                         <publicPackage>se.trixon.toolbox.core.base</publicPackage>
                         <publicPackage>se.trixon.toolbox.core.news</publicPackage>
+                        <publicPackage>org.apache.commons.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
