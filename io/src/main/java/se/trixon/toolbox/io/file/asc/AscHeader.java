@@ -23,7 +23,7 @@ import java.nio.file.Path;
 
 /**
  *
- * @author Patrik Karlsson <patrik@trixon.se>
+ * @author Patrik Karlsson
  */
 public class AscHeader {
 

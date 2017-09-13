@@ -23,7 +23,7 @@ import se.trixon.toolbox.io.file.CoordinatePoint;
 
 /**
  *
- * @author Patrik Karlsson <patrik@trixon.se>
+ * @author Patrik Karlsson
  */
 public class GeoPoint extends CoordinatePoint {
 

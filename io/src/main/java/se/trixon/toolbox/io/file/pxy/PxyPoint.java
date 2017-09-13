@@ -21,7 +21,7 @@ import se.trixon.toolbox.io.file.CoordinatePoint;
 
 /**
  *
- * @author Patrik Karlsson <patrik@trixon.se>
+ * @author Patrik Karlsson
  */
 public class PxyPoint extends CoordinatePoint {
 

@@ -17,7 +17,7 @@ package se.trixon.toolbox.io.file.geo;
 
 /**
  *
- * @author Patrik Karlsson <patrik@trixon.se>
+ * @author Patrik Karlsson
  */
 public class GeoAttribute {
 

@@ -27,7 +27,7 @@ import se.trixon.toolbox.io.file.CoordinateFile;
 
 /**
  *
- * @author Patrik Karlsson <patrik@trixon.se>
+ * @author Patrik Karlsson
  */
 public class Asc extends CoordinateFile {
 
