@@ -8,6 +8,32 @@
     <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>toolbox-parent</name>
+    <url>https://github.com/trixon/netbeans-toolbox</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>trixon</id>
+            <name>Patrik Karlsson</name>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <email>patrik@trixon.se</email>
+            <url>http://trixon.se</url>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/trixon/netbeans-toolbox</url>
+        <connection>scm:git:git://github.com/trixon/netbeans-toolbox.git</connection>
+        <developerConnection>scm:git:git@github.com:trixon/netbeans-toolbox.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
     <repositories>
         <!--
         Repository hosting NetBeans modules, especially APIs.
