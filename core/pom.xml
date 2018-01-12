@@ -19,7 +19,6 @@
                 <configuration>
                     <publicPackages>
                         <publicPackage>se.trixon.almond.nbp.*</publicPackage>
-                        <publicPackage>se.trixon.almond.util.*</publicPackage>
                         <publicPackage>se.trixon.toolbox.core</publicPackage>
                         <publicPackage>se.trixon.toolbox.core.base</publicPackage>
                         <publicPackage>se.trixon.toolbox.core.news</publicPackage>

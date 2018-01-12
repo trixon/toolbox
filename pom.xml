@@ -98,6 +98,6 @@
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
         <brandingToken>toolbox</brandingToken>
-        <almond.version>1.0.1</almond.version>
+        <almond.version>1.0.2-SNAPSHOT</almond.version>
     </properties>
 </project>
