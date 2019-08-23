@@ -4,10 +4,10 @@
 
     <groupId>se.trixon.toolbox</groupId>
     <artifactId>toolbox-parent</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>toolbox-parent</name>
-    <url>https://github.com/trixon/netbeans-toolbox</url>
+    <url>https://github.com/trixon/toolbox</url>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -28,31 +28,19 @@
         </developer>
     </developers>
     <scm>
-        <url>https://github.com/trixon/netbeans-toolbox</url>
-        <connection>scm:git:git://github.com/trixon/netbeans-toolbox.git</connection>
-        <developerConnection>scm:git:git@github.com:trixon/netbeans-toolbox.git</developerConnection>
+        <url>https://github.com/trixon/toolbox</url>
+        <connection>scm:git:git://github.com/trixon/toolbox.git</connection>
+        <developerConnection>scm:git:git@github.com:trixon/toolbox.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
-    <repositories>
-        <!--
-        Repository hosting NetBeans modules, especially APIs.
-        Versions are based on IDE releases, e.g.: RELEASE691
-        To create your own repository, use: nbm:populate-repository
-        -->
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
-        </repository>
-    </repositories>
 
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
+                    <groupId>org.apache.netbeans.utilities</groupId>
                     <artifactId>nbm-maven-plugin</artifactId>
-                    <version>4.1</version>
+                    <version>4.2</version>
                     <extensions>true</extensions>
                     <configuration>
                         <brandingToken>${brandingToken}</brandingToken>
@@ -63,16 +51,18 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
+                    <version>3.8.1</version>
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
+                        <showDeprecation>true</showDeprecation>
+                        <compilerArgument>-Xlint:unchecked</compilerArgument>
                     </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>3.1.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -80,10 +70,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
         </plugins>
@@ -97,9 +87,109 @@
         <!--<module>../toolbox-idiot</module>-->
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- Toolbox -->
+            <dependency>
+                <groupId>se.trixon.toolbox</groupId>
+                <artifactId>core</artifactId>
+                <version>${toolbox.version}</version>
+            </dependency>
+
+            <!-- Trixon -->
+            <dependency>
+                <groupId>se.trixon.almond</groupId>
+                <artifactId>almond-util</artifactId>
+                <version>${almond.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>se.trixon.almond</groupId>
+                <artifactId>almond-nbp</artifactId>
+                <version>${almond.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>se.trixon.almond</groupId>
+                <artifactId>almond-nbp-actions</artifactId>
+                <version>${almond.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>se.trixon.almond</groupId>
+                <artifactId>almond-nbp-actions-osx</artifactId>
+                <version>${almond.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>se.trixon.almond</groupId>
+                <artifactId>almond-nbp-darcula</artifactId>
+                <version>${almond.version}</version>
+            </dependency>
+
+            <!-- Other -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.9</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-csv</artifactId>
+                <version>1.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>1.7</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.8.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>28.0-jre</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.micromata.jak</groupId>
+                <artifactId>JavaAPIforKml</artifactId>
+                <version>2.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.drewnoakes</groupId>
+                <artifactId>metadata-extractor</artifactId>
+                <version>2.12.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-trixon-maven</id>
+            <url>https://dl.bintray.com/trixon/maven</url>
+        </repository>
+    </repositories>
+
     <properties>
         <netbeans.version>RELEASE111</netbeans.version>
+        <netbeans.compile.on.save>all</netbeans.compile.on.save>
         <brandingToken>toolbox</brandingToken>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <toolbox.version>3.0.0-SNAPSHOT</toolbox.version>
         <almond.version>3.0.5-SNAPSHOT</almond.version>
     </properties>
 </project>
