@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2018 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,8 @@ package se.trixon.toolbox.core.about;
 
 import org.openide.modules.OnStart;
 import se.trixon.almond.nbp.about.AboutAction;
+import se.trixon.almond.util.AboutModel;
 import se.trixon.almond.util.SystemHelper;
-import se.trixon.almond.util.swing.dialogs.about.AboutModel;
 
 /**
  *

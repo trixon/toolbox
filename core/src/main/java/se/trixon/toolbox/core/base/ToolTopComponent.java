@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2018 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,9 +24,7 @@ import org.openide.windows.InputOutput;
 import org.openide.windows.OutputWriter;
 import org.openide.windows.TopComponent;
 import se.trixon.almond.nbp.dialogs.NbMessage;
-import se.trixon.almond.util.AlmondOptions;
 import se.trixon.almond.util.Dict;
-import se.trixon.almond.util.icons.IconColor;
 import se.trixon.toolbox.core.Toolbox;
 
 /**
@@ -42,7 +40,7 @@ public abstract class ToolTopComponent extends TopComponent {
     protected StringBuilder mLogBuilder;
     protected String mHelpId = null;
     protected String mToolName;
-    protected final IconColor mIconColor = AlmondOptions.getInstance().getIconColor();
+//    protected final IconColor mIconColor = AlmondOptions.getInstance().getIconColor();
 
     public void appendLog(String string) {
         mLogBuilder.append(string).append("\n");

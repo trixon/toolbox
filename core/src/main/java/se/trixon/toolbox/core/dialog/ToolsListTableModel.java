@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2018 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,12 +35,12 @@ public class ToolsListTableModel extends DefaultTableModel {
     public static final int COLUMN_VERSION = 2;
 
     public ToolsListTableModel() {
-        columnIdentifiers.add(Dict.NAME.getString());
-        columnIdentifiers.add(Dict.DESCRIPTION.getString());
-        columnIdentifiers.add(Dict.VERSION.getString());
+        columnIdentifiers.add(Dict.NAME.toString());
+        columnIdentifiers.add(Dict.DESCRIPTION.toString());
+        columnIdentifiers.add(Dict.VERSION.toString());
         columnIdentifiers.add(NbBundle.getMessage(Toolbox.class, "toolModule"));
-        columnIdentifiers.add(Dict.COPYRIGHT.getString());
-        columnIdentifiers.add(Dict.LICENSE.getString());
+        columnIdentifiers.add(Dict.COPYRIGHT.toString());
+        columnIdentifiers.add(Dict.LICENSE.toString());
     }
 
     public void addRow(ToolProvider toolProvider) {

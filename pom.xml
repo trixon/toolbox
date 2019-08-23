@@ -57,6 +57,7 @@
                     <configuration>
                         <brandingToken>${brandingToken}</brandingToken>
                         <cluster>${brandingToken}</cluster>
+                        <additionalArguments>-J-Xmx512m</additionalArguments>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -93,11 +94,12 @@
         <module>application</module>
         <module>core</module>
         <module>io</module>
+        <!--<module>../toolbox-idiot</module>-->
     </modules>
 
     <properties>
-        <netbeans.version>RELEASE82</netbeans.version>
+        <netbeans.version>RELEASE111</netbeans.version>
         <brandingToken>toolbox</brandingToken>
-        <almond.version>1.0.2-SNAPSHOT</almond.version>
+        <almond.version>3.0.5-SNAPSHOT</almond.version>
     </properties>
 </project>

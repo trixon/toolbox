@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2018 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +15,7 @@
  */
 package se.trixon.toolbox.core;
 
+import java.awt.Color;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 import javax.swing.JFrame;
@@ -26,8 +27,6 @@ import se.trixon.almond.nbp.ActionHelper;
 import se.trixon.almond.nbp.Almond;
 import se.trixon.almond.nbp.InitIcons;
 import se.trixon.almond.nbp.NbLog;
-import se.trixon.almond.util.AlmondOptions;
-import se.trixon.almond.util.icons.IconColor;
 import se.trixon.almond.util.icons.material.MaterialIcon;
 import se.trixon.toolbox.core.startpage.StartPageTopComponent;
 
@@ -57,20 +56,21 @@ public class Installer implements Runnable {
 
             InitIcons.run();
 
-            IconColor iconColor = AlmondOptions.getInstance().getIconColor();
+//            IconColor iconColor = AlmondOptions.getInstance().getIconColor();
             String category = "Actions/File";
             String id = "se.trixon.toolbox.core.actions.ToolInfoAction";
-            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.INFO_OUTLINE.get(Almond.ICON_SMALL, iconColor));
-            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.INFO_OUTLINE.get(Almond.ICON_LARGE, iconColor));
+            Color iconColor = Color.BLUE;
+            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.INFO_OUTLINE.getImageIcon(Almond.ICON_SMALL, iconColor));
+            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.INFO_OUTLINE.getImageIcon(Almond.ICON_LARGE, iconColor));
 
             id = "se.trixon.toolbox.core.actions.ToolListAction";
-            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.LIST.get(Almond.ICON_SMALL, iconColor));
-            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.LIST.get(Almond.ICON_LARGE, iconColor));
+            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.LIST.getImageIcon(Almond.ICON_SMALL, iconColor));
+            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.LIST.getImageIcon(Almond.ICON_LARGE, iconColor));
 
             id = "se.trixon.toolbox.core.actions.ToolOptionsAction";
             //TODO Will not set icon, Action does not exist at this time
-            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.SETTINGS.get(Almond.ICON_SMALL, iconColor));
-            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.SETTINGS.get(Almond.ICON_LARGE, iconColor));
+            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.SETTINGS.getImageIcon(Almond.ICON_SMALL, iconColor));
+            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.SETTINGS.getImageIcon(Almond.ICON_LARGE, iconColor));
 
             NbLog.select();
             NbLog.v(Toolbox.LOG_TAG, "Loaded and ready...");

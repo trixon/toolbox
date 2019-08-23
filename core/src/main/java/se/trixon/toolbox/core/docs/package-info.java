@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2018 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@HelpSetRegistration(helpSet = "core-hs.xml", position = 0)
+//@HelpSetRegistration(helpSet = "core-hs.xml", position = 0)
 package se.trixon.toolbox.core.docs;
-
-import org.netbeans.api.javahelp.HelpSetRegistration;
