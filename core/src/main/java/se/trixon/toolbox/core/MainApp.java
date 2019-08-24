@@ -22,10 +22,13 @@ import de.codecentric.centerdevice.MenuToolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -39,9 +42,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 import org.apache.commons.lang3.SystemUtils;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionUtils;
+import org.netbeans.modules.autoupdate.ui.PluginManagerUI;
+import org.netbeans.modules.autoupdate.ui.api.PluginManager;
 import org.openide.LifecycleManager;
 import se.trixon.almond.util.AboutModel;
 import se.trixon.almond.util.Dict;
@@ -63,11 +71,11 @@ public class MainApp extends Application {
     private static final Logger LOGGER = Logger.getLogger(MainApp.class.getName());
     private Action mAboutAction;
     private final AlmondFx mAlmondFX = AlmondFx.getInstance();
-//    private FbdModule mFbdModule;
     private Action mHelpAction;
-//    private MapollageModule mMapollageModule;
     private Action mOptionsAction;
     private ToolbarItem mOptionsToolbarItem;
+    private Action mPluginAction;
+    private final SwingNode mPluginManagerUiNode = new SwingNode();
     private PreferencesModule mPreferencesModule;
     private Stage mStage;
     private Workbench mWorkbench;
@@ -83,6 +91,7 @@ public class MainApp extends Application {
     }
 
     public MainApp() {
+        initPluginManagerUi(mPluginManagerUiNode);
     }
 
     @Override
@@ -124,7 +133,7 @@ public class MainApp extends Application {
     }
 
     private void displayOptions() {
-//        mWorkbench.openModule(mPreferencesModule);
+        mWorkbench.openModule(mPreferencesModule);
     }
 
     private void initAccelerators() {
@@ -151,10 +160,28 @@ public class MainApp extends Application {
         applicationMenu.getItems().get(cnt - 1).setText(String.format("%s %s", Dict.QUIT.toString(), APP_TITLE));
     }
 
+    private void initPluginManagerUi(final SwingNode swingNode) {
+        SwingUtilities.invokeLater(() -> {
+            JButton button = new JButton(new AbstractAction() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    Platform.runLater(() -> {
+                        Stage stage = (Stage) swingNode.getScene().getWindow();
+                        stage.close();
+                    });
+                }
+            });
+
+            PluginManagerUI pluginManagerUI = new PluginManagerUI(button);
+            swingNode.setContent(pluginManagerUI);
+            PluginManager p;
+        });
+    }
+
     private void initToolbar() {
         mOptionsToolbarItem = new ToolbarItem(Dict.OPTIONS.toString(), MaterialIcon._Action.SETTINGS.getImageView(ICON_SIZE_TOOLBAR, Color.LIGHTGRAY),
                 event -> {
-//                    mWorkbench.openModule(mPreferencesModule);
+                    displayOptions();
                 }
         );
 
@@ -169,6 +196,17 @@ public class MainApp extends Application {
         });
         mOptionsAction.setAccelerator(new KeyCodeCombination(KeyCode.COMMA, KeyCombination.SHORTCUT_DOWN));
         mOptionsAction.setGraphic(MaterialIcon._Action.SETTINGS.getImageView(ICON_SIZE_DRAWER));
+
+        //plugins
+        mPluginAction = new Action(Dict.PLUGINS.toString(), (ActionEvent event) -> {
+            mWorkbench.hideNavigationDrawer();
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            alert.setTitle("Plugins");
+
+            alert.getDialogPane().setContent(mPluginManagerUiNode);
+            alert.setResizable(true);
+            alert.showAndWait();
+        });
 
         //help
         mHelpAction = new Action(Dict.HELP.toString(), (ActionEvent event) -> {
@@ -216,6 +254,7 @@ public class MainApp extends Application {
         });
 
         mWorkbench.getNavigationDrawerItems().setAll(
+                ActionUtils.createMenuItem(mPluginAction),
                 ActionUtils.createMenuItem(mHelpAction),
                 ActionUtils.createMenuItem(aboutAction)
         );
