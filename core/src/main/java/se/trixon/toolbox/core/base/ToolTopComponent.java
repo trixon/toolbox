@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,27 +16,17 @@
 package se.trixon.toolbox.core.base;
 
 import java.util.ResourceBundle;
-import javax.swing.SwingUtilities;
-import org.openide.awt.StatusDisplayer;
-import org.openide.util.HelpCtx;
-import org.openide.windows.IOProvider;
-import org.openide.windows.InputOutput;
-import org.openide.windows.OutputWriter;
-import org.openide.windows.TopComponent;
-import se.trixon.almond.nbp.dialogs.NbMessage;
-import se.trixon.almond.util.Dict;
-import se.trixon.toolbox.core.Toolbox;
 
 /**
  *
  * @author Patrik Karlsson
  */
-public abstract class ToolTopComponent extends TopComponent {
+public abstract class ToolTopComponent {
 
     protected static final int TOOLBAR_ICON_SIZE = 32;
     private String mStatus = "";
     protected ResourceBundle mBundle;
-    protected InputOutput mInputOutput;
+//    protected InputOutput mInputOutput;
     protected StringBuilder mLogBuilder;
     protected String mHelpId = null;
     protected String mToolName;
@@ -45,62 +35,62 @@ public abstract class ToolTopComponent extends TopComponent {
     public void appendLog(String string) {
         mLogBuilder.append(string).append("\n");
 
-        try (OutputWriter writer = mInputOutput.getOut()) {
-            writer.append(string + "\n");
-        }
+//        try (OutputWriter writer = mInputOutput.getOut()) {
+//            writer.append(string + "\n");
+//        }
     }
 
-    @Override
-    public void componentClosed() {
-        super.componentClosed();
-        if (mInputOutput != null) {
-            mInputOutput.closeInputOutput();
-        }
-    }
-
-    @Override
-    public void componentOpened() {
-        super.componentOpened();
-    }
-
-    @Override
-    protected void componentActivated() {
-        super.componentActivated();
-        Toolbox.setStatusText(mStatus);
-    }
-
-    @Override
-    protected void componentDeactivated() {
-        super.componentDeactivated();
-        mStatus = StatusDisplayer.getDefault().getStatusText();
-        Toolbox.clearStatusText();
-    }
-
-    protected void displayHelp(final String helpId) {
-
-        SwingUtilities.invokeLater(() -> {
-            if (!new HelpCtx(helpId).display()) {
-                NbMessage.error(Dict.Dialog.TITLE_HELP_NOT_FOUND.toString(), String.format(Dict.Dialog.MESSAGE_HELP_NOT_FOUND.toString(), helpId));
-            }
-        });
-    }
-
-    protected void logAppend(String string) {
-        mLogBuilder.append(string).append("\n");
-
-        try (OutputWriter writer = mInputOutput.getOut()) {
-            writer.append(string + "\n");
-        }
-    }
-
-    protected void logClear() {
-        mLogBuilder = new StringBuilder();
-
-        if (mInputOutput != null) {
-            mInputOutput.closeInputOutput();
-        }
-
-        mInputOutput = IOProvider.getDefault().getIO(mToolName, false);
-        mInputOutput.select();
-    }
+//    @Override
+//    public void componentClosed() {
+//        super.componentClosed();
+//        if (mInputOutput != null) {
+//            mInputOutput.closeInputOutput();
+//        }
+//    }
+//
+//    @Override
+//    public void componentOpened() {
+//        super.componentOpened();
+//    }
+//
+//    @Override
+//    protected void componentActivated() {
+//        super.componentActivated();
+//        Toolbox.setStatusText(mStatus);
+//    }
+//
+//    @Override
+//    protected void componentDeactivated() {
+//        super.componentDeactivated();
+//        mStatus = StatusDisplayer.getDefault().getStatusText();
+//        Toolbox.clearStatusText();
+//    }
+//
+//    protected void displayHelp(final String helpId) {
+//
+//        SwingUtilities.invokeLater(() -> {
+//            if (!new HelpCtx(helpId).display()) {
+//                NbMessage.error(Dict.Dialog.TITLE_HELP_NOT_FOUND.toString(), String.format(Dict.Dialog.MESSAGE_HELP_NOT_FOUND.toString(), helpId));
+//            }
+//        });
+//    }
+//
+//    protected void logAppend(String string) {
+//        mLogBuilder.append(string).append("\n");
+//
+//        try (OutputWriter writer = mInputOutput.getOut()) {
+//            writer.append(string + "\n");
+//        }
+//    }
+//
+//    protected void logClear() {
+//        mLogBuilder = new StringBuilder();
+//
+//        if (mInputOutput != null) {
+//            mInputOutput.closeInputOutput();
+//        }
+//
+//        mInputOutput = IOProvider.getDefault().getIO(mToolName, false);
+//        mInputOutput.select();
+//    }
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,25 +15,20 @@
  */
 package se.trixon.toolbox.core.news;
 
-import se.trixon.almond.nbp.news.NewsProvider;
-import java.util.ResourceBundle;
-import org.openide.util.lookup.ServiceProvider;
-import se.trixon.almond.util.SystemHelper;
-
 /**
  *
  * @author Patrik Karlsson
  */
-@ServiceProvider(service = NewsProvider.class)
-public class CoreNews implements NewsProvider {
+//@ServiceProvider(service = NewsProvider.class)
+public class CoreNews {//implements NewsProvider {
 
-    @Override
-    public String getName() {
-        return "Toolbox";
-    }
-
-    @Override
-    public ResourceBundle getNewsBundle() {
-        return ResourceBundle.getBundle(SystemHelper.getPackageAsPath(this.getClass()) + "CoreNews");
-    }
+//    @Override
+//    public String getName() {
+//        return "Toolbox";
+//    }
+//
+//    @Override
+//    public ResourceBundle getNewsBundle() {
+//        return ResourceBundle.getBundle(SystemHelper.getPackageAsPath(this.getClass()) + "CoreNews");
+//    }
 }

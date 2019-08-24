@@ -16,6 +16,18 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
+                    <moduleDependencies>
+                        <dependency>
+                            <!--Private Package Reference-->
+                            <id>org.netbeans.api:org-netbeans-modules-autoupdate-ui</id>
+                            <type>impl</type>
+                        </dependency>
+                        <dependency>
+                            <!--Private Package Reference-->
+                            <id>org.netbeans.api:org-netbeans-modules-autoupdate-ui-api</id>
+                            <type>impl</type>
+                        </dependency>
+                    </moduleDependencies>
                     <publicPackages>
                         <publicPackage>se.trixon.almond.nbp.*</publicPackage>
                         <publicPackage>se.trixon.toolbox.core</publicPackage>
@@ -50,6 +62,11 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-autoupdate-ui</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-modules</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
@@ -60,54 +77,18 @@
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-options-api</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-javahelp</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-settings</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-dialogs</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-windows</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-io</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-awt</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
 
         <!--Trixon-->
-        <dependency>
+        <!--        <dependency>
             <groupId>se.trixon.almond</groupId>
             <artifactId>almond-nbp</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>se.trixon.almond</groupId>
+            <artifactId>almond-util</artifactId>
         </dependency>
 
         <!--Other-->
@@ -127,6 +108,21 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric.centerdevice</groupId>
+            <artifactId>centerdevice-nsmenufx</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId>
+            <version>RELEASE111</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-dialogs</artifactId>
+            <version>RELEASE111</version>
         </dependency>
     </dependencies>
     <properties>

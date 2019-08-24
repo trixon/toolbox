@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,72 +15,32 @@
  */
 package se.trixon.toolbox.core;
 
-import java.awt.Color;
-import java.util.ResourceBundle;
-import java.util.prefs.Preferences;
-import javax.swing.JFrame;
-import org.openide.modules.OnStart;
-import org.openide.util.NbPreferences;
-import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
-import se.trixon.almond.nbp.ActionHelper;
-import se.trixon.almond.nbp.Almond;
-import se.trixon.almond.nbp.InitIcons;
-import se.trixon.almond.nbp.NbLog;
-import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.toolbox.core.startpage.StartPageTopComponent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.openide.modules.ModuleInstall;
 
-/**
- *
- * @author Patrik Karlsson
- */
-@OnStart
-public class Installer implements Runnable {
+public class Installer extends ModuleInstall {
 
-    private final Preferences mPreferences;
+    private static final Logger LOGGER = Logger.getLogger(Installer.class.getName());
 
-    public Installer() {
-        mPreferences = NbPreferences.forModule(StartPageTopComponent.class);
+    @Override
+    public void close() {
+        LOGGER.log(Level.INFO, "platform close");
+        super.close();
     }
 
     @Override
-    public void run() {
-        WindowManager.getDefault().invokeWhenUIReady(() -> {
-            ResourceBundle bundle = ResourceBundle.getBundle("se/trixon/toolbox/core/about/about");
-            JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
-            mainFrame.setTitle(bundle.getString("app.name"));
-//                openWindow("output");
-            if (mPreferences.getBoolean(StartPageTopComponent.KEY_SHOW_START_PAGE_ON_STARTUP, true)) {
-                openWindow("StartPageTopComponent");
-            }
-
-            InitIcons.run();
-
-//            IconColor iconColor = AlmondOptions.getInstance().getIconColor();
-            String category = "Actions/File";
-            String id = "se.trixon.toolbox.core.actions.ToolInfoAction";
-            Color iconColor = Color.BLUE;
-            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.INFO_OUTLINE.getImageIcon(Almond.ICON_SMALL, iconColor));
-            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.INFO_OUTLINE.getImageIcon(Almond.ICON_LARGE, iconColor));
-
-            id = "se.trixon.toolbox.core.actions.ToolListAction";
-            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.LIST.getImageIcon(Almond.ICON_SMALL, iconColor));
-            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.LIST.getImageIcon(Almond.ICON_LARGE, iconColor));
-
-            id = "se.trixon.toolbox.core.actions.ToolOptionsAction";
-            //TODO Will not set icon, Action does not exist at this time
-            ActionHelper.setIconSmall(category, id, MaterialIcon._Action.SETTINGS.getImageIcon(Almond.ICON_SMALL, iconColor));
-            ActionHelper.setIconLarge(category, id, MaterialIcon._Action.SETTINGS.getImageIcon(Almond.ICON_LARGE, iconColor));
-
-            NbLog.select();
-            NbLog.v(Toolbox.LOG_TAG, "Loaded and ready...");
-        });
+    public boolean closing() {
+        LOGGER.log(Level.INFO, "platform closing");
+        return super.closing();
     }
 
-    private void openWindow(String id) {
-        TopComponent topComponent = WindowManager.getDefault().findTopComponent(id);
-        if (topComponent != null) {
-            topComponent.open();
-        }
+    @Override
+    public void restored() {
+        LOGGER.log(Level.INFO, "platform restored");
+        new Thread(() -> {
+            LOGGER.log(Level.INFO, "start fx application in a new thread");
+            MainApp.main(new String[]{});
+        }).start();
     }
 }

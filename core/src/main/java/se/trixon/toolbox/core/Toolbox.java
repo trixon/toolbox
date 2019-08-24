@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +15,7 @@
  */
 package se.trixon.toolbox.core;
 
-import java.awt.Frame;
 import java.text.DateFormat;
-import org.openide.awt.StatusDisplayer;
-import org.openide.windows.WindowManager;
 
 /**
  *
@@ -28,23 +25,20 @@ public class Toolbox {
 
     public static final String LOG_TAG = "Toolbox";
 
-    public static Frame getFrame() {
-        return WindowManager.getDefault().getMainWindow();
-    }
-
-    public static void clearStatusText() {
-        setStatusText("");
-    }
-
+//    public static Frame getFrame() {
+//        return WindowManager.getDefault().getMainWindow();
+//    }
+//    public static void clearStatusText() {
+//        setStatusText("");
+//    }
     public static DateFormat getDefaultDateFormat() {
         return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
     }
 
-    public static void setStatusText(String text, int importance) {
-        StatusDisplayer.getDefault().setStatusText(text, importance);
-    }
-
-    public static void setStatusText(String text) {
-        setStatusText(text, StatusDisplayer.IMPORTANCE_ANNOTATION);
-    }
+//    public static void setStatusText(String text, int importance) {
+//        StatusDisplayer.getDefault().setStatusText(text, importance);
+//    }
+//    public static void setStatusText(String text) {
+//        setStatusText(text, StatusDisplayer.IMPORTANCE_ANNOTATION);
+//    }
 }

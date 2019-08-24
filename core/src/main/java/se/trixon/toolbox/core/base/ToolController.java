@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,25 +17,22 @@ package se.trixon.toolbox.core.base;
 
 import java.awt.event.ActionEvent;
 import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import org.netbeans.api.options.OptionsDisplayer;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.modules.Modules;
 import org.openide.util.NbBundle;
+import se.trixon.almond.util.SystemHelper;
 import se.trixon.toolbox.core.ToolProvider;
 import se.trixon.toolbox.core.actions.ToolInfoAction;
 import se.trixon.toolbox.core.actions.ToolOptionsAction;
-import se.trixon.almond.nbp.news.NewsProvider;
-import se.trixon.almond.util.SystemHelper;
 
 /**
  *
  * @author Patrik Karlsson
  */
-public class ToolController implements ToolProvider, NewsProvider {
+public class ToolController implements ToolProvider {
 
     private ActionMap mActionMap;
     private ToolTopComponent mToolTopComponent;
@@ -45,7 +42,7 @@ public class ToolController implements ToolProvider, NewsProvider {
 
     public ToolController(ToolTopComponent toolTopComponent) {
         mToolTopComponent = toolTopComponent;
-        mActionMap = toolTopComponent.getActionMap();
+//        mActionMap = toolTopComponent.getActionMap();
 
         init();
     }
@@ -85,11 +82,10 @@ public class ToolController implements ToolProvider, NewsProvider {
         return getResource("Tool-Name");
     }
 
-    @Override
-    public ResourceBundle getNewsBundle() {
-        return null;
-    }
-
+//    @Override
+//    public ResourceBundle getNewsBundle() {
+//        return null;
+//    }
     @Override
     public String getOptionsPath() {
         return null;
@@ -165,6 +161,8 @@ public class ToolController implements ToolProvider, NewsProvider {
     }
 
     private void showOptions() {
-        OptionsDisplayer.getDefault().open(getOptionsPath());
+//        OptionsDisplayer.getDefault().open(getOptionsPath());
+//TODO
+        System.err.println("showOptions");
     }
 }

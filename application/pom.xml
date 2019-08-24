@@ -18,6 +18,22 @@
     <dependencies>
         <!-- NetBeans -->
         <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-core-startup</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-awt</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-autoupdate-ui</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <!--XXX-->
+        <!--        <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
             <version>${netbeans.version}</version>
@@ -80,7 +96,7 @@
                     <artifactId>org-netbeans-modules-favorites</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
 
         <!-- Toolbox -->
         <dependency>
@@ -95,18 +111,18 @@
         </dependency>
 
         <!-- Trixon -->
-        <dependency>
+        <!--        <dependency>
             <groupId>se.trixon.almond</groupId>
             <artifactId>almond-nbp-actions</artifactId>
         </dependency>
         <dependency>
             <groupId>se.trixon.almond</groupId>
             <artifactId>almond-nbp-actions-osx</artifactId>
-        </dependency>
-        <dependency>
+        </dependency>-->
+        <!--        <dependency>
             <groupId>se.trixon.almond</groupId>
             <artifactId>almond-nbp-darcula</artifactId>
-        </dependency>
+        </dependency>-->
         <!--        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tool-idiot</artifactId>

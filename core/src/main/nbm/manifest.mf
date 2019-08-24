@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+OpenIDE-Module-Install: se/trixon/toolbox/core/Installer.class
 OpenIDE-Module-Layer: se/trixon/toolbox/core/layer.xml
 OpenIDE-Module-Localizing-Bundle: se/trixon/toolbox/core/Bundle.properties
 AutoUpdate-Show-In-Client: false
