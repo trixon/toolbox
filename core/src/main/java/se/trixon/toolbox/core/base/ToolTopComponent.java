@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public abstract class ToolTopComponent {
 

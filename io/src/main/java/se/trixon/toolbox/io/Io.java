@@ -17,7 +17,7 @@ package se.trixon.toolbox.io;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class Io {
 

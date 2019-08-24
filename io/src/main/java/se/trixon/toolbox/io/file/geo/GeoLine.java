@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class GeoLine {
 

@@ -25,7 +25,7 @@ import org.openide.util.Exceptions;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class Launcher {
 

@@ -17,7 +17,7 @@ package se.trixon.toolbox.core;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public interface ToolProvider {
 

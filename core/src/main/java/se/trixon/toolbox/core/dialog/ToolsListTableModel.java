@@ -23,7 +23,7 @@ import se.trixon.toolbox.core.Toolbox;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class ToolsListTableModel extends DefaultTableModel {
 

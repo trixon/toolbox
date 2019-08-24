@@ -17,7 +17,7 @@ package se.trixon.toolbox.core.news;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 //@ServiceProvider(service = NewsProvider.class)
 public class CoreNews {//implements NewsProvider {

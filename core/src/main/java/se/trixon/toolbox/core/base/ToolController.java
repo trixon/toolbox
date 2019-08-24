@@ -30,7 +30,7 @@ import se.trixon.toolbox.core.actions.ToolOptionsAction;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class ToolController implements ToolProvider {
 

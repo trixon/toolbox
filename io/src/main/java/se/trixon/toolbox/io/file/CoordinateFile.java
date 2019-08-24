@@ -27,7 +27,7 @@ import java.nio.file.Path;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public abstract class CoordinateFile {
 

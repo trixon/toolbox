@@ -26,7 +26,7 @@ import se.trixon.toolbox.core.ToolProvider;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class ToolsListPanel extends javax.swing.JPanel {
 

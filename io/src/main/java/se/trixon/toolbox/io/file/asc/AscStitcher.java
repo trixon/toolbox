@@ -23,7 +23,7 @@ import java.util.Set;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class AscStitcher {
 

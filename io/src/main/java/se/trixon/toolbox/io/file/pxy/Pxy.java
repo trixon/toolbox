@@ -31,7 +31,7 @@ import se.trixon.toolbox.io.file.CoordinateFile;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class Pxy extends CoordinateFile {
 

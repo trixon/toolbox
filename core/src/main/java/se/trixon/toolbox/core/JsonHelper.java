@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class JsonHelper {
 

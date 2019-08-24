@@ -21,7 +21,7 @@ import org.openide.util.NbPreferences;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public enum ToolboxOptions {
 

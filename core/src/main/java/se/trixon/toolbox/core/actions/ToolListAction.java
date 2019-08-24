@@ -39,7 +39,7 @@ import se.trixon.toolbox.core.dialog.ToolsListPanel;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public final class ToolListAction implements ActionListener {
 

@@ -22,7 +22,7 @@ import org.openide.awt.ActionRegistration;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class ToolOptionsAction {
 

@@ -19,7 +19,7 @@ import java.text.DateFormat;
 
 /**
  *
- * @author Patrik Karlsson
+ * @author Patrik Karlström
  */
 public class Toolbox {
 
