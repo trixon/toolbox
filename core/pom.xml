@@ -93,6 +93,14 @@
 
         <!--Other-->
         <dependency>
+            <groupId>com.dlsc.workbenchfx</groupId>
+            <artifactId>workbenchfx-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dlsc.preferencesfx</groupId>
+            <artifactId>preferencesfx-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>

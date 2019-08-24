@@ -15,24 +15,42 @@
  */
 package se.trixon.toolbox.core;
 
+import com.dlsc.workbenchfx.Workbench;
+import com.dlsc.workbenchfx.model.WorkbenchDialog;
+import com.dlsc.workbenchfx.view.controls.ToolbarItem;
 import de.codecentric.centerdevice.MenuToolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.SystemUtils;
 import org.controlsfx.control.action.Action;
+import org.controlsfx.control.action.ActionUtils;
 import org.openide.LifecycleManager;
+import se.trixon.almond.util.AboutModel;
 import se.trixon.almond.util.Dict;
+import se.trixon.almond.util.PomInfo;
+import se.trixon.almond.util.SystemHelper;
 import se.trixon.almond.util.fx.AlmondFx;
+import se.trixon.almond.util.fx.FxHelper;
+import se.trixon.almond.util.fx.dialogs.about.AboutPane;
+import se.trixon.almond.util.icons.material.MaterialIcon;
 
 public class MainApp extends Application {
 
@@ -42,18 +60,27 @@ public class MainApp extends Application {
     public static final int ICON_SIZE_DRAWER = ICON_SIZE_TOOLBAR / 2;
     public static final int MODULE_ICON_SIZE = 32;
     private static final boolean IS_MAC = SystemUtils.IS_OS_MAC;
+    private static final Logger LOGGER = Logger.getLogger(MainApp.class.getName());
     private Action mAboutAction;
     private final AlmondFx mAlmondFX = AlmondFx.getInstance();
 //    private FbdModule mFbdModule;
     private Action mHelpAction;
 //    private MapollageModule mMapollageModule;
     private Action mOptionsAction;
-//    private ToolbarItem mOptionsToolbarItem;
-//    private PreferencesModule mPreferencesModule;
+    private ToolbarItem mOptionsToolbarItem;
+    private PreferencesModule mPreferencesModule;
     private Stage mStage;
-//    private Workbench mWorkbench;
+    private Workbench mWorkbench;
 
-    private static final Logger LOGGER = Logger.getLogger(MainApp.class.getName());
+    /**
+     * The main() method is ignored in correctly deployed JavaFX application. main() serves only as fallback in case the application can not be launched through deployment artifacts, e.g., in IDEs with limited FX support. NetBeans ignores main().
+     *
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        LOGGER.log(Level.INFO, "manual start");
+        launch(args);
+    }
 
     public MainApp() {
     }
@@ -73,6 +100,31 @@ public class MainApp extends Application {
         mStage.show();
         initAccelerators();
         //mWorkbench.openModule(mPreferencesModule);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        LOGGER.log(Level.INFO, "request platform shutdown");
+        LifecycleManager.getDefault().exit();
+    }
+
+    private void createUI() {
+        mPreferencesModule = new PreferencesModule();
+//        mFbdModule = new FbdModule();
+//        mMapollageModule = new MapollageModule();
+//        mWorkbench = Workbench.builder(mFbdModule, mMapollageModule, mPreferencesModule).build();
+        mWorkbench = Workbench.builder(mPreferencesModule).build();
+
+        mWorkbench.getStylesheets().add(MainApp.class.getResource("customTheme.css").toExternalForm());
+        initToolbar();
+        initWorkbenchDrawer();
+        Scene scene = new Scene(mWorkbench);
+//        scene.getStylesheets().add("css/modena_dark.css");
+        mStage.setScene(scene);
+    }
+
+    private void displayOptions() {
+//        mWorkbench.openModule(mPreferencesModule);
     }
 
     private void initAccelerators() {
@@ -99,35 +151,78 @@ public class MainApp extends Application {
         applicationMenu.getItems().get(cnt - 1).setText(String.format("%s %s", Dict.QUIT.toString(), APP_TITLE));
     }
 
-    private void createUI() {
-//        mPreferencesModule = new PreferencesModule();
-//        mFbdModule = new FbdModule();
-//        mMapollageModule = new MapollageModule();
-//        mWorkbench = Workbench.builder(mFbdModule, mMapollageModule, mPreferencesModule).build();
-//
-//        mWorkbench.getStylesheets().add(MainApp.class.getResource("customTheme.css").toExternalForm());
-//        initToolbar();
-//        initWorkbenchDrawer();
+    private void initToolbar() {
+        mOptionsToolbarItem = new ToolbarItem(Dict.OPTIONS.toString(), MaterialIcon._Action.SETTINGS.getImageView(ICON_SIZE_TOOLBAR, Color.LIGHTGRAY),
+                event -> {
+//                    mWorkbench.openModule(mPreferencesModule);
+                }
+        );
 
-//        Scene scene = new Scene(mWorkbench);
-        Scene scene = new Scene(new Pane());
-//        scene.getStylesheets().add("css/modena_dark.css");
-        mStage.setScene(scene);
+        mWorkbench.getToolbarControlsRight().addAll(mOptionsToolbarItem);
     }
 
-    @Override
-    public void stop() throws Exception {
-        LOGGER.log(Level.INFO, "request platform shutdown");
-        LifecycleManager.getDefault().exit();
+    private void initWorkbenchDrawer() {
+        //options
+        mOptionsAction = new Action(Dict.OPTIONS.toString(), (ActionEvent event) -> {
+            mWorkbench.hideNavigationDrawer();
+            displayOptions();
+        });
+        mOptionsAction.setAccelerator(new KeyCodeCombination(KeyCode.COMMA, KeyCombination.SHORTCUT_DOWN));
+        mOptionsAction.setGraphic(MaterialIcon._Action.SETTINGS.getImageView(ICON_SIZE_DRAWER));
+
+        //help
+        mHelpAction = new Action(Dict.HELP.toString(), (ActionEvent event) -> {
+            mWorkbench.hideNavigationDrawer();
+            SystemHelper.desktopBrowse("https://trixon.se/projects/ttc/documentation/");
+        });
+        //mHelpAction.setAccelerator(new KeyCodeCombination(KeyCode.F1, KeyCombination.SHORTCUT_ANY));
+        mHelpAction.setAccelerator(KeyCombination.keyCombination("F1"));
+
+        //about
+        Action aboutAction = new Action(Dict.ABOUT.toString(), (ActionEvent event) -> {
+            mWorkbench.hideNavigationDrawer();
+//            AboutModel aboutModel = new AboutModel(
+//                    SystemHelper.getBundle(Installer.class, "about"),
+//                    SystemHelper.getResourceAsImageView(Initializer.class, "logo.png"));
+//            NbAboutFx nbAboutFx = new NbAboutFx(aboutModel);
+//            nbAboutFx.display();
+            PomInfo pomInfo = new PomInfo(Installer.class, "se.trixon", "ttc");
+            AboutModel aboutModel = new AboutModel(
+                    SystemHelper.getBundle(getClass(), "about"),
+                    SystemHelper.getResourceAsImageView(MainApp.class, "logo.png")
+            );
+            aboutModel.setAppVersion(pomInfo.getVersion());
+            AboutPane aboutPane = new AboutPane(aboutModel);
+
+            double scaledFontSize = FxHelper.getScaledFontSize();
+            Label appLabel = new Label(aboutModel.getAppName());
+            appLabel.setFont(new Font(scaledFontSize * 1.8));
+            Label verLabel = new Label(String.format("%s %s", Dict.VERSION.toString(), aboutModel.getAppVersion()));
+            verLabel.setFont(new Font(scaledFontSize * 1.2));
+            Label dateLabel = new Label(aboutModel.getAppDate());
+            dateLabel.setFont(new Font(scaledFontSize * 1.2));
+
+            VBox box = new VBox(appLabel, verLabel, dateLabel);
+            box.setAlignment(Pos.CENTER_LEFT);
+            box.setPadding(new Insets(0, 0, 0, 22));
+            BorderPane topBorderPane = new BorderPane(box);
+            topBorderPane.setLeft(aboutModel.getImageView());
+            topBorderPane.setPadding(new Insets(22));
+            BorderPane mainBorderPane = new BorderPane(aboutPane);
+            mainBorderPane.setTop(topBorderPane);
+
+            WorkbenchDialog dialog = WorkbenchDialog.builder(Dict.ABOUT.toString(), mainBorderPane, ButtonType.CLOSE).build();
+            mWorkbench.showDialog(dialog);
+        });
+
+        mWorkbench.getNavigationDrawerItems().setAll(
+                ActionUtils.createMenuItem(mHelpAction),
+                ActionUtils.createMenuItem(aboutAction)
+        );
+
+        if (!IS_MAC) {
+            mOptionsAction.setAccelerator(new KeyCodeCombination(KeyCode.COMMA, KeyCombination.SHORTCUT_DOWN));
+        }
     }
 
-    /**
-     * The main() method is ignored in correctly deployed JavaFX application. main() serves only as fallback in case the application can not be launched through deployment artifacts, e.g., in IDEs with limited FX support. NetBeans ignores main().
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        LOGGER.log(Level.INFO, "manual start");
-        launch(args);
-    }
 }

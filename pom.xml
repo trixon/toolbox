@@ -125,6 +125,16 @@
 
             <!-- Other -->
             <dependency>
+                <groupId>com.dlsc.workbenchfx</groupId>
+                <artifactId>workbenchfx-core</artifactId>
+                <version>8.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dlsc.preferencesfx</groupId>
+                <artifactId>preferencesfx-core</artifactId>
+                <version>8.4.3</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.9</version>
