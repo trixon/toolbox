@@ -110,6 +110,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- Tools -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tt-fbd</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- Trixon -->
         <!--        <dependency>
             <groupId>se.trixon.almond</groupId>

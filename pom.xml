@@ -84,7 +84,7 @@
         <module>application</module>
         <module>core</module>
         <module>io</module>
-        <!--<module>../toolbox-idiot</module>-->
+        <module>tools/fbd</module>
     </modules>
 
     <dependencyManagement>
@@ -100,26 +100,6 @@
             <dependency>
                 <groupId>se.trixon.almond</groupId>
                 <artifactId>almond-util</artifactId>
-                <version>${almond.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>se.trixon.almond</groupId>
-                <artifactId>almond-nbp</artifactId>
-                <version>${almond.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>se.trixon.almond</groupId>
-                <artifactId>almond-nbp-actions</artifactId>
-                <version>${almond.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>se.trixon.almond</groupId>
-                <artifactId>almond-nbp-actions-osx</artifactId>
-                <version>${almond.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>se.trixon.almond</groupId>
-                <artifactId>almond-nbp-darcula</artifactId>
                 <version>${almond.version}</version>
             </dependency>
 
