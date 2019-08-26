@@ -47,7 +47,7 @@
 
         <!-- Tools -->
         <dependency>
-            <groupId>se.trixon.toolbox-tools</groupId>
+            <groupId>se.trixon.tools</groupId>
             <artifactId>filebydate</artifactId>
             <version>${project.version}</version>
         </dependency>
