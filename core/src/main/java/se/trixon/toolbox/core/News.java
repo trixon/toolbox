@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.core.news;
+package se.trixon.toolbox.core;
+
+import org.openide.util.lookup.ServiceProvider;
+import se.trixon.almond.nbp.core.news.NewsProvider;
+import se.trixon.almond.util.SystemHelper;
 
 /**
  *
  * @author Patrik Karlström
  */
-//@ServiceProvider(service = NewsProvider.class)
-public class CoreNews {//implements NewsProvider {
+@ServiceProvider(service = NewsProvider.class)
+public class News implements NewsProvider {
 
-//    @Override
-//    public String getName() {
-//        return "Toolbox";
-//    }
-//
-//    @Override
-//    public ResourceBundle getNewsBundle() {
-//        return ResourceBundle.getBundle(SystemHelper.getPackageAsPath(this.getClass()) + "CoreNews");
-//    }
+    @Override
+    public String getBundlePath() {
+        return SystemHelper.getPackageAsPath(this.getClass()) + "News";
+    }
+
+    @Override
+    public String getHeading() {
+        return "Toolbox";
+    }
 }

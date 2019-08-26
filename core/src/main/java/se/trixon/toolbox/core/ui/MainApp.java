@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.core;
+package se.trixon.toolbox.core.ui;
 
 import com.dlsc.workbenchfx.Workbench;
 import com.dlsc.workbenchfx.model.WorkbenchDialog;
@@ -59,6 +59,9 @@ import se.trixon.almond.util.fx.AlmondFx;
 import se.trixon.almond.util.fx.FxHelper;
 import se.trixon.almond.util.fx.dialogs.about.AboutPane;
 import se.trixon.almond.util.icons.material.MaterialIcon;
+import se.trixon.toolbox.core.Installer;
+import se.trixon.toolbox.core.ui.NewsModule;
+import se.trixon.toolbox.core.ui.PreferencesModule;
 
 public class MainApp extends Application {
 
@@ -86,7 +89,6 @@ public class MainApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        LOGGER.log(Level.INFO, "manual start");
         launch(args);
     }
 
@@ -122,7 +124,7 @@ public class MainApp extends Application {
 //        mFbdModule = new FbdModule();
 //        mMapollageModule = new MapollageModule();
 //        mWorkbench = Workbench.builder(mFbdModule, mMapollageModule, mPreferencesModule).build();
-        mWorkbench = Workbench.builder(mPreferencesModule).build();
+        mWorkbench = Workbench.builder(mPreferencesModule, new NewsModule()).build();
 
         mWorkbench.getStylesheets().add(MainApp.class.getResource("customTheme.css").toExternalForm());
         initToolbar();

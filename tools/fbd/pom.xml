@@ -15,28 +15,6 @@
                 <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-                <configuration>
-                    <moduleDependencies>
-                        <dependency>
-                            <!--Private Package Reference-->
-                            <id>org.netbeans.api:org-netbeans-modules-autoupdate-ui</id>
-                            <type>impl</type>
-                        </dependency>
-                        <dependency>
-                            <!--Private Package Reference-->
-                            <id>org.netbeans.api:org-netbeans-modules-autoupdate-ui-api</id>
-                            <type>impl</type>
-                        </dependency>
-                    </moduleDependencies>
-                    <publicPackages>
-                        <publicPackage>se.trixon.almond.nbp.*</publicPackage>
-                        <publicPackage>se.trixon.toolbox.core</publicPackage>
-                        <publicPackage>se.trixon.toolbox.core.base</publicPackage>
-                        <publicPackage>se.trixon.toolbox.core.news</publicPackage>
-                        <publicPackage>org.apache.commons.*</publicPackage>
-                        <publicPackage>com.google.gson.*</publicPackage>
-                    </publicPackages>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -55,12 +33,12 @@
     </build>
     <dependencies>
         <!--NetBeans-->
-        <dependency>
+        <!--        <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
             <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+        <!--        <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-autoupdate-ui</artifactId>
             <version>${netbeans.version}</version>
@@ -79,13 +57,20 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
+        </dependency>-->
+
+        <!--Toolbox-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <!--Trixon-->
-        <!--        <dependency>
+        <dependency>
             <groupId>se.trixon.almond</groupId>
-            <artifactId>almond-nbp</artifactId>
-        </dependency>-->
+            <artifactId>almond-nbp-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>se.trixon.almond</groupId>
             <artifactId>almond-util</artifactId>
@@ -93,45 +78,17 @@
 
         <!--Other-->
         <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+        </dependency>
+        <!--        <dependency>
             <groupId>com.dlsc.workbenchfx</groupId>
             <artifactId>workbenchfx-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.dlsc.preferencesfx</groupId>
             <artifactId>preferencesfx-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.codecentric.centerdevice</groupId>
-            <artifactId>centerdevice-nsmenufx</artifactId>
-            <version>2.1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util</artifactId>
-            <version>RELEASE111</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-dialogs</artifactId>
-            <version>RELEASE111</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
     <properties>
         <netbeans.hint.license>apache20</netbeans.hint.license>

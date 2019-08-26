@@ -13,25 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.core.actions;
-
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
-import org.openide.awt.ActionRegistration;
+package se.trixon.toolbox.api;
 
 /**
  *
  * @author Patrik Karlström
  */
-public class ToolOptionsAction {
+public interface ToolProvider {
 
-    @ActionID(category = "file",
-            id = "se.trixon.toolbox.core.actions.ToolOptionsAction")
-    @ActionRegistration(displayName = "#CTL_ToolOptionsAction")
-    @ActionReferences({
-        @ActionReference(path = "Menu/File", position = 10)
-        ,
-        @ActionReference(path = "Toolbars/File", position = 10),})
-    public static final String KEY = "ToolOptionsAction";
+    String getCategory();
+
+    String getCopyright();
+
+    String getCredit();
+
+    String getDescription();
+
+    String getLicense();
+
+    String getModuleName();
+
+    String getName();
+
+    String getOptionsPath();
+
+    String getVersion();
 }

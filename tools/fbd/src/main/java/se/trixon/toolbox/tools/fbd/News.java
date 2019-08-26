@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,29 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.core;
+package se.trixon.toolbox.tools.fbd;
+
+import org.openide.util.lookup.ServiceProvider;
+import se.trixon.almond.nbp.core.news.NewsProvider;
+import se.trixon.almond.util.SystemHelper;
 
 /**
  *
  * @author Patrik Karlström
  */
-public interface ToolProvider {
+@ServiceProvider(service = NewsProvider.class)
+public class News implements NewsProvider {
 
-    String getCategory();
+    @Override
+    public String getBundlePath() {
+        return SystemHelper.getPackageAsPath(this.getClass()) + "News";
+    }
 
-    String getCopyright();
-
-    String getCredit();
-
-    String getDescription();
-
-    String getLicense();
-
-    String getModuleName();
-
-    String getName();
-
-    String getOptionsPath();
-
-    String getVersion();
+    @Override
+    public String getHeading() {
+        return "FileByDate";
+    }
 }

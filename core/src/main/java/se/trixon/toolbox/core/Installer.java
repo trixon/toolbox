@@ -15,6 +15,7 @@
  */
 package se.trixon.toolbox.core;
 
+import se.trixon.toolbox.core.ui.MainApp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.modules.ModuleInstall;
@@ -25,21 +26,20 @@ public class Installer extends ModuleInstall {
 
     @Override
     public void close() {
-        LOGGER.log(Level.INFO, "platform close");
+        LOGGER.log(Level.INFO, "Toolbox closed");
         super.close();
     }
 
     @Override
     public boolean closing() {
-        LOGGER.log(Level.INFO, "platform closing");
+        LOGGER.log(Level.INFO, "Closing Toolbox");
         return super.closing();
     }
 
     @Override
     public void restored() {
-        LOGGER.log(Level.INFO, "platform restored");
+        LOGGER.log(Level.INFO, "Opening Toolbox");
         new Thread(() -> {
-            LOGGER.log(Level.INFO, "start fx application in a new thread");
             MainApp.main(new String[]{});
         }).start();
     }

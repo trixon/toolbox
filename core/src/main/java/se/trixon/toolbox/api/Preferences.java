@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.trixon.toolbox.core;
+package se.trixon.toolbox.api;
 
 import com.dlsc.preferencesfx.PreferencesFx;
 import com.dlsc.preferencesfx.model.Category;
 import com.dlsc.preferencesfx.view.PreferencesFxView;
 import se.trixon.almond.util.Dict;
+import se.trixon.toolbox.core.ui.PreferencesModule;
 
 /**
  * Model object for Preferences.
