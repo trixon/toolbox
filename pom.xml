@@ -84,7 +84,6 @@
         <module>application</module>
         <module>core</module>
         <module>io</module>
-        <module>tools/fbd</module>
     </modules>
 
     <dependencyManagement>
