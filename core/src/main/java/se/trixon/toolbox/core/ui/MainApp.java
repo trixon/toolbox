@@ -19,10 +19,10 @@ import com.dlsc.workbenchfx.Workbench;
 import com.dlsc.workbenchfx.model.WorkbenchDialog;
 import com.dlsc.workbenchfx.view.controls.ToolbarItem;
 import de.codecentric.centerdevice.MenuToolkit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableMap;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -42,6 +42,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
@@ -60,8 +61,6 @@ import se.trixon.almond.util.fx.FxHelper;
 import se.trixon.almond.util.fx.dialogs.about.AboutPane;
 import se.trixon.almond.util.icons.material.MaterialIcon;
 import se.trixon.toolbox.core.Installer;
-import se.trixon.toolbox.core.ui.NewsModule;
-import se.trixon.toolbox.core.ui.PreferencesModule;
 
 public class MainApp extends Application {
 
@@ -115,8 +114,33 @@ public class MainApp extends Application {
 
     @Override
     public void stop() throws Exception {
-        LOGGER.log(Level.INFO, "request platform shutdown");
         LifecycleManager.getDefault().exit();
+    }
+
+    private void activateModule(int moduleIndexOnPage) {
+        if (moduleIndexOnPage == 0) {
+            moduleIndexOnPage = 10;
+        }
+
+        int pageIndex = 0;//TODO get actual page index
+        int moduleIndex = pageIndex * mWorkbench.getModulesPerPage() + moduleIndexOnPage - 1;
+        try {
+            mWorkbench.openModule(mWorkbench.getModules().get(moduleIndex));
+        } catch (IndexOutOfBoundsException e) {
+            //nvm
+        }
+    }
+
+    private void activateOpenModule(int moduleIndexOnPage) {
+        if (moduleIndexOnPage == 0) {
+            moduleIndexOnPage = 10;
+        }
+
+        try {
+            mWorkbench.openModule(mWorkbench.getOpenModules().get(moduleIndexOnPage - 1));
+        } catch (IndexOutOfBoundsException e) {
+            //nvm
+        }
     }
 
     private void createUI() {
@@ -139,7 +163,41 @@ public class MainApp extends Application {
     }
 
     private void initAccelerators() {
+        final ObservableMap<KeyCombination, Runnable> accelerators = mStage.getScene().getAccelerators();
+        for (int i = 0; i < 10; i++) {
+            final int index = i;
+            accelerators.put(new KeyCodeCombination(KeyCode.valueOf("DIGIT" + i), KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN), (Runnable) () -> {
+                activateModule(index);
+            });
 
+            accelerators.put(new KeyCodeCombination(KeyCode.valueOf("NUMPAD" + i), KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN), (Runnable) () -> {
+                activateModule(index);
+            });
+
+            accelerators.put(new KeyCodeCombination(KeyCode.valueOf("DIGIT" + i), KeyCombination.SHORTCUT_DOWN), (Runnable) () -> {
+                activateOpenModule(index);
+            });
+
+            accelerators.put(new KeyCodeCombination(KeyCode.valueOf("NUMPAD" + i), KeyCombination.SHORTCUT_DOWN), (Runnable) () -> {
+                activateOpenModule(index);
+            });
+        }
+
+        accelerators.put(new KeyCodeCombination(KeyCode.Q, KeyCombination.SHORTCUT_DOWN), (Runnable) () -> {
+            mStage.fireEvent(new WindowEvent(mStage, WindowEvent.WINDOW_CLOSE_REQUEST));
+        });
+
+        accelerators.put(new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN), (Runnable) () -> {
+            if (mWorkbench.getActiveModule() != null) {
+                mWorkbench.closeModule(mWorkbench.getActiveModule());
+            }
+        });
+
+        if (!IS_MAC) {
+            accelerators.put(new KeyCodeCombination(KeyCode.COMMA, KeyCombination.SHORTCUT_DOWN), (Runnable) () -> {
+                displayOptions();
+            });
+        }
     }
 
     private void initMac() {
