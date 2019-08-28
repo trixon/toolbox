@@ -20,6 +20,7 @@ import com.dlsc.workbenchfx.model.WorkbenchDialog;
 import com.dlsc.workbenchfx.view.controls.ToolbarItem;
 import de.codecentric.centerdevice.MenuToolkit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -330,6 +331,7 @@ public class MainApp extends Application {
 
     private void populateTools() {
         mTools = new ArrayList<>(Lookup.getDefault().lookupAll(Tool.class));
+        Collections.sort(mTools, (Tool o1, Tool o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
 
         mWorkbench.getModules().clear();
         for (Tool tool : mTools) {
