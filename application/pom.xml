@@ -51,6 +51,11 @@
             <artifactId>filebydate</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>se.trixon.tools</groupId>
+            <artifactId>mapollage</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- Trixon -->
     </dependencies>
