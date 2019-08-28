@@ -15,29 +15,30 @@
  */
 package se.trixon.toolbox.api;
 
-import java.text.DateFormat;
+import com.dlsc.workbenchfx.model.WorkbenchModule;
 
 /**
  *
  * @author Patrik Karlström
  */
-public class Toolbox {
+public abstract class Tool {
 
-    public static final int ICON_SIZE_PROFILE = 32;
-    public static final int ICON_SIZE_TOOLBAR = 40;
-    public static final int ICON_SIZE_DRAWER = ICON_SIZE_TOOLBAR / 2;
-    public static final String LOG_TAG = "Toolbox";
-    public static final int MODULE_ICON_SIZE = 32;
+    private WorkbenchModule mModule;
+    private String mName;
 
-    public static void clearStatusText() {
-        setStatusText("");
+    public WorkbenchModule getModule() {
+        return mModule;
     }
 
-    public static DateFormat getDefaultDateFormat() {
-        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+    public String getName() {
+        return mName;
     }
 
-    public static void setStatusText(String text) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setModule(WorkbenchModule module) {
+        mModule = module;
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 }

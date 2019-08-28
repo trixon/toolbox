@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,6 @@
  */
 package se.trixon.toolbox.core.ui;
 
-import se.trixon.toolbox.api.Preferences;
 import com.dlsc.workbenchfx.model.WorkbenchModule;
 import com.dlsc.workbenchfx.view.controls.ToolbarItem;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
@@ -24,13 +23,15 @@ import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import se.trixon.almond.util.Dict;
 import se.trixon.almond.util.icons.material.MaterialIcon;
+import se.trixon.toolbox.api.Preferences;
+import static se.trixon.toolbox.api.Toolbox.*;
 
 public class PreferencesModule extends WorkbenchModule {
 
     private final Preferences mPreferences = Preferences.getInstance();
 
     public PreferencesModule() {
-        super(Dict.OPTIONS.toString(), MaterialIcon._Action.SETTINGS.getImageView(MainApp.MODULE_ICON_SIZE).getImage());
+        super(Dict.OPTIONS.toString(), MaterialIcon._Action.SETTINGS.getImageView(MODULE_ICON_SIZE).getImage());
 
         ToolbarItem saveToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.CONTENT_SAVE), event -> mPreferences.save());
         ToolbarItem discardToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.DELETE),

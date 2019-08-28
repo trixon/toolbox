@@ -19,6 +19,7 @@ import com.dlsc.workbenchfx.Workbench;
 import com.dlsc.workbenchfx.model.WorkbenchDialog;
 import com.dlsc.workbenchfx.view.controls.ToolbarItem;
 import de.codecentric.centerdevice.MenuToolkit;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -52,34 +53,34 @@ import org.controlsfx.control.action.ActionUtils;
 import org.netbeans.modules.autoupdate.ui.PluginManagerUI;
 import org.netbeans.modules.autoupdate.ui.api.PluginManager;
 import org.openide.LifecycleManager;
+import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
 import se.trixon.almond.util.AboutModel;
 import se.trixon.almond.util.Dict;
-import se.trixon.almond.util.PomInfo;
 import se.trixon.almond.util.SystemHelper;
 import se.trixon.almond.util.fx.AlmondFx;
 import se.trixon.almond.util.fx.FxHelper;
 import se.trixon.almond.util.fx.dialogs.about.AboutPane;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.toolbox.core.Installer;
+import se.trixon.toolbox.api.Tool;
+import static se.trixon.toolbox.api.Toolbox.*;
 
 public class MainApp extends Application {
 
     public static final String APP_TITLE = "Trixon Toolbox";
-    public static final int ICON_SIZE_PROFILE = 32;
-    public static final int ICON_SIZE_TOOLBAR = 40;
-    public static final int ICON_SIZE_DRAWER = ICON_SIZE_TOOLBAR / 2;
-    public static final int MODULE_ICON_SIZE = 32;
     private static final boolean IS_MAC = SystemUtils.IS_OS_MAC;
     private static final Logger LOGGER = Logger.getLogger(MainApp.class.getName());
     private Action mAboutAction;
     private final AlmondFx mAlmondFX = AlmondFx.getInstance();
     private Action mHelpAction;
+    private NewsModule mNewsModule;
     private Action mOptionsAction;
     private ToolbarItem mOptionsToolbarItem;
     private Action mPluginAction;
     private final SwingNode mPluginManagerUiNode = new SwingNode();
     private PreferencesModule mPreferencesModule;
     private Stage mStage;
+    private ArrayList<Tool> mTools;
     private Workbench mWorkbench;
 
     /**
@@ -109,6 +110,7 @@ public class MainApp extends Application {
         mStage.setTitle(APP_TITLE);
         mStage.show();
         initAccelerators();
+        initListeners();
         //mWorkbench.openModule(mPreferencesModule);
     }
 
@@ -145,14 +147,15 @@ public class MainApp extends Application {
 
     private void createUI() {
         mPreferencesModule = new PreferencesModule();
-//        mFbdModule = new FbdModule();
-//        mMapollageModule = new MapollageModule();
-//        mWorkbench = Workbench.builder(mFbdModule, mMapollageModule, mPreferencesModule).build();
-        mWorkbench = Workbench.builder(mPreferencesModule, new NewsModule()).build();
+        mNewsModule = new NewsModule();
+
+        mWorkbench = Workbench.builder().build();
 
         mWorkbench.getStylesheets().add(MainApp.class.getResource("customTheme.css").toExternalForm());
         initToolbar();
         initWorkbenchDrawer();
+
+        populateTools();
         Scene scene = new Scene(mWorkbench);
 //        scene.getStylesheets().add("css/modena_dark.css");
         mStage.setScene(scene);
@@ -198,6 +201,12 @@ public class MainApp extends Application {
                 displayOptions();
             });
         }
+    }
+
+    private void initListeners() {
+        Lookup.getDefault().lookupResult(Tool.class).addLookupListener((LookupEvent ev) -> {
+            populateTools();
+        });
     }
 
     private void initMac() {
@@ -279,17 +288,12 @@ public class MainApp extends Application {
         //about
         Action aboutAction = new Action(Dict.ABOUT.toString(), (ActionEvent event) -> {
             mWorkbench.hideNavigationDrawer();
-//            AboutModel aboutModel = new AboutModel(
-//                    SystemHelper.getBundle(Installer.class, "about"),
-//                    SystemHelper.getResourceAsImageView(Initializer.class, "logo.png"));
-//            NbAboutFx nbAboutFx = new NbAboutFx(aboutModel);
-//            nbAboutFx.display();
-            PomInfo pomInfo = new PomInfo(Installer.class, "se.trixon", "ttc");
+
             AboutModel aboutModel = new AboutModel(
                     SystemHelper.getBundle(getClass(), "about"),
                     SystemHelper.getResourceAsImageView(MainApp.class, "logo.png")
             );
-            aboutModel.setAppVersion(pomInfo.getVersion());
+
             AboutPane aboutPane = new AboutPane(aboutModel);
 
             double scaledFontSize = FxHelper.getScaledFontSize();
@@ -322,6 +326,17 @@ public class MainApp extends Application {
         if (!IS_MAC) {
             mOptionsAction.setAccelerator(new KeyCodeCombination(KeyCode.COMMA, KeyCombination.SHORTCUT_DOWN));
         }
+    }
+
+    private void populateTools() {
+        mTools = new ArrayList<>(Lookup.getDefault().lookupAll(Tool.class));
+
+        mWorkbench.getModules().clear();
+        for (Tool tool : mTools) {
+            mWorkbench.getModules().add(tool.getModule());
+        }
+
+        mWorkbench.getModules().addAll(mNewsModule, mPreferencesModule);
     }
 
 }

@@ -24,7 +24,7 @@ import se.trixon.almond.nbp.core.news.NewsBuilder;
 import se.trixon.almond.nbp.core.news.NewsProvider;
 import se.trixon.almond.util.Dict;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.toolbox.core.*;
+import static se.trixon.toolbox.api.Toolbox.*;
 
 public class NewsModule extends WorkbenchModule {
 
@@ -32,7 +32,7 @@ public class NewsModule extends WorkbenchModule {
     private final WebView mWebView = new WebView();
 
     public NewsModule() {
-        super(Dict.NEWS.toString(), MaterialIcon._Action.RECEIPT.getImageView(MainApp.MODULE_ICON_SIZE).getImage());
+        super(Dict.NEWS.toString(), MaterialIcon._Action.RECEIPT.getImageView(MODULE_ICON_SIZE).getImage());
         mCssBuilder = new StringBuilder("<html>");
         mCssBuilder.append("<head><style>");
         mCssBuilder.append("h1 { font-size: x-large; color: #D40000; margin-bottom: 0px; }");

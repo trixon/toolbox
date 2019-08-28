@@ -26,7 +26,7 @@ import se.trixon.toolbox.core.ui.PreferencesModule;
  */
 public class Preferences {
 
-//    private final GeneralPreferences mGeneralPreferences = new GeneralPreferences();
+    private final GeneralPreferences mGeneralPreferences = new GeneralPreferences();
 //    private final MapollagePreferences mMapollagePreferences = new MapollagePreferences();
     private final PreferencesFx mPreferencesFx;
 
@@ -42,9 +42,10 @@ public class Preferences {
         mPreferencesFx.discardChanges();
     }
 
-//    public GeneralPreferences general() {
-//        return mGeneralPreferences;
-//    }
+    public GeneralPreferences general() {
+        return mGeneralPreferences;
+    }
+
     public PreferencesFxView getPreferencesFxView() {
         return mPreferencesFx.getView();
     }
@@ -58,7 +59,7 @@ public class Preferences {
 
     private PreferencesFx createPreferences() {
         return PreferencesFx.of(PreferencesModule.class,
-                //                mGeneralPreferences.getCategory(),
+                mGeneralPreferences.getCategory(),
                 Category.of(Dict.TOOLS.toString())
                         .expand()
                         .subCategories( //Category.of("FileByDate"),
