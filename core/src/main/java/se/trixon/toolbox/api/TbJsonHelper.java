@@ -22,7 +22,7 @@ import org.json.simple.JSONObject;
  *
  * @author Patrik Karlström
  */
-public class JsonHelper {
+public class TbJsonHelper {
 
     public static int getInt(JSONObject object, String key) {
         return ((Long) object.get(key)).intValue();

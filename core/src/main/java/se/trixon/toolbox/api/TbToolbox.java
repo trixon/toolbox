@@ -15,21 +15,29 @@
  */
 package se.trixon.toolbox.api;
 
-import com.dlsc.preferencesfx.model.Category;
+import java.text.DateFormat;
 
 /**
  *
  * @author Patrik Karlström
  */
-public abstract class ToolPreference {
+public class TbToolbox {
 
-    protected Category mCategory;
+    public static final int ICON_SIZE_PROFILE = 32;
+    public static final int ICON_SIZE_TOOLBAR = 40;
+    public static final int ICON_SIZE_DRAWER = ICON_SIZE_TOOLBAR / 2;
+    public static final String LOG_TAG = "Toolbox";
+    public static final int MODULE_ICON_SIZE = 32;
 
-    public ToolPreference() {
+    public static void clearStatusText() {
+        setStatusText("");
     }
 
-    public Category getCategory() {
-        return mCategory;
+    public static DateFormat getDefaultDateFormat() {
+        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
     }
 
+    public static void setStatusText(String text) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

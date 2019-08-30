@@ -24,7 +24,7 @@ import se.trixon.almond.nbp.core.news.NewsBuilder;
 import se.trixon.almond.nbp.core.news.NewsProvider;
 import se.trixon.almond.util.Dict;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import static se.trixon.toolbox.api.Toolbox.*;
+import static se.trixon.toolbox.api.TbToolbox.*;
 
 public class NewsModule extends WorkbenchModule {
 

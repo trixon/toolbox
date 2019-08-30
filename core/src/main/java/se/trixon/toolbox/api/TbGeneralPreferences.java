@@ -33,7 +33,7 @@ import se.trixon.almond.util.Dict;
  *
  * @author Patrik Karlström
  */
-public class GeneralPreferences {
+public class TbGeneralPreferences {
 
     private final Category mCategory;
     private final ObjectProperty<Locale> mLocale = new SimpleObjectProperty<>(Locale.getDefault());
@@ -41,7 +41,7 @@ public class GeneralPreferences {
     private final ObjectProperty<Locale> mLocaleSelection = new SimpleObjectProperty<>(Locale.getDefault());
     private final BooleanProperty mWordWrap = new SimpleBooleanProperty(true);
 
-    public GeneralPreferences() {
+    public TbGeneralPreferences() {
         ArrayList<Locale> locales = new ArrayList<>(Arrays.asList(Locale.getAvailableLocales()));
         locales.sort((Locale o1, Locale o2) -> o1.getDisplayName().compareTo(o2.getDisplayName()));
         locales.forEach((locale) -> {

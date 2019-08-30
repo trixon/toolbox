@@ -23,21 +23,21 @@ import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import se.trixon.almond.util.Dict;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.toolbox.api.Preferences;
-import static se.trixon.toolbox.api.Toolbox.*;
+import se.trixon.toolbox.api.TbPreferences;
+import static se.trixon.toolbox.api.TbToolbox.*;
 
 public class PreferencesModule extends WorkbenchModule {
 
     public PreferencesModule() {
         super(Dict.OPTIONS.toString(), MaterialIcon._Action.SETTINGS.getImageView(MODULE_ICON_SIZE).getImage());
 
-        ToolbarItem saveToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.CONTENT_SAVE), event -> Preferences.getInstance().save());
+        ToolbarItem saveToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.CONTENT_SAVE), event -> TbPreferences.getInstance().save());
         ToolbarItem discardToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.DELETE),
                 event -> getWorkbench().showConfirmationDialog("Discard Changes",
                         "Are you sure you want to discard all changes since you last saved?",
                         buttonType -> {
                             if (ButtonType.YES.equals(buttonType)) {
-                                Preferences.getInstance().discardChanges();
+                                TbPreferences.getInstance().discardChanges();
                             }
                         })
         );
@@ -47,12 +47,12 @@ public class PreferencesModule extends WorkbenchModule {
 
     @Override
     public Node activate() {
-        return Preferences.getInstance().getPreferencesFxView();
+        return TbPreferences.getInstance().getPreferencesFxView();
     }
 
     @Override
     public boolean destroy() {
-        Preferences.getInstance().save();
+        TbPreferences.getInstance().save();
         return true;
     }
 }

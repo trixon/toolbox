@@ -23,14 +23,14 @@ import org.openide.util.NbPreferences;
  *
  * @author Patrik Karlström
  */
-public enum ToolboxOptions {
+public enum TbToolboxOptions {
 
     INSTANCE;
     public static final String DEFAULT_DIR_OPEN = System.getProperty("user.home");
     public static final String DEFAULT_DIR_SAVE = System.getProperty("user.home");
     public static final String KEY_DIR_OPEN = "dirOpen";
     public static final String KEY_DIR_SAVE = "dirSave";
-    private static Preferences mPreferences = NbPreferences.forModule(ToolboxOptions.class);
+    private static Preferences mPreferences = NbPreferences.forModule(TbToolboxOptions.class);
 
     public static Preferences getPreferences() {
         return mPreferences;

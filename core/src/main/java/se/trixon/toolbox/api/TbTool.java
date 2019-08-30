@@ -15,33 +15,30 @@
  */
 package se.trixon.toolbox.api;
 
-import org.openide.util.NbBundle;
+import com.dlsc.workbenchfx.model.WorkbenchModule;
 
 /**
  *
  * @author Patrik Karlström
  */
-public enum NameCase {
-    UNCHANGED, LOWER, UPPER;
+public abstract class TbTool {
 
-    public static NameCase getCase(String key) {
-        if (key != null) {
-            key = key.toLowerCase();
-            if (key.equalsIgnoreCase("l") || key.equalsIgnoreCase("lower")) {
-                return LOWER;
-            } else if (key.equalsIgnoreCase("u") || key.equalsIgnoreCase("upper")) {
-                return UPPER;
-            }
-        }
+    private WorkbenchModule mModule;
+    private String mName;
 
-        return null;
+    public WorkbenchModule getModule() {
+        return mModule;
     }
 
-    private NameCase() {
+    public String getName() {
+        return mName;
     }
 
-    @Override
-    public String toString() {
-        return NbBundle.getMessage(getClass(), "case_" + name().toLowerCase());
+    public void setModule(WorkbenchModule module) {
+        mModule = module;
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 }

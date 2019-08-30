@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,27 +15,23 @@
  */
 package se.trixon.toolbox.api;
 
+import org.openide.util.NbBundle;
+
 /**
  *
  * @author Patrik Karlström
  */
-public interface ToolProvider {
+public enum TbDateSource {
 
-    String getCategory();
+    EXIF_ORIGINAL,
+    FILE_CREATED,
+    FILE_MODIFIED;
 
-    String getCopyright();
+    private TbDateSource() {
+    }
 
-    String getCredit();
-
-    String getDescription();
-
-    String getLicense();
-
-    String getModuleName();
-
-    String getName();
-
-    String getOptionsPath();
-
-    String getVersion();
+    @Override
+    public String toString() {
+        return NbBundle.getMessage(getClass(), "dateSource_" + name().toLowerCase());
+    }
 }

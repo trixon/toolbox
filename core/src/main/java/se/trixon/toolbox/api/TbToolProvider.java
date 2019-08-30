@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright 2019 Patrik Karlström.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,30 +15,27 @@
  */
 package se.trixon.toolbox.api;
 
-import com.dlsc.workbenchfx.model.WorkbenchModule;
-
 /**
  *
  * @author Patrik Karlström
  */
-public abstract class Tool {
+public interface TbToolProvider {
 
-    private WorkbenchModule mModule;
-    private String mName;
+    String getCategory();
 
-    public WorkbenchModule getModule() {
-        return mModule;
-    }
+    String getCopyright();
 
-    public String getName() {
-        return mName;
-    }
+    String getCredit();
 
-    public void setModule(WorkbenchModule module) {
-        mModule = module;
-    }
+    String getDescription();
 
-    public void setName(String name) {
-        mName = name;
-    }
+    String getLicense();
+
+    String getModuleName();
+
+    String getName();
+
+    String getOptionsPath();
+
+    String getVersion();
 }

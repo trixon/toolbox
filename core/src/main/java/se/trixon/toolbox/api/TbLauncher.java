@@ -27,17 +27,17 @@ import org.openide.util.Exceptions;
  *
  * @author Patrik Karlström
  */
-public class Launcher {
+public class TbLauncher {
 
     private boolean mDestroyedByUser;
     private final Set<LauncherListener> mLauncherListeners = new HashSet<>();
     private Process mProcess;
     private final ProcessBuilder mProcessBuilder = new ProcessBuilder(new String[]{"/home/pata/ticktock.sh"});
 
-    public Launcher() {
+    public TbLauncher() {
     }
 
-    public Launcher(LauncherListener launcherListener) {
+    public TbLauncher(LauncherListener launcherListener) {
         mLauncherListeners.add(launcherListener);
     }
 

@@ -63,9 +63,9 @@ import se.trixon.almond.util.fx.AlmondFx;
 import se.trixon.almond.util.fx.FxHelper;
 import se.trixon.almond.util.fx.dialogs.about.AboutPane;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.toolbox.api.Preferences;
-import se.trixon.toolbox.api.Tool;
-import static se.trixon.toolbox.api.Toolbox.*;
+import se.trixon.toolbox.api.TbPreferences;
+import se.trixon.toolbox.api.TbTool;
+import static se.trixon.toolbox.api.TbToolbox.*;
 
 public class MainApp extends Application {
 
@@ -82,7 +82,7 @@ public class MainApp extends Application {
     private final SwingNode mPluginManagerUiNode = new SwingNode();
     private PreferencesModule mPreferencesModule;
     private Stage mStage;
-    private ArrayList<Tool> mTools;
+    private ArrayList<TbTool> mTools;
     private Workbench mWorkbench;
 
     /**
@@ -206,7 +206,7 @@ public class MainApp extends Application {
     }
 
     private void initListeners() {
-        Lookup.getDefault().lookupResult(Tool.class).addLookupListener((LookupEvent ev) -> {
+        Lookup.getDefault().lookupResult(TbTool.class).addLookupListener((LookupEvent ev) -> {
             populateTools();
         });
     }
@@ -331,17 +331,17 @@ public class MainApp extends Application {
     }
 
     private void populateTools() {
-        mTools = new ArrayList<>(Lookup.getDefault().lookupAll(Tool.class));
-        Collections.sort(mTools, (Tool o1, Tool o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+        mTools = new ArrayList<>(Lookup.getDefault().lookupAll(TbTool.class));
+        Collections.sort(mTools, (TbTool o1, TbTool o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
 
         mWorkbench.getModules().clear();
-        for (Tool tool : mTools) {
+        for (TbTool tool : mTools) {
             mWorkbench.getModules().add(tool.getModule());
         }
 
-        Preferences.getInstance();
+        TbPreferences.getInstance();
 //        try {
-//            Preferences.getInstance().createPreferences();
+//            TbPreferences.getInstance().createPreferences();
 //        } catch (Exception e) {
 //            Exceptions.printStackTrace(e);
 //        }

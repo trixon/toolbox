@@ -21,17 +21,27 @@ import org.openide.util.NbBundle;
  *
  * @author Patrik Karlström
  */
-public enum DateSource {
+public enum TbNameCase {
+    UNCHANGED, LOWER, UPPER;
 
-    EXIF_ORIGINAL,
-    FILE_CREATED,
-    FILE_MODIFIED;
+    public static TbNameCase getCase(String key) {
+        if (key != null) {
+            key = key.toLowerCase();
+            if (key.equalsIgnoreCase("l") || key.equalsIgnoreCase("lower")) {
+                return LOWER;
+            } else if (key.equalsIgnoreCase("u") || key.equalsIgnoreCase("upper")) {
+                return UPPER;
+            }
+        }
 
-    private DateSource() {
+        return null;
+    }
+
+    private TbNameCase() {
     }
 
     @Override
     public String toString() {
-        return NbBundle.getMessage(getClass(), "dateSource_" + name().toLowerCase());
+        return NbBundle.getMessage(getClass(), "case_" + name().toLowerCase());
     }
 }

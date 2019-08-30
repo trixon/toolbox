@@ -23,24 +23,24 @@ import se.trixon.almond.util.Dict;
 import se.trixon.toolbox.core.ui.PreferencesModule;
 
 /**
- * Model object for Preferences.
+ * Model object for TbPreferences.
  */
-public class Preferences {
+public class TbPreferences {
 
-    private final GeneralPreferences mGeneralPreferences = new GeneralPreferences();
+    private final TbGeneralPreferences mGeneralPreferences = new TbGeneralPreferences();
     private PreferencesFx mPreferencesFx;
 
-    public static Preferences getInstance() {
+    public static TbPreferences getInstance() {
         return Holder.INSTANCE;
     }
 
-    private Preferences() {
+    private TbPreferences() {
         createPreferences();
     }
 
     public void createPreferences() {
-        Category[] categories = Lookup.getDefault().lookupAll(ToolPreference.class).stream()
-                .sorted((ToolPreference o1, ToolPreference o2) -> o1.getCategory().getDescription().compareToIgnoreCase(o2.getCategory().getDescription()))
+        Category[] categories = Lookup.getDefault().lookupAll(TbToolPreference.class).stream()
+                .sorted((TbToolPreference o1, TbToolPreference o2) -> o1.getCategory().getDescription().compareToIgnoreCase(o2.getCategory().getDescription()))
                 .map(p -> p.getCategory())
                 .toArray(Category[]::new);
 
@@ -56,7 +56,7 @@ public class Preferences {
         mPreferencesFx.discardChanges();
     }
 
-    public GeneralPreferences general() {
+    public TbGeneralPreferences general() {
         return mGeneralPreferences;
     }
 
@@ -74,6 +74,6 @@ public class Preferences {
 
     private static class Holder {
 
-        private static final Preferences INSTANCE = new Preferences();
+        private static final TbPreferences INSTANCE = new TbPreferences();
     }
 }

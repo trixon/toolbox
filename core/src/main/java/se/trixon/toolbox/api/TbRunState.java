@@ -19,7 +19,7 @@ package se.trixon.toolbox.api;
  *
  * @author Patrik Karlström
  */
-public enum RunState {
+public enum TbRunState {
     STARTABLE, CANCELABLE, CLOSEABLE
 
 }
