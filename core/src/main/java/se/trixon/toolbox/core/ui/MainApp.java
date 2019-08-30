@@ -63,6 +63,7 @@ import se.trixon.almond.util.fx.AlmondFx;
 import se.trixon.almond.util.fx.FxHelper;
 import se.trixon.almond.util.fx.dialogs.about.AboutPane;
 import se.trixon.almond.util.icons.material.MaterialIcon;
+import se.trixon.toolbox.api.Preferences;
 import se.trixon.toolbox.api.Tool;
 import static se.trixon.toolbox.api.Toolbox.*;
 
@@ -338,6 +339,12 @@ public class MainApp extends Application {
             mWorkbench.getModules().add(tool.getModule());
         }
 
+        Preferences.getInstance();
+//        try {
+//            Preferences.getInstance().createPreferences();
+//        } catch (Exception e) {
+//            Exceptions.printStackTrace(e);
+//        }
         mWorkbench.getModules().addAll(mNewsModule, mPreferencesModule);
     }
 

@@ -18,6 +18,7 @@ package se.trixon.toolbox.api;
 import com.dlsc.preferencesfx.PreferencesFx;
 import com.dlsc.preferencesfx.model.Category;
 import com.dlsc.preferencesfx.view.PreferencesFxView;
+import org.openide.util.Lookup;
 import se.trixon.almond.util.Dict;
 import se.trixon.toolbox.core.ui.PreferencesModule;
 
@@ -27,15 +28,28 @@ import se.trixon.toolbox.core.ui.PreferencesModule;
 public class Preferences {
 
     private final GeneralPreferences mGeneralPreferences = new GeneralPreferences();
-//    private final MapollagePreferences mMapollagePreferences = new MapollagePreferences();
-    private final PreferencesFx mPreferencesFx;
+    private PreferencesFx mPreferencesFx;
 
     public static Preferences getInstance() {
         return Holder.INSTANCE;
     }
 
     private Preferences() {
-        mPreferencesFx = createPreferences();
+        createPreferences();
+    }
+
+    public void createPreferences() {
+        Category[] categories = Lookup.getDefault().lookupAll(ToolPreference.class).stream()
+                .sorted((ToolPreference o1, ToolPreference o2) -> o1.getCategory().getDescription().compareToIgnoreCase(o2.getCategory().getDescription()))
+                .map(p -> p.getCategory())
+                .toArray(Category[]::new);
+
+        mPreferencesFx = PreferencesFx.of(PreferencesModule.class,
+                mGeneralPreferences.getCategory(),
+                Category.of(Dict.TOOLS.toString())
+                        .expand()
+                        .subCategories(categories)
+        ).persistWindowState(false).saveSettings(true).debugHistoryMode(false).buttonsVisibility(true);
     }
 
     public void discardChanges() {
@@ -46,26 +60,16 @@ public class Preferences {
         return mGeneralPreferences;
     }
 
+    public <T> T getForClass(Class c) {
+        return (T) (Lookup.getDefault().lookup(c));
+    }
+
     public PreferencesFxView getPreferencesFxView() {
         return mPreferencesFx.getView();
     }
 
-//    public MapollagePreferences mapollage() {
-//        return mMapollagePreferences;
-//    }
     public void save() {
         mPreferencesFx.saveSettings();
-    }
-
-    private PreferencesFx createPreferences() {
-        return PreferencesFx.of(PreferencesModule.class,
-                mGeneralPreferences.getCategory(),
-                Category.of(Dict.TOOLS.toString())
-                        .expand()
-                        .subCategories( //Category.of("FileByDate"),
-                        //                                mMapollagePreferences.getCategory()
-                        )
-        ).persistWindowState(false).saveSettings(true).debugHistoryMode(false).buttonsVisibility(true);
     }
 
     private static class Holder {

@@ -28,18 +28,16 @@ import static se.trixon.toolbox.api.Toolbox.*;
 
 public class PreferencesModule extends WorkbenchModule {
 
-    private final Preferences mPreferences = Preferences.getInstance();
-
     public PreferencesModule() {
         super(Dict.OPTIONS.toString(), MaterialIcon._Action.SETTINGS.getImageView(MODULE_ICON_SIZE).getImage());
 
-        ToolbarItem saveToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.CONTENT_SAVE), event -> mPreferences.save());
+        ToolbarItem saveToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.CONTENT_SAVE), event -> Preferences.getInstance().save());
         ToolbarItem discardToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.DELETE),
                 event -> getWorkbench().showConfirmationDialog("Discard Changes",
                         "Are you sure you want to discard all changes since you last saved?",
                         buttonType -> {
                             if (ButtonType.YES.equals(buttonType)) {
-                                mPreferences.discardChanges();
+                                Preferences.getInstance().discardChanges();
                             }
                         })
         );
@@ -49,12 +47,12 @@ public class PreferencesModule extends WorkbenchModule {
 
     @Override
     public Node activate() {
-        return mPreferences.getPreferencesFxView();
+        return Preferences.getInstance().getPreferencesFxView();
     }
 
     @Override
     public boolean destroy() {
-        mPreferences.save();
+        Preferences.getInstance().save();
         return true;
     }
 }
