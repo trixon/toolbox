@@ -21,6 +21,7 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
+import org.openide.util.NbBundle;
 import se.trixon.almond.util.Dict;
 import se.trixon.almond.util.icons.material.MaterialIcon;
 import se.trixon.toolbox.api.TbPreferences;
@@ -33,8 +34,8 @@ public class PreferencesModule extends WorkbenchModule {
 
         ToolbarItem saveToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.CONTENT_SAVE), event -> TbPreferences.getInstance().save());
         ToolbarItem discardToolbarItem = new ToolbarItem(new MaterialDesignIconView(MaterialDesignIcon.DELETE),
-                event -> getWorkbench().showConfirmationDialog("Discard Changes",
-                        "Are you sure you want to discard all changes since you last saved?",
+                event -> getWorkbench().showConfirmationDialog(NbBundle.getMessage(getClass(), "discard_title"),
+                        NbBundle.getMessage(getClass(), "discard_message"),
                         buttonType -> {
                             if (ButtonType.YES.equals(buttonType)) {
                                 TbPreferences.getInstance().discardChanges();

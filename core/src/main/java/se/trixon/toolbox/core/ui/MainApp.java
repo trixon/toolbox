@@ -282,7 +282,7 @@ public class MainApp extends Application {
         //help
         mHelpAction = new Action(Dict.HELP.toString(), (ActionEvent event) -> {
             mWorkbench.hideNavigationDrawer();
-            SystemHelper.desktopBrowse("https://trixon.se/projects/ttc/documentation/");
+            SystemHelper.desktopBrowse("https://trixon.se/projects/toolbox/documentation/");
         });
         //mHelpAction.setAccelerator(new KeyCodeCombination(KeyCode.F1, KeyCombination.SHORTCUT_ANY));
         mHelpAction.setAccelerator(KeyCombination.keyCombination("F1"));
