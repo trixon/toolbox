@@ -116,12 +116,12 @@
             <dependency>
                 <groupId>com.dlsc.workbenchfx</groupId>
                 <artifactId>workbenchfx-core</artifactId>
-                <version>8.0.0</version>
+                <version>8.0.2</version>
             </dependency>
             <dependency>
                 <groupId>com.dlsc.preferencesfx</groupId>
                 <artifactId>preferencesfx-core</artifactId>
-                <version>8.4.3</version>
+                <version>8.6.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -162,7 +162,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>28.0-jre</version>
+                <version>28.1-jre</version>
             </dependency>
 
             <dependency>
