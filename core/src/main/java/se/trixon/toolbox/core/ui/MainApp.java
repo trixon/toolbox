@@ -104,13 +104,11 @@ public class MainApp extends Application {
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("logo.png")));
 //        stage.getIcons().add(new Image("org/netbeans/core/startup/frame48.gif"));
 
-        mAlmondFX.addStageWatcher(stage, MainApp.class);
         createUI();
         if (IS_MAC) {
             initMac();
         }
         mStage.setTitle(APP_TITLE);
-        mStage.show();
         initAccelerators();
         initListeners();
         //mWorkbench.openModule(mPreferencesModule);
@@ -158,9 +156,12 @@ public class MainApp extends Application {
         initWorkbenchDrawer();
 
         populateTools();
-        Scene scene = new Scene(mWorkbench);
-//        scene.getStylesheets().add("css/modena_dark.css");
-        mStage.setScene(scene);
+        mStage.setScene(new Scene(mWorkbench));
+
+        Platform.runLater(() -> {
+            mAlmondFX.addStageWatcher(mStage, MainApp.class);
+            mStage.show();
+        });
     }
 
     private void displayOptions() {

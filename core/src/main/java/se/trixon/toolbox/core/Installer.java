@@ -15,10 +15,10 @@
  */
 package se.trixon.toolbox.core;
 
-import se.trixon.toolbox.core.ui.MainApp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.modules.ModuleInstall;
+import se.trixon.toolbox.core.ui.MainApp;
 
 public class Installer extends ModuleInstall {
 

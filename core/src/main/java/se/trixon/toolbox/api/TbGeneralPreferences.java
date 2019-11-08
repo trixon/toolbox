@@ -38,9 +38,9 @@ public class TbGeneralPreferences {
     public TbGeneralPreferences() {
 
         mCategory = Category.of(Dict.GENERAL.toString(),
-                Group.of(Dict.SYSTEM.toString(),
-                        Setting.of(Dict.CALENDAR_LANGUAGE.toString(), mLocaleProperty, null).customKey("general.locale")
-                ),
+                //                Group.of(Dict.SYSTEM.toString(),
+                //                        Setting.of(Dict.CALENDAR_LANGUAGE.toString(), mLocaleProperty, null).customKey("general.locale")
+                //                ),
                 Group.of(Dict.LOGGING.toString(),
                         Setting.of(Dict.DYNAMIC_WORD_WRAP.toString(), mWordWrap).customKey("general.wordWrap")
                 )
