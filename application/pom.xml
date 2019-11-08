@@ -43,6 +43,12 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>core</artifactId>
             <version>${project.version}</version>
+            <!--            <exclusions>
+                <exclusion>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>-->
         </dependency>
 
         <!-- Tools -->
@@ -75,6 +81,7 @@
                     <additionalArguments>&#045;&#045;locale en:US</additionalArguments>
                     <!--<additionalArguments>&#045;&#045;nosplash</additionalArguments>-->
                     <!--<additionalArguments>&#045;&#045;fontsize 32</additionalArguments>-->
+                    <!--<additionalArguments>&#045;&#045;nogui</additionalArguments>-->
                 </configuration>
             </plugin>
             <plugin>
